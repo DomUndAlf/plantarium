@@ -1,7 +1,9 @@
 import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
 // Initialize the Express application
 const app = express();
+const prisma = new PrismaClient();
 
 // Define the port number for the server to listen on
 const port = 3000;
@@ -17,3 +19,6 @@ app.listen(port, () => {
 });
 
 export default app;
+
+//middleware
+//routen definieren
