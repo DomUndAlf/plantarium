@@ -1,5 +1,4 @@
-// Import Express.js module
-const express = require('express');
+import express from 'express';
 
 // Initialize the Express application
 const app = express();
@@ -16,3 +15,5 @@ app.get('/', (req: any, res: { send: (arg0: string) => void; }) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`); // Log a message to the console indicating the server is running
 });
+
+export default app;
