@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: plantDB
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: plantarium
+      MYSQL_DATABASE: plantarium
+      MYSQL_USER: dom
+      MYSQL_PASSWORD: plantarium
+    ports:
+      - "3307:3306"
+    volumes:
+      - plantarium-data:/var/lib/mysql
+
+volumes:
+  plantarium-data:
