@@ -1,0 +1,7 @@
+{
+    "scripts": {
+      "start-front": "cd FE && npm run dev",
+      "start-back": "cd BE && npm start",
+      "start": "npm-run-all --parallel start-front start-back"
+    }
+  }
