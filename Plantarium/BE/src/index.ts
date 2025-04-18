@@ -1,6 +1,6 @@
 import app from './app.js';
 
-const PORT = 3000;
+const PORT = process.env.VITE_BEPORT;
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
