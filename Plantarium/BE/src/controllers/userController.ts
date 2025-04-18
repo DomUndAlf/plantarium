@@ -11,7 +11,6 @@ export const getAllUsers = async (req: any, res: any) => {
   });
 
   res.status(200).json({ data: allUsers });
-  console.log(allUsers);
 };
 
 export default getAllUsers;
