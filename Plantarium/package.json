@@ -2,6 +2,9 @@
     "scripts": {
       "start-front": "cd FE && npm run dev",
       "start-back": "cd BE && npm start",
-      "start": "npm-run-all --parallel start-front start-back"
+      "start": "npm-run-all --parallel start-front start-back",
+      "format-back": "cd BE && npx prettier",
+      "format-front": "cd FE && npx prettier",
+      "format": "npm run format-front && format-back"
     }
   }

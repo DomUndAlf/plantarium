@@ -15,7 +15,7 @@ COPY . .
 ENV PORT=3000
 
 # App bauen (für Produktion) – oder auskommentieren, falls du `npm run dev` nutzen willst
-# RUN npm run build
+RUN npm run build
 
 # Dev-Server starten
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]

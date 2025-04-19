@@ -3,16 +3,19 @@ version: '3.9'
 services:
   frontend:
     build: FE
+    container_name: frontend
     ports:
-    - "3000:3000"
+      - "3000:3000"
     depends_on:
-    - backend
+      - backend
   backend:
     build: BE
-    ports: 
-    - "3001:3001"
+    container_name: backend
+    ports:
+      - "3001:3001"
+      - "5555:5555"
     depends_on:
-    - mysql
+      - mysql
   mysql:
     image: mysql:8.0
     container_name: plantDB
@@ -20,12 +23,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: plantarium
       MYSQL_DATABASE: plantarium
-      MYSQL_USER: dom
+      MYSQL_USER: root
       MYSQL_PASSWORD: plantarium
     ports:
       - "3307:3306"
     volumes:
       - plantarium-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      retries: 3
+      start_period: 5s
+      timeout: 10s
 
 volumes:
   plantarium-data:
