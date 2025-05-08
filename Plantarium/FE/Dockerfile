@@ -18,4 +18,4 @@ ENV PORT=3000
 RUN npm run build
 
 # Dev-Server starten
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["npm", "run", "preview"]
