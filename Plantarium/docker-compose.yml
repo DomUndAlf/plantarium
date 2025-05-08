@@ -10,6 +10,8 @@ services:
       - backend
   backend:
     build: BE
+    env_file:
+    - ./BE/.env
     container_name: backend
     ports:
       - "127.0.10.1:8081:3001"
