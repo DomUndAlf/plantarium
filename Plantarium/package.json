@@ -5,7 +5,7 @@
         "start": "npm-run-all --parallel start-front start-back",
         "format-back": "cd BE && npx prettier",
         "format-front": "cd FE && npx prettier",
-        "format": "npm run format-front && npm run format-back",
+        "format:all": "npm run format-front && npm run format-back",
         "dev:frontend": "cd FE && npm run dev:local",
         "dev:backend": "cd BE && npm run dev:local",
         "dev:all": "run-p dev:frontend dev:backend",
