@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig(() => {
   return {
-    base: '/dev1/',
+    base: './',
     plugins: [react()],
     server: {
         host: '0.0.0.0',
