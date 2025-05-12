@@ -25,8 +25,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: plantarium
       MYSQL_DATABASE: plantarium
-      MYSQL_USER: root
-      MYSQL_PASSWORD: plantarium
     ports:
       - "127.0.10.1:3307:3306"
     volumes:
