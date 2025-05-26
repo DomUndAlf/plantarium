@@ -14,6 +14,7 @@ export default defineConfig([
     extends: ["js/recommended"],
     rules: {
       camelcase: ["error", { properties: "always" }],
+            "react/react-in-jsx-scope": "off",
     },
   },
   { 
