@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
+import CreateGarden from "./CreateGarden";
 
 function Dash() {
   const [user, setUser] = useState<any>(null);
@@ -33,6 +34,7 @@ function Dash() {
       <p>Willkommen!</p>
       <p>Deine interne ID: <code>{user.id}</code></p>
       <p>Dein Shibboleth ID: <code>{user.shibboleth_id}</code></p>
+      <CreateGarden />
     </div>
   );
 }

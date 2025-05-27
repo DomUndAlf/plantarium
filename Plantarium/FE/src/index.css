@@ -2,4 +2,5 @@
 
 @theme {
   --color-mint: #95b878;
+  --inset-shadow-md: inset 2px 5px 12px rgba(0, 0, 0, 0.2); 
 }
