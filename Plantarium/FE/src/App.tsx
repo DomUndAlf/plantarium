@@ -1,5 +1,4 @@
 // import { useEffect, useState } from 'react'
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import Dash from "./components/Dash";
