@@ -1,5 +1,4 @@
 import { Router, Request, Response} from "express";
-import { getAllUsers, getUser } from "../controllers/userController";
 import { prisma } from "../prismaClient";
 import jwt from "jsonwebtoken";
 
@@ -21,7 +20,5 @@ userRouter.get('/me', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get('', getAllUsers);
-userRouter.get('/:id', getUser);
 
 export default userRouter;
