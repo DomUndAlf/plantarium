@@ -4,6 +4,26 @@ import jwt from "jsonwebtoken";
 
 const userRouter = Router();
 
+/**
+ * GET /users/me
+ * 
+ * Liefert die Benutzerdaten des aktuell authentifizierten Users zurück.
+ * 
+ * Erwartet ein gültiges JWT im HttpOnly-Cookie `jwt`.
+ * 
+ * Ablauf:
+ *  - JWT wird aus den Cookies gelesen und verifiziert.
+ *  - Die Nutzer-ID wird aus dem Token extrahiert.
+ *  - Der entsprechende Nutzer wird aus der Datenbank geladen.
+ *  - Falls kein Nutzer gefunden wird, wird 404 zurückgegeben.
+ *  - Bei erfolgreicher Authentifizierung und Nutzerfund werden die Nutzerdaten als JSON zurückgegeben.
+ *  - Falls kein oder ein ungültiger Token vorliegt, wird 401 Unauthorized zurückgegeben.
+ * 
+ * @param {Request} req - Express HTTP Request, erwartet Cookies mit JWT
+ * @param {Response} res - Express HTTP Response, sendet JSON mit Userdaten oder Fehlermeldung
+ * 
+ * @returns {Promise<void>}
+ */
 userRouter.get('/me', async (req: Request, res: Response) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: 'Nicht eingeloggt' });
