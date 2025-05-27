@@ -1,5 +1,4 @@
-import { Fieldset, Legend, Field, Input } from "@headlessui/react";
-import { Label } from "react-konva";
+import { Fieldset, Legend, Field, Input, Button, Label } from "@headlessui/react";
 
 function CreateGarden(){
     return(
@@ -26,6 +25,10 @@ function CreateGarden(){
                  <Label className="block text-left w-4/5 mx-auto">Width of your garden (m)</Label>
                 <Input className="mt-2 p-2 block text-gray-700 rounded-xl bg-white w-4/5 mx-auto" placeholder="5,5" name="name" />
             </Field>
+
+            <Button className="p-2 mt-12 w-1/3 block text-mint rounded-xl bg-white mx-auto">
+                Speichern und weiter
+            </Button>
         </Fieldset>
         </div>
     </>
