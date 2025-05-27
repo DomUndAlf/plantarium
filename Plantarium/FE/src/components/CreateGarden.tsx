@@ -26,7 +26,7 @@ function CreateGarden(){
                 <Input className="mt-2 p-2 block text-gray-700 rounded-xl bg-white w-4/5 mx-auto" placeholder="5,5" name="name" />
             </Field>
 
-            <Button className="p-2 mt-12 w-1/3 block text-mint rounded-xl bg-white mx-auto">
+            <Button className="p-2 mt-12 w-1/3 block text-mint rounded-xl font-semibold bg-white mx-auto">
                 Speichern und weiter
             </Button>
         </Fieldset>
