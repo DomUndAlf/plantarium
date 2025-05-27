@@ -16,7 +16,7 @@ const userRouter = Router();
  *  - Die Nutzer-ID wird aus dem Token extrahiert.
  *  - Der entsprechende Nutzer wird aus der Datenbank geladen.
  *  - Falls kein Nutzer gefunden wird, wird 404 zurückgegeben.
- *  - Bei erfolgreicher Authentifizierung und Nutzerfund werden die Nutzerdaten als JSON zurückgegeben.
+ *  - Bei erfolgreicher Authentifizierung und Nutzerfund werden die Nutzerdaten als JSON zurückgegeben. (id und shibboleth ID)
  *  - Falls kein oder ein ungültiger Token vorliegt, wird 401 Unauthorized zurückgegeben.
  * 
  * @param {Request} req - Express HTTP Request, erwartet Cookies mit JWT
@@ -39,6 +39,8 @@ userRouter.get('/me', async (req: Request, res: Response) => {
     res.status(401).json({ error: 'Ungültiges Token' });
   }
 });
+
+//als nächstes: put /me mit name, location, height, width 
 
 
 export default userRouter;
