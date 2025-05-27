@@ -5,21 +5,22 @@ services:
     build: FE
     container_name: frontend
     ports:
-      - "3000:3000"
+      - "127.0.10.1:8080:80"
+    environment:
+      - VITE_API_URL=/dev1/api
     depends_on:
       - backend
+
   backend:
     build: BE
-    env_file:
-    - ./BE/.env
     container_name: backend
     ports:
-      - "3001:3001"
-      - "127.0.10.1:8081:3001"
-      - "127.0.10.1:8082:5555" 
-      - "5555:5555"
+      - "127.0.10.1:8081:80"
+    env_file:
+      - ./BE/.env.production
     depends_on:
       - mysql
+
   mysql:
     image: mysql:8.0
     container_name: plantDB
@@ -27,10 +28,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: plantarium
       MYSQL_DATABASE: plantarium
-    ports:
-      - "3307:3306"
     volumes:
       - plantarium-data:/var/lib/mysql
+    expose:
+      - "3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s

@@ -1,19 +1,25 @@
 {
-    "scripts": {
-        "start-front": "cd FE && npm run dev",
-        "start-back": "cd BE && npm start",
-        "start": "npm-run-all --parallel start-front start-back",
-        "format-back": "cd BE && npx prettier",
-        "format-front": "cd FE && npx prettier",
-        "format:all": "npm run format-front && npm run format-back",
-        "dev:frontend": "cd FE && npm run dev:local",
-        "dev:backend": "cd BE && npm run dev:local",
-        "dev:all": "run-p dev:frontend dev:backend",
-        "build:backend": "cd BE && npm run build",
-        "build:frontend": "cd FE && npm run build",
-        "build:all": "npm-run-all build:backend build:frontend"
-    },
-    "devDependencies": {
-        "npm-run-all": "^4.1.5"
-    }
+  "name": "plantarium-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start-front": "cd FE && npm run dev",
+    "start-back": "cd BE && npm run dev:local",
+    "start": "npm-run-all --parallel start-front start-back",
+
+    "dev:frontend": "cd FE && npm run dev",
+    "dev:backend": "cd BE && npm run dev:local",
+    "dev:all": "npm-run-all --parallel dev:frontend dev:backend",
+
+    "build:frontend": "cd FE && npm run build",
+    "build:backend": "cd BE && npm run build",
+    "build:all": "npm-run-all build:frontend build:backend",
+
+    "format:frontend": "cd FE && npx prettier --write .",
+    "format:backend": "cd BE && npx prettier --write .",
+    "format:all": "npm run format:frontend && npm run format:backend"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
