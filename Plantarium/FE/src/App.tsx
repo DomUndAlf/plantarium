@@ -16,6 +16,8 @@ function App() {
   );
 }
 
+export default App;
+
 // type User = {
 //   id: number;
 //   shibboleth_id: string;
@@ -47,4 +49,4 @@ function App() {
 //   )
 // }
 
-export default App;
+
