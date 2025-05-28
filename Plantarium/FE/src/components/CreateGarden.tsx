@@ -1,6 +1,12 @@
 import { Fieldset, Legend, Field, Input, Button, Label } from "@headlessui/react";
+//import { useState } from "react";
 
 function CreateGarden(){
+    //werte in state speichern
+    //onsubmit auf button macht fetch aufruf mit daten aus state
+    //daten werden als JSON gesendet
+    //
+
     return(
     <> 
     <div className="flex flex-col items-center justify-center">
