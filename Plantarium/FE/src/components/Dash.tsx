@@ -34,7 +34,6 @@ function Dash() {
       <p>Willkommen!</p>
       <p>Deine interne ID: <code>{user.id}</code></p>
       <p>Dein Shibboleth ID: <code>{user.shibboleth_id}</code></p>
-      <CreateGarden />
     </div>
   );
 }

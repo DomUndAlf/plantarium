@@ -11,7 +11,8 @@
     "postinstall": "prisma generate",
     "pull": "docker-compose exec backend npx prisma db pull",
     "generate": "docker-compose exec backend npx prisma generate",
-    "studio": "docker-compose exec backend npx prisma studio"
+    "studio": "npx prisma studio",
+    "studioDocker": "docker-compose exec backend npx prisma studio"
   },
   "author": "Dominique Fischer",
   "license": "ISC",
