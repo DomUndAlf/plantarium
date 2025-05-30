@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Stage, Layer, Rect } from "react-konva";
+import useImage from 'use-image';
+
 
 function MainLayer() {
     const [user, setUser] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
@@ -9,6 +11,8 @@ function MainLayer() {
         width: window.innerWidth,
         height: window.innerHeight,
     });
+
+    const [grassImg] = useImage('../../public/assets/grass.jpg');
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -42,8 +46,8 @@ function MainLayer() {
     const gardenWidth = user.width * 100;
     const gardenHeight = user.height * 100;
 
-    const stageWidth = Math.max(window.innerWidth, gardenWidth + 200);
-    const stageHeight = Math.max(window.innerHeight, gardenHeight + 200);
+    const stageWidth = Math.max(window.innerWidth, gardenWidth);
+    const stageHeight = Math.max(window.innerHeight, gardenHeight + 50);
 
     const rectX = (stageWidth - gardenWidth) / 2;
 
@@ -57,7 +61,9 @@ function MainLayer() {
                             y={(user.height * 100 + 70 - user.height * 100) / 2}
                             width={user.width * 100}
                             height={user.height * 100}
-                            fill="red"
+                            fillPatternImage={grassImg}
+                            fillPatternRepeat="repeat"
+                            fillPatternScale={{ x: 0.4, y: 0.4 }}
                             shadowBlur={10}
                         />
                     </Layer>
