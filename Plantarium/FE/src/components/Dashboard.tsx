@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import CreateGarden from "./CreateGarden";
-import Dash from "./Dash";
+import GardenBase from "./GardenBase";
 
-function Dashboard () {
-    const [user, setUser] = useState<any>(null);
+function Dashboard() {
+  const [user, setUser] = useState<any>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchUser = async () => {
       const res = await fetch("http://localhost:3001/users/me", {
         credentials: "include",
@@ -16,18 +16,17 @@ function Dashboard () {
         setUser(data.data); // ⬅️ Struktur wie in deinem Backend
       }
     };
-     fetchUser();
+    fetchUser();
   }, []);
 
- function isNew():boolean {
+  function isNew(): boolean {
     if (!user)
-        return true;
+      return true;
     else return false;
-    }
-    
-    if (isNew()) return <CreateGarden/>
-    else 
-    return (<p> Hallo {user.name} </p>);
+  }
+  if (isNew()) return <CreateGarden />
+  else
+    return (<GardenBase />);
 }
 
 export default Dashboard;
