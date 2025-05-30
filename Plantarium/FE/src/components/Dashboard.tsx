@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import CreateGarden from "./CreateGarden";
-import GardenBase from "./GardenBase";
+import MainFrame from "./MainFrame";
 
 function Dashboard() {
   const [user, setUser] = useState<any>(null);
@@ -13,7 +13,7 @@ function Dashboard() {
 
       if (res.ok) {
         const data = await res.json();
-        setUser(data.data); // ⬅️ Struktur wie in deinem Backend
+        setUser(data.data);
       }
     };
     fetchUser();
@@ -24,9 +24,9 @@ function Dashboard() {
       return true;
     else return false;
   }
-  if (isNew()) return <CreateGarden />
+  if (isNew()) return <CreateGarden />  
   else
-    return (<GardenBase />);
+    return (<MainFrame />);
 }
 
 export default Dashboard;

@@ -19,7 +19,7 @@ function Header() {
 
 
 return (
-    <header className="fixed top-0 left-0 w-full bg-mint text-white shadow-md z-50 text-center">
+    <header className="fixed top-0 left-0 p-3 w-full bg-mint text-white shadow-md z-50 text-center ">
         <p className="">Hallo {user}!</p>
     </header>
 );
