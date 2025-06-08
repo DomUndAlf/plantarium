@@ -43,13 +43,13 @@ function MainLayer() {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    const gardenWidth = user.width * 100;
-    const gardenHeight = user.height * 100;
+    const gardenWidth: number = user.width * 100;
+    const gardenHeight: number = user.height * 100;
 
-    const stageWidth = Math.max(window.innerWidth, gardenWidth);
-    const stageHeight = Math.max(window.innerHeight, gardenHeight + 50);
+    const stageWidth: number = Math.max(window.innerWidth, gardenWidth);
+    const stageHeight: number = Math.max(window.innerHeight, gardenHeight + 50);
 
-    const rectX = (stageWidth - gardenWidth) / 2;
+    const rectX: number = (stageWidth - gardenWidth) / 2;
 
     return (
         <main className="flex-grow pt-[60px] w-full overflow-auto">
