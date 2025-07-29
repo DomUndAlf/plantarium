@@ -1,13 +1,13 @@
 import { Fieldset, Legend, Field, Input, Button, Label } from "@headlessui/react";
 import { useState } from "react";
-import { IGarden } from "../../interfaces/interfaces";
+import { IGarden } from "../interfaces/interfaces";
 
 function CreateGarden(){
     const [garden, setGarden] = useState<IGarden>({
         name: "",
         location: "",
-        height: "",
-        width: ""});
+        height: 0,
+        width: 0});
 
 //Aktualisiert den Zustand (garden) bei jeder Änderung in einem Eingabefeld        
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

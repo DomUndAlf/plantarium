@@ -1,14 +1,18 @@
+import { useContext } from "react";
+import { UserContext } from "../mainStructure/MainFrame";
+
 type Props = {
     detailName: string;
 }
 
 function Details({ detailName }: Props) {
+    const user = useContext(UserContext);
     switch (detailName) {
         case "garden":
             return (<div className="p-5 bg-white/80 text-black rounded-xl">
-                <p className="font-semibold">Ort:</p>
-                <p className="font-semibold">Höhe:</p>
-                <p className="font-semibold">Breite:</p>
+                <p className="font-semibold">Ort:</p> <p className="font-light">{user?.location}</p>
+                <p className="font-semibold">Höhe:</p> <p className="font-light">{user?.height} m</p>
+                <p className="font-semibold">Breite:</p> <p className="font-light">{user?.width} m </p>
             </div>);
         case "structure":
             // hier gehört noch mapping hin

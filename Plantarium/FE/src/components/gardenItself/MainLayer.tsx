@@ -1,35 +1,20 @@
 //blanke Rasenfläche ohne Beete und Strukturen
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Stage, Layer, Rect } from "react-konva";
 import useImage from 'use-image';
+import { UserContext } from "../mainStructure/MainFrame";
 
 
 function MainLayer() {
-    const [user, setUser] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+    const user = useContext(UserContext);
+
     const [, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
     });
 
     const [grassImg] = useImage('../../public/assets/grass.jpg');
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            const res = await fetch("http://localhost:3001/users/me", {
-                credentials: "include",
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-                setUser({
-                    height: data.data.height,
-                    width: data.data.width,
-                });
-            }
-        };
-        fetchUser();
-    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -42,6 +27,8 @@ function MainLayer() {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
+
+    if (!user) return <p className="text-white p-4">Lade Nutzerdaten...</p>;
 
     const gardenWidth: number = user.width * 100;
     const gardenHeight: number = user.height * 100;
