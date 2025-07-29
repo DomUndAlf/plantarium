@@ -1,6 +1,6 @@
 export interface IGarden {
     name: string;
     location: string;
-    height: number;
-    width: number;
+    height: string;
+    width: string;
 }

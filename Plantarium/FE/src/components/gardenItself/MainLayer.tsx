@@ -30,8 +30,8 @@ function MainLayer() {
 
     if (!user) return <p className="text-white p-4">Lade Nutzerdaten...</p>;
 
-    const gardenWidth: number = user.width * 100;
-    const gardenHeight: number = user.height * 100;
+    const gardenWidth: number = Number(user.width) * 100;
+    const gardenHeight: number = Number(user.height) * 100;
 
     const stageWidth: number = Math.max(window.innerWidth, gardenWidth);
     const stageHeight: number = Math.max(window.innerHeight, gardenHeight + 50);
@@ -45,9 +45,9 @@ function MainLayer() {
                     <Layer>
                         <Rect
                             x={rectX}
-                            y={(user.height * 100 + 70 - user.height * 100) / 2}
-                            width={user.width * 100}
-                            height={user.height * 100}
+                            y={(Number(user.height) * 100 + 70 - Number(user.height) * 100) / 2}
+                            width={Number(user.width) * 100}
+                            height={Number(user.height) * 100}
                             fillPatternImage={grassImg}
                             fillPatternRepeat="repeat"
                             fillPatternScale={{ x: 0.4, y: 0.4 }}

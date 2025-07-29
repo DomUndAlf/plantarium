@@ -6,8 +6,8 @@ function CreateGarden(){
     const [garden, setGarden] = useState<IGarden>({
         name: "",
         location: "",
-        height: 0,
-        width: 0});
+        height: "",
+        width: ""});
 
 //Aktualisiert den Zustand (garden) bei jeder Änderung in einem Eingabefeld        
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +19,16 @@ function CreateGarden(){
 
  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); //verhindert neuladen
+
+  if (
+    !garden.name.trim() ||
+    !garden.location.trim() ||
+    Number(garden.height) <= 0 ||
+    Number(garden.width) <= 0
+  ) {
+    alert("Please fill out the entire form");
+    return;
+  }
 
     const res = await fetch("http://localhost:3001/users/me/garden", { //PUT request an diese route
       method: "PUT",
