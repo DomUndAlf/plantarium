@@ -37,7 +37,7 @@ function Sidebar({ isOpen, onClose }: Props) {
         <Dialog open={isOpen} onClose={onClose} className="relative z-50">
             <div className="fixed inset-0 bg-white/30" />
 
-            <div className="fixed inset-y-0 left-0 w-100 bg-mint shadow-lg p-4">
+            <div className="fixed inset-y-0 left-0 w-100 bg-mint shadow-lg p-4  overflow-y-auto h-screen">
                 <YardIcon onClick={onClose} className="mb-4 text-white"></YardIcon>
                 <List className="space-y-4 text-white font-semibold text-lg">
 

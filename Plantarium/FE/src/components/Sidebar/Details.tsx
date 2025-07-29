@@ -17,6 +17,8 @@ function Details({ detailName }: Props) {
                 <p className="font-semibold">Höhe:</p> <p className="font-light">{user?.height} m</p>
                 <p className="font-semibold">Breite:</p> <p className="font-light">{user?.width} m </p>
             </div>
+            <Button className="m-3 p-2 pl-8 pr-8 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                        Edit </Button>
             </div>);
         case "structure":
             // hier gehört noch mapping hin
@@ -43,7 +45,7 @@ function Details({ detailName }: Props) {
                         {/* soll man hier noch location im garten anzeigen? */}
                     </div>
                     <Button className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                        add new structure </Button>
+                        add new bed </Button>
                 </div>);
 
         case "bedplants":
@@ -58,7 +60,7 @@ function Details({ detailName }: Props) {
                         {/* soll man hier noch location im garten anzeigen? */}
                     </div>
                     <Button className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                        add new structure </Button>
+                        add new bedplant </Button>
                 </div>
             );
         case "plants":
@@ -73,7 +75,7 @@ function Details({ detailName }: Props) {
                         {/* soll man hier noch location im garten anzeigen? */}
                     </div>
                     <Button className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                        add new structure </Button>
+                        add new singular plant </Button>
                 </div>
             );
     }
