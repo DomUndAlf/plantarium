@@ -1,6 +1,6 @@
 import Header from "./Header";
 import Footer from "./Footer";
-import MainLayer from "./MainLayer";
+import MainLayer from "../MainLayer";
 
 function MainFrame() {
     return (

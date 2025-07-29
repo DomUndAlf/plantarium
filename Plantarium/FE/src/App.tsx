@@ -1,7 +1,7 @@
 // import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Welcome from "./components/Welcome";
-import Dashboard from "./components/Dashboard";
+import Welcome from "./components/firstLogin/Welcome";
+import Dashboard from "./components/mainStructure/Dashboard";
 
 function App() {
 

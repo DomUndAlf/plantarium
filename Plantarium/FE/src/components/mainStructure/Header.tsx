@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import YardIcon from '@mui/icons-material/Yard';
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar/Sidebar";
 
 function Header() {
     const [user, setUser] = useState<any>(null);

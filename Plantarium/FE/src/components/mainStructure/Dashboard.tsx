@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CreateGarden from "./CreateGarden";
+import CreateGarden from "../firstLogin/CreateGarden";
 import MainFrame from "./MainFrame";
 
 function Dashboard() {

@@ -1,6 +1,6 @@
 import { Fieldset, Legend, Field, Input, Button, Label } from "@headlessui/react";
 import { useState } from "react";
-import { IGarden } from "../interfaces/interfaces";
+import { IGarden } from "../../interfaces/interfaces";
 
 function CreateGarden(){
     const [garden, setGarden] = useState<IGarden>({
