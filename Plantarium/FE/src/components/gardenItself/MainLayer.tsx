@@ -8,6 +8,8 @@ import { UserContext } from "../mainStructure/MainFrame";
 
 function MainLayer() {
     const user = useContext(UserContext);
+    const [showDialog, setShowDialog] = useState(false);
+    //gucken ob strukturen da, wenn nicht, Dialogfenster aufrufen
 
     const [, setWindowSize] = useState({
         width: window.innerWidth,

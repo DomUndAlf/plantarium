@@ -1,4 +1,4 @@
-import { Dialog } from "@headlessui/react";
+import { Button, Dialog } from "@headlessui/react";
 import { useState } from "react";
 import YardIcon from '@mui/icons-material/Yard';
 import { List, ListItem, ListItemButton } from "@mui/material";
@@ -20,7 +20,7 @@ function Sidebar({ isOpen, onClose }: Props) {
 
 
     const handleClick = (location: string) => {
-        if (location === "garden") 
+        if (location === "garden")
             setOpenGarden(!openGarden);
         else if (location === "structure")
             setOpenStructures(!openStructures);
@@ -40,36 +40,50 @@ function Sidebar({ isOpen, onClose }: Props) {
             <div className="fixed inset-y-0 left-0 w-100 bg-mint shadow-lg p-4">
                 <YardIcon onClick={onClose} className="mb-4 text-white"></YardIcon>
                 <List className="space-y-4 text-white font-semibold text-lg">
-                    
+
                     <ListItemButton onClick={() => handleClick("garden")}>
                         <ListItem>Deine Gartendaten</ListItem>
                         {openGarden ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    {openGarden && <Details detailName={"garden"} />}
+                    <>
+                        {openGarden && <Details detailName={"garden"} />}
+                    </>
+
 
                     <ListItemButton onClick={() => handleClick("structure")}>
                         <ListItem>Deine Strukturen</ListItem>
                         {openStructures ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    {openStructures && <Details detailName={"structure"} />}
+                    <>
+                        {openStructures && <Details detailName={"structure"}
+                        />}
+                    </>
+
 
                     <ListItemButton onClick={() => handleClick("beds")}>
                         <ListItem>Deine Beete</ListItem>
                         {openBeds ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    {openBeds && <Details detailName={"beds"} />}
+                    <>
+                        {openBeds && <Details detailName={"beds"} />}
+                    </>
 
                     <ListItemButton onClick={() => handleClick("bedplants")}>
                         <ListItem>Deine Beetpflanzen</ListItem>
                         {openBedPlants ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    {openBedPlants && <Details detailName={"bedplants"} />}
+                    <>
+                        {openBedPlants && <Details detailName={"bedplants"} />}
+                    </>
 
                     <ListItemButton onClick={() => handleClick("plants")}>
                         <ListItem>Deine Einzelpflanzen</ListItem>
                         {openPlants ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    {openPlants && <Details detailName={"plants"} />}
+                    <>
+                        {openPlants && <Details detailName={"plants"} />}
+                    </>
+
                 </List>
             </div>
         </Dialog>
@@ -82,5 +96,4 @@ export default Sidebar;
 
 //Routen reinlegen
 
- //ExpandMore/Less sind nur die Icons
-                  
+//ExpandMore/Less sind nur die Icons
