@@ -42,7 +42,7 @@ function MainLayer() {
     return (
         <main className="flex-grow pt-[60px] w-full overflow-auto">
             <div className="w-max mx-auto min-w-full">
-                <Stage width={stageWidth} height={stageHeight} className="inline-block mb-10">
+                <Stage width={stageWidth} height={stageHeight} className="inline-block mb-10 ml-10 mr-10">
                     <Layer>
                         <Rect
                             x={rectX}
