@@ -52,7 +52,8 @@ function MainFrame() {
                     <Footer />
                     {activeDialog && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                            <Dialoge type={activeDialog} onClose={() => setActiveDialog(null)} />
+                            <Dialoge activeDialog={activeDialog} /> 
+                            {/* on close? */}
                         </div>
                     )}
                 </div>

@@ -1,22 +1,24 @@
-import BedDetails from "../Sidebar/BedDetails";
-import BedplantDetails from "../Sidebar/BedplantDetails";
-import PlantDetails from "../Sidebar/PlantDetails";
-import StructureDetails from "../Sidebar/StructureDetails";
 
-function Dialoge(activeDialog: any) {
+import BedDialogue from "./BedDialogue";
+import BedplantDialogue from "./Bedplantdialogue";
+import { DialogType } from "./Dialogcontext";
+import PlantDialogue from "./PlantDialogue";
+import StructureDialogue from "./StructureDialogue";
+
+function Dialoge({ activeDialog }: { activeDialog: DialogType }) {
 
     switch (activeDialog) {
         case "bed":
-            return <BedDetails />;
+            return <BedDialogue />;
 
         case "plant":
-            return <PlantDetails />;
+            return <PlantDialogue />;
 
         case "structure":
-            return <StructureDetails />;
+            return <StructureDialogue />;
 
         case "bedplant":
-            return <BedplantDetails />; //DAS SIND DIE FENSTER IN DER SIDEBAR DU DEPP LOL
+            return <BedplantDialogue />; //DAS SIND DIE FENSTER IN DER SIDEBAR DU DEPP LOL
     }
 
 }
