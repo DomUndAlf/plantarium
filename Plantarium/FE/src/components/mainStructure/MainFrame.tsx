@@ -12,7 +12,7 @@ export const UserContext = createContext<IGarden | null>(null);
 function MainFrame() {
     const [user, setUser] = useState<IGarden | null>(null);
     const [loading, setLoading] = useState(true);
-    const [activeDialog, setActiveDialog] = useState<null | "garden" | "structure" | "beds" | "plants" | "bedplants">(null);
+    const [activeDialog, setActiveDialog] = useState<null | "garden" | "structure" | "bed" | "plant" | "bedplant">(null);
 
 
     useEffect(() => {
