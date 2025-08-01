@@ -1,4 +1,8 @@
 import { Button } from "@headlessui/react";
+import { DialogContext } from "../dialogues/Dialogcontext";
+import { useContext } from "react";
+
+const dialog = useContext(DialogContext);
 
 function BedDetails() {
     return (
