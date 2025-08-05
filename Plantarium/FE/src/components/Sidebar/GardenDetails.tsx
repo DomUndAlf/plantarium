@@ -63,21 +63,21 @@ function GardenDetails() {
                     <div className="w-90 p-5 bg-white/80 text-black rounded-xl mb-3">
                         <p className="font-semibold">Ort:</p>
                         <Input
-                            className="font-light w-80"
+                            className="font-light w-80 p-2 border-1 rounded-xl border-darkMint/20"
                             name="location"
                             value={garden.location}
                             onChange={handleChange}
                         />
                         <p className="font-semibold">Höhe:</p>
                         <Input
-                            className="font-light"
+                            className="font-light p-2 border-1 rounded-xl border-darkMint/20"
                             name="height"
                             value={garden.height}
                             onChange={handleChange}
                         />
                         <p className="font-semibold">Breite:</p>
                         <Input
-                            className="font-light"
+                            className="font-light p-2 border-1 rounded-xl border-darkMint/20"
                             name="width"
                             value={garden.width}
                             onChange={handleChange}

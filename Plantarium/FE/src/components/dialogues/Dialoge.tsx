@@ -23,7 +23,7 @@ function Dialoge({ activeDialog, onClose }: Props) {
             return <StructureDialogue isOpen={true} onClose={onClose}/>;
 
         case "bedplant":
-            return <BedplantDialogue />; //DAS SIND DIE FENSTER IN DER SIDEBAR DU DEPP LOL
+            return <BedplantDialogue />;
     }
 
 }

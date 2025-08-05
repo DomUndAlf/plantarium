@@ -16,27 +16,27 @@ function StructureDialogue({ isOpen, onClose }: Props) {
                     <DialogTitle className="text-xl font-bold text-darkMint mb-5">Add a new Surface</DialogTitle>
 
                     <Field>
-                        <Label className="font-bold text-black">Surface type</Label>
+                        <Label className="font-semibold text-black">Surface type</Label>
                         <div className="relative">
-                            <Select className='mt-3 block w-full appearance-none rounded-l border-none p-2 text-md/8 text-black'>
+                            <Select className='mt-2 block w-full appearance-none  border-1 rounded-xl border-darkMint/20 p-2 text-md/8 text-black'>
                                 <option value="active">Path</option>
                                 <option value="paused">Terrace</option>
                                 <option value="delayed">Building</option>
                             </Select>
-                            <ExpandMore className="group pointer-events-none absolute top-2.5 right-2.5 size-4 fill-white/60" aria-hidden="true"/>
+                            <ExpandMore className=" absolute top-2.5 right-2.5 size-4 fill-white/60" aria-hidden="true"/>
                         </div>
                     </Field>
                 <div>
-                    <p className="mt-3 font-semibold"> Height: </p>
-                    <Input className="font-light p-2" value="0"></Input>
+                    <p className="mt-3 font-semibold "> Height: </p>
+                    <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" value="0"></Input>
                     <p className="mt-3 font-semibold"> Width: </p>
-                    <Input className="font-light p-2" value="0"></Input>
+                    <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" value="0"></Input>
                 </div>
                 <div className="flex justify-center gap-2 mt-2">
-                    <Button onClick={onClose} className="m-1 mb-1 mt-4 p-2 px-3 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">
+                    <Button onClick={onClose} className="text-lg m-1 mb-1 mt-4 p-2 px-3 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">
                         Save & Place
                     </Button>
-                    <Button onClick={onClose} className="m-1  mb-1 mt-4 px-3 p-2 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">
+                    <Button onClick={onClose} className="text-lg m-1  mb-1 mt-4 px-3 p-2 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">
                         Close
                     </Button>
                 </div>
