@@ -100,13 +100,13 @@ model users {
 }
 
 enum surfaces_type {
-  wiese
-  weg
-  beet
-  geb_ude @map("gebäude")
+  path
+  terrace
+  bed
+  building
 }
 
 enum plants_growth_type {
-  beet
+  bed
   single
 }

@@ -67,7 +67,7 @@ surfaceRouter.put("/me/garden/surfaces/:id", async (req, res) => {
     const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
   try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
     const userId = decoded.id;
 
     const surfaceId = parseInt(req.params.id);
@@ -79,7 +79,7 @@ surfaceRouter.put("/me/garden/surfaces/:id", async (req, res) => {
       height,
     } = req.body;
 
-    const updated = await prisma.surfaces.updateMany({
+    const updated = await prisma.surfaces.update({
       where: {
         id: surfaceId,
         user_id: userId,
@@ -113,6 +113,10 @@ surfaceRouter.delete("/me/garden/surfaces/:id", async (req, res) => {
         user_id: userId,
       },
     });
+    
+    if (deleted.count === 0) {
+  return res.status(404).json({ error: "Fläche nicht gefunden oder keine Berechtigung" });
+}
 
     res.json({ deleted });
   } catch (error) {
