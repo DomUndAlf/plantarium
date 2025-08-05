@@ -5,7 +5,12 @@ import { DialogType } from "./Dialogcontext";
 import PlantDialogue from "./PlantDialogue";
 import StructureDialogue from "./StructureDialogue";
 
-function Dialoge({ activeDialog }: { activeDialog: DialogType }) {
+type Props = {
+  activeDialog: DialogType;
+  onClose: () => void;
+};
+
+function Dialoge({ activeDialog, onClose }: Props) {
 
     switch (activeDialog) {
         case "bed":
@@ -15,7 +20,7 @@ function Dialoge({ activeDialog }: { activeDialog: DialogType }) {
             return <PlantDialogue />;
 
         case "structure":
-            return <StructureDialogue />;
+            return <StructureDialogue isOpen={true} onClose={onClose}/>;
 
         case "bedplant":
             return <BedplantDialogue />; //DAS SIND DIE FENSTER IN DER SIDEBAR DU DEPP LOL

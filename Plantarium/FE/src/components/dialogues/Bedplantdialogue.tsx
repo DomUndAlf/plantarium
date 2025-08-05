@@ -1,4 +1,3 @@
-import { Description, Field, Input, Label } from "@headlessui/react";
 
 function BedplantDialogue() {
     return(
