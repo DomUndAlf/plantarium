@@ -13,17 +13,14 @@ type Props = {
 function Dialoge({ activeDialog, onClose }: Props) {
 
     switch (activeDialog) {
-        case "bed":
-            return <BedDialogue />;
-
         case "plant":
-            return <PlantDialogue />;
+            return <PlantDialogue isOpen={true} onClose={onClose}/>;
 
         case "structure":
             return <StructureDialogue isOpen={true} onClose={onClose}/>;
 
         case "bedplant":
-            return <BedplantDialogue />;
+            return <BedplantDialogue />; //hier muss dann was anderes hin, eine neue komponente, weil bedplantdialogue innerhalb der bed structure benutzt wird
     }
 
 }
