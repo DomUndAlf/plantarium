@@ -1,7 +1,8 @@
-import { Button, Checkbox, Dialog, DialogPanel, DialogTitle, Field, Input, Label, Select, Switch } from "@headlessui/react";
+import { Button, Dialog, DialogPanel, DialogTitle, Field, Label, Select } from "@headlessui/react";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import BedDialogue from "./BedDialogue";
+import PathTeraceHut from "./PathTeraceHut";
 
 export type Props = {
     isOpen: boolean;
@@ -9,7 +10,7 @@ export type Props = {
 };
 
 function StructureDialogue({ isOpen, onClose }: Props) {
-    const [selectedType, setSelectedType] = useState("");
+    const [selectedType, setSelectedType] = useState("path");
 
     return (
         <Dialog open={isOpen} onClose={onClose}>
@@ -26,7 +27,7 @@ function StructureDialogue({ isOpen, onClose }: Props) {
                                 value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
                                 <option value="path">Path</option>
                                 <option value="terrace">Terrace</option>
-                                <option value="buiding">Building</option>
+                                <option value="building">Building</option>
                                 <option value="bed">Bed</option>
                             </Select>
                             <ExpandMore className=" absolute top-2.5 right-2.5 size-4 fill-white/60" aria-hidden="true" />
@@ -34,6 +35,9 @@ function StructureDialogue({ isOpen, onClose }: Props) {
                     </Field>
 
                     {selectedType=="bed" &&  <BedDialogue />}
+                    {selectedType=="path" && <PathTeraceHut />}
+                    {selectedType=="terrace" && <PathTeraceHut />}
+                    {selectedType=="building" && <PathTeraceHut />}
 
                     <div className="flex justify-center gap-2 mt-2">
                         <Button onClick={onClose} className="text-lg m-1 mb-1 mt-4 p-2 px-3 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">

@@ -1,5 +1,4 @@
-import { Dialog, DialogPanel, DialogTitle, Input, Button } from "@headlessui/react";
-import { Props } from "./StructureDialogue";
+import { Input} from "@headlessui/react";
 
 function BedplantDialogue() {
     return (

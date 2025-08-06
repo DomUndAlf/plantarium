@@ -1,5 +1,4 @@
 
-import BedDialogue from "./BedDialogue";
 import BedplantDialogue from "./Bedplantdialogue";
 import { DialogType } from "./Dialogcontext";
 import PlantDialogue from "./PlantDialogue";

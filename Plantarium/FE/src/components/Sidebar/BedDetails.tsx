@@ -1,9 +1,4 @@
-import { Button } from "@headlessui/react";
-import { DialogContext } from "../dialogues/Dialogcontext";
-import { useContext } from "react";
-
 function BedDetails() {
-    const dialog = useContext(DialogContext);
     return (
         <div className="flex items-center flex-col">
             <div className="w-90 p-5 bg-white/80 text-black rounded-xl mb-3">

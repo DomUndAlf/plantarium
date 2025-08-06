@@ -1,5 +1,4 @@
-import { Button, Dialog, DialogPanel, DialogTitle, Input, Switch } from "@headlessui/react";
-import { Props } from "./StructureDialogue";
+import { Input, Switch } from "@headlessui/react";
 import { useState } from "react";
 import BedplantDialogue from "./Bedplantdialogue";
 
