@@ -11,7 +11,6 @@ bedRouter.post("/me/garden/beds", async (req, res) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
     const {
-      name,
       x_position,
       y_position,
       width,
@@ -43,5 +42,82 @@ bedRouter.post("/me/garden/beds", async (req, res) => {
     res.status(500).json({ error: "Fehler beim Erstellen des Beets" });
   }
 });
+
+
+bedRouter.get("/me/garden/beds", async (req, res) => {
+  const token = req.cookies?.jwt;
+     if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+    try {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+  
+  const beds = await prisma.beds.findMany({
+      where: { user_id: decoded.id },
+    });
+
+    res.json({ data: beds });
+  } catch (error) {
+    res.status(500).json({ error: "Fehler beim Laden der Beete" });
+  }
+});
+
+bedRouter.put("/me/garden/beds/:id", async (req, res) => {
+    const token = req.cookies?.jwt;
+     if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    const userId = decoded.id;
+
+    const bedId = parseInt(req.params.id);
+    const {
+      x_position,
+      y_position,
+      width,
+      height,
+    } = req.body;
+
+    const updated = await prisma.beds.update({
+      where: {
+        id: bedId,
+        user_id: userId,
+      },
+      data: {
+        x_position,
+        y_position,
+        width,
+        height,
+      },
+    });
+
+    res.json({ updated });
+  } catch (error) {
+    res.status(500).json({ error: "Fehler beim Aktualisieren" });
+  }
+});
+
+bedRouter.delete("/me/garden/beds/:id", async (req, res) => {
+    const token = req.cookies?.jwt;
+     if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+         try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    const userId = decoded.id;
+    const bedId = parseInt(req.params.id);
+
+    const deleted = await prisma.beds.deleteMany({
+      where: {
+        id: bedId,
+        user_id: userId,
+      },
+    });
+    
+    if (deleted.count === 0) {
+  return res.status(404).json({ error: "Fläche nicht gefunden oder keine Berechtigung" });
+}
+
+    res.json({ deleted });
+  } catch (error) {
+    res.status(500).json({ error: "Fehler beim Löschen" });
+  }
+});
+
 
 export default bedRouter;
