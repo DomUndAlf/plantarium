@@ -1,19 +1,34 @@
 import { Input } from "@headlessui/react";
+import { IStructureManualInput } from "../../interfaces/interfaces";
 
-function PathTeraceHut() {
-    return(
+type Props = {
+  struct: IStructureManualInput;
+  setStruct: (value: IStructureManualInput) => void;
+  type: string;
+};
+
+function PathTeraceHut({ struct, setStruct }: Props) {
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStruct({
+            ...struct,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+    }
+    return (
         <>
-        <div>
-                        <p className="mt-3 font-semibold "> Width (m): </p>
-                        <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" value="3.4"></Input>
-                        <p className="mt-3 font-semibold "> Height (m): </p>
-                        <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" value="0.2"></Input></div>
-                    <div className="m-4 ml-0 flex items-center"></div>
+            <form onSubmit={handleSubmit}>
+                <p className="mt-3 font-semibold "> Width (m): </p>
+                <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" name="width" value={struct.width} onChange={handleChange}></Input>
+                <p className="mt-3 font-semibold "> Height (m): </p>
+                <Input className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" name="height" value={struct.height} onChange={handleChange}></Input>
+            </form>
         </>
     )
 }
-
-//hier muss nochmal bestimmt werden welche struktur es ist, um das richtige bild zu rendern
-//oder besser übergeordnet?
 
 export default PathTeraceHut;

@@ -3,6 +3,7 @@ import userRouter from './routes/user.routes';
 import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
+import surfaceRouter from './routes/structBeds.routes';
 
 const app = express();
 app.use(cors({
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use('/users', userRouter);
+app.use('/', surfaceRouter);
 
 export default app;
 

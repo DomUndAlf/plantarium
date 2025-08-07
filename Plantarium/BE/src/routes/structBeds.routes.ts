@@ -124,3 +124,4 @@ surfaceRouter.delete("/me/garden/surfaces/:id", async (req, res) => {
   }
 });
 
+export default surfaceRouter;

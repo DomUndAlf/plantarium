@@ -12,6 +12,7 @@ function GardenDetails() {
         location: "",
         height: "",
         width: "",
+        id: 0
     });
 
     useEffect(() => {
@@ -21,6 +22,7 @@ function GardenDetails() {
                 location: user.location || "",
                 height: user.height || "",
                 width: user.width || "",
+                id: user.id || 0
             });
         }
     }, [user]);
@@ -58,39 +60,23 @@ function GardenDetails() {
         }
     };
 
-            return (
-                <form onSubmit={handleSubmit} className="flex items-center flex-col">
-                    <div className="w-90 p-5 bg-white/80 text-black rounded-xl mb-3">
-                        <p className="font-semibold">Ort:</p>
-                        <Input
-                            className="font-light w-80 p-2 border-1 rounded-xl border-darkMint/20"
-                            name="location"
-                            value={garden.location}
-                            onChange={handleChange}
-                        />
-                        <p className="font-semibold">Höhe:</p>
-                        <Input
-                            className="font-light p-2 border-1 rounded-xl border-darkMint/20"
-                            name="height"
-                            value={garden.height}
-                            onChange={handleChange}
-                        />
-                        <p className="font-semibold">Breite:</p>
-                        <Input
-                            className="font-light p-2 border-1 rounded-xl border-darkMint/20"
-                            name="width"
-                            value={garden.width}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <Button
-                        type="submit"
-                        className="m-3 p-2 pl-8 pr-8 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150"
-                    >
-                        Update
-                    </Button>
-                </form>
-            );
+    return (
+        <form onSubmit={handleSubmit} className="flex items-center flex-col">
+            <div className="w-90 p-5 bg-white/80 text-black rounded-xl mb-3">
+                <p className="font-semibold">Ort:</p>
+                <Input className="font-light w-80 p-2 border-1 rounded-xl border-darkMint/20" name="location" value={garden.location} onChange={handleChange} />
+                
+                <p className="font-semibold">Höhe:</p>
+                <Input className="font-light p-2 border-1 rounded-xl border-darkMint/20" name="height" value={garden.height} onChange={handleChange} />
+
+                <p className="font-semibold">Breite:</p>
+                <Input className="font-light p-2 border-1 rounded-xl border-darkMint/20" name="width" value={garden.width} onChange={handleChange} />
+            </div>
+            <Button type="submit" className="m-3 p-2 pl-8 pr-8 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150" >
+                Update
+            </Button>
+        </form>
+    );
 
 }
 
