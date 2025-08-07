@@ -22,14 +22,16 @@ function StructureDialogue({ isOpen, onClose }: Props) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const res = await fetch("http://localhost:3001/me/garden/surfaces", {
+        const isBed = selectedType === "bed";
+
+        const res = await fetch(`http://localhost:3001/me/garden/${isBed ? "beds" : "surfaces"}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             credentials: "include",
             body: JSON.stringify({
-                type: selectedType,
+                type: !isBed ? selectedType : undefined,
                 x_position: 0,
                 y_position: 0,
                 width: Number(struct.width),

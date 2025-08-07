@@ -22,7 +22,6 @@ model bed_plants {
 model beds {
   id         Int          @id @default(autoincrement())
   user_id    Int
-  name       String?      @db.VarChar(255)
   x_position Float        @db.Float
   y_position Float        @db.Float
   width      Float        @db.Float
