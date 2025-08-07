@@ -43,7 +43,7 @@ function StructureDialogue({ isOpen, onClose }: Props) {
             const data = await res.json();
             console.log("Update erfolgreich:", data);
             onClose();
-            window.location.reload();
+            // window.location.reload();
         } else {
             console.error("Fehler beim Update");
         }
