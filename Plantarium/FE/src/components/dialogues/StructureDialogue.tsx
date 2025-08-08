@@ -8,46 +8,37 @@ import { IStructureManualInput } from "../../interfaces/interfaces";
 export type Props = {
     isOpen: boolean;
     onClose: () => void;
+    setPendingStruct: (s: IStructureManualInput) => void;
+    setIsPlacing: (v: boolean) => void;
 };
 
 
-function StructureDialogue({ isOpen, onClose }: Props) {
+function StructureDialogue({ isOpen, onClose, setPendingStruct, setIsPlacing }: Props) {
     const [selectedType, setSelectedType] = useState("path");
     const [struct, setStruct] = useState<IStructureManualInput>({
         width: 0,
         height: 0,
         type: selectedType,
+        x_position: 0,
+        y_position: 0
     });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  onClose();
 
-        const isBed = selectedType === "bed";
+  setTimeout(() => {
+    setPendingStruct({
+        width: Number(struct.width),
+        height: Number(struct.height),
+        type: selectedType,
+        x_position: 0,
+        y_position: 0
+    });
+    setIsPlacing(true);
+  }, 100);
+};
 
-        const res = await fetch(`http://localhost:3001/me/garden/${isBed ? "beds" : "surfaces"}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                type: !isBed ? selectedType : undefined,
-                x_position: 0,
-                y_position: 0,
-                width: Number(struct.width),
-                height: Number(struct.height),
-            }),
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            console.log("Update erfolgreich:", data);
-            onClose();
-            // window.location.reload();
-        } else {
-            console.error("Fehler beim Update");
-        }
-    };
 
 
     return (

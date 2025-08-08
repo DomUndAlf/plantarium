@@ -10,4 +10,7 @@ export interface IStructureManualInput {
     width: number;
     height: number;
     type: string;
+    x_position: number;
+    y_position:number;
+
 }
