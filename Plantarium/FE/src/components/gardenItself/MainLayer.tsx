@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { Stage, Layer, Rect } from "react-konva";
+import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
 import { UserContext } from "../mainStructure/MainFrame";
 import { IStructureManualInput } from "../../interfaces/interfaces";
@@ -217,15 +217,24 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                             );
                         })}
                         {beds.map((b, i) => (
-                            <Rect
-                                key={`bed-${i}`}
-                                x={b.x_position}
-                                y={b.y_position}
-                                width={b.width}
-                                height={b.height}
-                                fillPatternImage={bedImg}
-                                fillPatternScale={{ x: 0.4, y: 0.4 }}
-                            />
+  <Group key={`bed-fragment-${i}`}>
+    <Rect
+      x={b.x_position}
+      y={b.y_position}
+      width={b.width}
+      height={b.height}
+      fillPatternImage={bedImg}
+      fillPatternScale={{ x: 0.4, y: 0.4 }}
+    />
+    <Text
+      x={b.x_position + 5}
+      y={b.y_position + 5}
+      text= {"hallo" + b.type}
+      fontFamily="Calibri"
+      fontSize={15}
+      fill="white"
+    />
+  </Group>
                         ))}
 
                         {isPlacing && pendingStruct && (
