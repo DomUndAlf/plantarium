@@ -18,7 +18,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(
         null
     );
-    const [hoveredStructInfo, setHoveredStructInfo] = useState<string | "hover over bed">("hover over bed");
+   
+    const [hoveredBedIndex, setHoveredBedIndex] = useState<number | null>(null);
+
 
     const [grassImg] = useImage("../../public/assets/grass.jpg");
     const [bedImg] = useImage("../../public/assets/soil.jpg");
@@ -207,34 +209,33 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                     fillPatternImage={fill}
                                     fillPatternRepeat="repeat"
                                     fillPatternScale={{ x: 0.15, y: 0.15 }}
-                                    onMouseEnter={() =>
-                                        setHoveredStructInfo(
-                                            `${s.type} – ${Math.round(s.width / 100)}m × ${Math.round(s.height / 100)}m`
-                                        )
-                                    }
-                                    onMouseLeave={() => setHoveredStructInfo("hover over bed")}
                                 />
                             );
                         })}
                         {beds.map((b, i) => (
-  <Group key={`bed-fragment-${i}`}>
-    <Rect
-      x={b.x_position}
-      y={b.y_position}
-      width={b.width}
-      height={b.height}
-      fillPatternImage={bedImg}
-      fillPatternScale={{ x: 0.4, y: 0.4 }}
-    />
-    <Text
-      x={b.x_position + 5}
-      y={b.y_position + 5}
-      text= {"hallo" + b.type}
-      fontFamily="Calibri"
-      fontSize={15}
-      fill="white"
-    />
-  </Group>
+                            <Group key={`bed-fragment-${i}`}
+                                onMouseEnter={() => setHoveredBedIndex(i)}
+                                onMouseLeave={() => setHoveredBedIndex(null)}
+                            >
+                                <Rect
+                                    x={b.x_position}
+                                    y={b.y_position}
+                                    width={b.width}
+                                    height={b.height}
+                                    fillPatternImage={bedImg}
+                                    fillPatternScale={{ x: 0.4, y: 0.4 }}
+                                />
+                                {hoveredBedIndex === i &&
+                                    <Text
+                                        x={b.x_position + 5}
+                                        y={b.y_position + 5}
+                                        text={`Beet: ${b.width / 100}m × ${b.height / 100}m`}
+                                        fontFamily="Calibri"
+                                        fontSize={15}
+                                        fill="white"
+                                    />
+                                }
+                            </Group>
                         ))}
 
                         {isPlacing && pendingStruct && (
@@ -251,10 +252,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                         )}
                     </Layer>
                 </Stage>
-
-                <div className="fixed top-15 right-4 bg-white/90 text-black p-2 rounded shadow-lg z-50 text-sm font-semibold">
-                    info: {hoveredStructInfo}
-                </div>
             </div>
         </main>
     );
