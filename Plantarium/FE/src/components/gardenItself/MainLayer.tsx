@@ -1,8 +1,8 @@
-import { useEffect, useState, useContext, useRef } from "react";
+import { useState, useContext, useRef } from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
-import { UserContext } from "../mainStructure/MainFrame";
-import { IStructureManualInput } from "../../interfaces/interfaces";
+import { UserContext, StructContext, BedsContext } from "../mainStructure/MainFrame";
+import { IBed, IStructureManualInput } from "../../interfaces/interfaces";
 
 type Props = {
     isPlacing: boolean;
@@ -12,13 +12,11 @@ type Props = {
 
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const user = useContext(UserContext);
+    const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
+    const { beds, setBeds } = useContext(BedsContext) || { beds: [], setBeds: () => { } };
+
     const stageRef = useRef<any>(null);
-    const [structures, setStructures] = useState<IStructureManualInput[]>([]);
-    const [beds, setBeds] = useState<IStructureManualInput[]>([]);
-    const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(
-        null
-    );
-   
+    const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(null);
     const [hoveredBedIndex, setHoveredBedIndex] = useState<number | null>(null);
 
 
@@ -27,45 +25,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const [terImg] = useImage("../../public/assets/terace.jpg");
     const [roofImg] = useImage("../../public/assets/roof.jpg");
     const [pathImg] = useImage("../../public/assets/path.jpg");
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [surfacesRes, bedsRes] = await Promise.all([
-                    fetch("http://localhost:3001/me/garden/surfaces", {
-                        credentials: "include",
-                    }),
-                    fetch("http://localhost:3001/me/garden/beds", {
-                        credentials: "include",
-                    }),
-                ]);
-
-                if (surfacesRes.ok) {
-                    const data = await surfacesRes.json();
-                    const surfaces = data.data.map((s: any) => ({
-                        ...s,
-                        width: s.width ?? 200,
-                        height: s.height ?? 200,
-                    }));
-                    setStructures(surfaces);
-                }
-
-                if (bedsRes.ok) {
-                    const data = await bedsRes.json();
-                    const beds = data.data.map((b: any) => ({
-                        ...b,
-                        width: b.width ?? 200,
-                        height: b.height ?? 200,
-                    }));
-                    setBeds(beds);
-                }
-            } catch (err) {
-                console.error("Netzwerkfehler beim Laden", err);
-            }
-        };
-
-        fetchData();
-    }, []);
 
     if (!user) return <p className="text-white p-4">Lade Nutzerdaten...</p>;
 
@@ -157,9 +116,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                 };
 
                 if (isBed) {
-                    setBeds((prev) => [...prev, newStruct]);
+                    setBeds((prev: IBed[]) => [...prev, newStruct]);
                 } else {
-                    setStructures((prev) => [...prev, newStruct]);
+                    setStructures((prev: IStructureManualInput[]) => [...prev, newStruct]);
                 }
 
                 setIsPlacing(false);
@@ -172,13 +131,12 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
 
     return (
         <main className="flex-grow pt-[60px] w-full overflow-auto">
-            <div className="w-full flex justify-center">
+            <div className="w-full flex justify-center mt-5">
                 <Stage
                     width={gardenWidth}
                     height={gardenHeight}
                     ref={stageRef}
-                    className="mb-10"
-                >
+                    className="mb-10">
                     <Layer>
                         <Rect
                             x={0}

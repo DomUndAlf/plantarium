@@ -14,3 +14,11 @@ export interface IStructureManualInput {
     y_position:number;
 
 }
+
+export interface IBed {
+    width: number;
+    height: number;
+    x_position: number;
+    y_position:number;
+    //später noch mehr daten aus dem entity
+}
