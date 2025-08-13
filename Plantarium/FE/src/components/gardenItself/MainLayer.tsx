@@ -111,8 +111,8 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                 const data = await res.json();
                 const newStruct = {
                     ...data.data,
-                    width: pendingStruct.width * 200,
-                    height: pendingStruct.height * 200,
+                    width: pendingStruct.width * 100,
+                    height: pendingStruct.height * 100,
                 };
 
                 if (isBed) {
@@ -196,12 +196,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                             </Group>
                         ))}
 
+{/* das hier das grüne hovervierecke:  */}
+
                         {isPlacing && pendingStruct && (
                             <Rect
                                 x={dragPos?.x || 50}
                                 y={dragPos?.y || 50}
-                                width={pendingStruct.width * 200}
-                                height={pendingStruct.height * 200}
+                                width={pendingStruct.width * 100}
+                                height={pendingStruct.height * 100}
                                 fill="rgba(0, 200, 0, 0.3)"
                                 draggable
                                 onDragMove={handleDragMove}
