@@ -7,6 +7,7 @@ export interface IGarden {
 }
 
 export interface IStructureManualInput {
+    id: number;
     width: number;
     height: number;
     type: string;
@@ -16,6 +17,7 @@ export interface IStructureManualInput {
 }
 
 export interface IBed {
+    id: number
     width: number;
     height: number;
     x_position: number;
