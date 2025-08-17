@@ -1,11 +1,11 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { IBed, IStructureManualInput } from "../../interfaces/interfaces";
+import { IBed, IStructure } from "../../interfaces/interfaces";
 
 
 export type Props = {
     isOpen: boolean;
     onClose: () => void;
-    toDelete: IStructureManualInput | IBed | null;
+    toDelete: IStructure | IBed | null;
 };
 
 

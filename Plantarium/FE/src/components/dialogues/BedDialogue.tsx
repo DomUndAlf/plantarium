@@ -1,12 +1,12 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import BedplantDialogue from "./Bedplantdialogue";
-import { IStructureManualInput } from "../../interfaces/interfaces";
+import { IStructure } from "../../interfaces/interfaces";
 import PathTeraceHut from "./PathTeraceHut";
 
 type Props = {
-    struct: IStructureManualInput;
-    setStruct: (value: IStructureManualInput) => void;
+    struct: IStructure;
+    setStruct: (value: IStructure) => void;
     type: string;
 };
 

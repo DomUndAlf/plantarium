@@ -3,19 +3,20 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import BedDialogue from "./BedDialogue";
 import PathTeraceHut from "./PathTeraceHut";
-import { IStructureManualInput } from "../../interfaces/interfaces";
+import { IStructure } from "../../interfaces/interfaces";
 
 export type Props = {
     isOpen: boolean;
     onClose: () => void;
-    setPendingStruct: (s: IStructureManualInput) => void;
+    setPendingStruct: (s: IStructure) => void;
     setIsPlacing: (v: boolean) => void;
 };
 
 
 function StructureDialogue({ isOpen, onClose, setPendingStruct, setIsPlacing }: Props) {
     const [selectedType, setSelectedType] = useState("path");
-    const [struct, setStruct] = useState<IStructureManualInput>({
+    const [struct, setStruct] = useState<IStructure>({
+        id: 0,
         width: 0,
         height: 0,
         type: selectedType,
@@ -29,6 +30,7 @@ const handleSubmit = (e: React.FormEvent) => {
 
   setTimeout(() => {
     setPendingStruct({
+        id: 0,
         width: Number(struct.width),
         height: Number(struct.height),
         type: selectedType,

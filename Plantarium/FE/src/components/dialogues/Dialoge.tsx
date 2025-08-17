@@ -1,5 +1,5 @@
 
-import { IStructureManualInput } from "../../interfaces/interfaces";
+import { IStructure } from "../../interfaces/interfaces";
 import BedplantDialogue from "./Bedplantdialogue";
 import { DialogType } from "./Dialogcontext";
 import PlantDialogue from "./PlantDialogue";
@@ -8,7 +8,7 @@ import StructureDialogue from "./StructureDialogue";
 type Props = {
   activeDialog: DialogType;
   onClose: () => void;
-  setPendingStruct: (s: IStructureManualInput) => void;
+  setPendingStruct: (s: IStructure) => void;
   setIsPlacing: (v: boolean) => void;
 };
 

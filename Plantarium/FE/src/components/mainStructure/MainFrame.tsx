@@ -2,15 +2,15 @@ import Header from "./Header";
 import Footer from "./Footer";
 import MainLayer from "../gardenItself/MainLayer";
 import { createContext, useEffect, useState } from "react";
-import { IBed, IGarden, IStructureManualInput } from "../../interfaces/interfaces";
+import { IBed, IGarden, IStructure } from "../../interfaces/interfaces";
 import CreateGarden from "../CreateGarden";
 import Dialoge from "../dialogues/Dialoge";
 import { DialogContext } from "../dialogues/Dialogcontext";
 
 export const UserContext = createContext<IGarden | null>(null);
 export const StructContext = createContext<{
-  structures: IStructureManualInput[];
-  setStructures: React.Dispatch<React.SetStateAction<IStructureManualInput[]>>;
+  structures: IStructure[];
+  setStructures: React.Dispatch<React.SetStateAction<IStructure[]>>;
 } | null>(null);
 export const BedsContext = createContext<{
   beds: IBed[];
@@ -19,13 +19,13 @@ export const BedsContext = createContext<{
 
 function MainFrame() {
     const [user, setUser] = useState<IGarden | null>(null);
- const [structures, setStructures] = useState<IStructureManualInput[]>([]);
+ const [structures, setStructures] = useState<IStructure[]>([]);
   const [beds, setBeds] = useState<IBed[]>([]);
 
 
     const [loading, setLoading] = useState(true);
     const [activeDialog, setActiveDialog] = useState<null | "garden" | "structure" | "bed" | "plant" | "bedplant">(null);
-    const [pendingStructure, setPendingStructure] = useState<IStructureManualInput | null>(null);
+    const [pendingStructure, setPendingStructure] = useState<IStructure | null>(null);
     const [isPlacing, setIsPlacing] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

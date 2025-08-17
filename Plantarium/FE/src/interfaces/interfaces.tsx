@@ -6,7 +6,7 @@ export interface IGarden {
     width: string;
 }
 
-export interface IStructureManualInput {
+export interface IStructure {
     id: number;
     width: number;
     height: number;

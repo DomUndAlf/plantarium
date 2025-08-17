@@ -1,9 +1,9 @@
 import { Input } from "@headlessui/react";
-import { IStructureManualInput } from "../../interfaces/interfaces";
+import { IStructure } from "../../interfaces/interfaces";
 
 type Props = {
-  struct: IStructureManualInput;
-  setStruct: (value: IStructureManualInput) => void;
+  struct: IStructure;
+  setStruct: (value: IStructure) => void;
   type: string;
 };
 

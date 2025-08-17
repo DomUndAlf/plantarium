@@ -2,11 +2,11 @@ import { useState, useContext, useRef } from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
 import { UserContext, StructContext, BedsContext } from "../mainStructure/MainFrame";
-import { IBed, IStructureManualInput } from "../../interfaces/interfaces";
+import { IBed, IStructure } from "../../interfaces/interfaces";
 
 type Props = {
     isPlacing: boolean;
-    pendingStruct: IStructureManualInput | null;
+    pendingStruct: IStructure | null;
     setIsPlacing: (v: boolean) => void;
 };
 
@@ -118,7 +118,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                 if (isBed) {
                     setBeds((prev: IBed[]) => [...prev, newStruct]);
                 } else {
-                    setStructures((prev: IStructureManualInput[]) => [...prev, newStruct]);
+                    setStructures((prev: IStructure[]) => [...prev, newStruct]);
                 }
 
                 setIsPlacing(false);

@@ -4,6 +4,7 @@ import { IGarden } from "../interfaces/interfaces";
 
 function CreateGarden(){
     const [garden, setGarden] = useState<IGarden>({
+        id: 0,
         name: "",
         location: "",
         height: "",
