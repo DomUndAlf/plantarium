@@ -7,7 +7,6 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import GardenDetails from "./GardenDetails";
 import StructureDetails from "./StructureDetails";
 import BedDetails from "./BedDetails";
-import BedplantDetails from "./BedplantDetails";
 import PlantDetails from "./PlantDetails";
 
 type Props = {
@@ -18,8 +17,6 @@ type Props = {
 function Sidebar({ isOpen, onClose }: Props) {
     const [openGarden, setOpenGarden] = useState(true);
     const [openStructures, setOpenStructures] = useState(false)
-    const [openBeds, setOpenBeds] = useState(false);
-    const [openBedPlants, setOpenBedPlants] = useState(false);
     const [openPlants, setOpenPlants] = useState(false);
 
 
@@ -28,10 +25,6 @@ function Sidebar({ isOpen, onClose }: Props) {
             setOpenGarden(!openGarden);
         else if (location === "structure")
             setOpenStructures(!openStructures);
-        else if (location === "beds")
-            setOpenBeds(!openBeds);
-        else if (location === "bedplants")
-            setOpenBedPlants(!openBedPlants);
         else if (location === "plants")
             setOpenPlants(!openPlants);
     };
@@ -46,33 +39,23 @@ function Sidebar({ isOpen, onClose }: Props) {
                 <List className="space-y-4 text-white font-semibold text-lg">
 
                     <ListItemButton onClick={() => handleClick("garden")}>
-                        <ListItem>Deine Gartendaten</ListItem>
+                        <ListItem>your garden</ListItem>
                         {openGarden ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    <> {openGarden && <GardenDetails />} </>
+                    <> {openGarden && <GardenDetails /> } </>
 
 
                     <ListItemButton onClick={() => handleClick("structure")}>
-                        <ListItem>Deine Strukturen</ListItem>
+                        <ListItem>structures and beds</ListItem>
                         {openStructures ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    <> {openStructures && <StructureDetails />} </>
-
-
-                    <ListItemButton onClick={() => handleClick("beds")}>
-                        <ListItem>Deine Beete</ListItem>
-                        {openBeds ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <> {openBeds && <BedDetails />} </>
-
-                    <ListItemButton onClick={() => handleClick("bedplants")}>
-                        <ListItem>Deine Beetpflanzen</ListItem>
-                        {openBedPlants ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <> {openBedPlants && <BedplantDetails />} </>
+                
+                    <> {openStructures && <BedDetails />}
+                     {openStructures && <StructureDetails /> }
+                    </>
 
                     <ListItemButton onClick={() => handleClick("plants")}>
-                        <ListItem>Deine Einzelpflanzen</ListItem>
+                        <ListItem>singular plants</ListItem>
                         {openPlants ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                     <> {openPlants && <PlantDetails />} </>

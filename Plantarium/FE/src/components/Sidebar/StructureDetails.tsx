@@ -42,6 +42,7 @@ function StructureDetails() {
 
     return (
         <>
+           <h2 className="pl-8">surfaces</h2>
             {structures.map((i) => (
                 <div className="flex items-center flex-col  rounded-xl  bg-white/80 ">
                     <div className="w-90 p-5 pb-1 text-black">

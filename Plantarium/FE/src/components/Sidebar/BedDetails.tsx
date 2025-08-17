@@ -25,7 +25,6 @@ function BedDetails() {
                     </div>
                     <Button onClick={() => dialog.setActiveDialog("bed")} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                         delete </Button>
-
                 </div>
             ))}
         </>

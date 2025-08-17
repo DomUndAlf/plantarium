@@ -3,7 +3,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useState } from "react";
 import BedDialogue from "./BedDialogue";
 import PathTeraceHut from "./PathTeraceHut";
-import { IStructure } from "../../interfaces/interfaces";
+import { IBed, IStructure } from "../../interfaces/interfaces";
 
 export type Props = {
     isOpen: boolean;
@@ -15,13 +15,14 @@ export type Props = {
 
 function StructureDialogue({ isOpen, onClose, setPendingStruct, setIsPlacing }: Props) {
     const [selectedType, setSelectedType] = useState("path");
-    const [struct, setStruct] = useState<IStructure>({
+    const [structBed, setStructBed] = useState<IStructure | IBed >({
         id: 0,
         width: 0,
         height: 0,
         type: selectedType,
         x_position: 0,
-        y_position: 0
+        y_position: 0,
+        watered: false
     });
 
 const handleSubmit = (e: React.FormEvent) => {
@@ -31,8 +32,8 @@ const handleSubmit = (e: React.FormEvent) => {
   setTimeout(() => {
     setPendingStruct({
         id: 0,
-        width: Number(struct.width),
-        height: Number(struct.height),
+        width: Number(structBed.width),
+        height: Number(structBed.height),
         type: selectedType,
         x_position: 0,
         y_position: 0
@@ -65,10 +66,10 @@ const handleSubmit = (e: React.FormEvent) => {
                         </div>
                     </Field>
 
-                    {selectedType === "bed" && <BedDialogue struct={struct} setStruct={setStruct} type="bed" />}
-                    {selectedType === "path" && <PathTeraceHut struct={struct} setStruct={setStruct} type="path" />}
-                    {selectedType === "terrace" && <PathTeraceHut struct={struct} setStruct={setStruct} type="terrace" />}
-                    {selectedType === "building" && <PathTeraceHut struct={struct} setStruct={setStruct} type="building" />}
+                    {selectedType === "bed" && <BedDialogue structBed={structBed} setStructBed={setStructBed} type="bed" />}
+                    {selectedType === "path" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="path" />}
+                    {selectedType === "terrace" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="terrace" />}
+                    {selectedType === "building" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="building" />}
 
                     <div className="flex justify-center gap-2 mt-2">
                         <Button onClick={handleSubmit} className="text-lg m-1 mb-1 mt-4 p-2 px-3 bg-darkMint/80 text-white rounded-xl hover:bg-darkMint/60">

@@ -1,20 +1,20 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import BedplantDialogue from "./Bedplantdialogue";
-import { IStructure } from "../../interfaces/interfaces";
+import { IBed, IStructure } from "../../interfaces/interfaces";
 import PathTeraceHut from "./PathTeraceHut";
 
 type Props = {
-    struct: IStructure;
-    setStruct: (value: IStructure) => void;
+    structBed: IStructure | IBed;
+    setStructBed: (value: IStructure | IBed) => void;
     type: string;
 };
 
-function BedDialogue({ struct, setStruct }: Props) {
+function BedDialogue({ structBed, setStructBed }: Props) {
     const [enabled, setEnabled] = useState(false);
     return (
         <>
-            <PathTeraceHut struct={struct} setStruct={setStruct} type="bed" />
+            <PathTeraceHut struct={structBed} setStruct={setStructBed} type="bed" />
 
             <div className="m-4 ml-0 flex items-center">
                 <Switch checked={enabled} onChange={setEnabled} className="m-2 ml-0 group relative flex h-7 w-14 cursor-pointer rounded-full bg-mint p-1 ease-in-out focus:not-data-focus:outline-none data-checked:bg-darkMint data-focus:outline data-focus:outline-white" >
@@ -26,7 +26,7 @@ function BedDialogue({ struct, setStruct }: Props) {
                 </span>
             </div>
 
-            {enabled && <BedplantDialogue />}
+            {enabled && <BedplantDialogue  />}
         </>
     )
 }

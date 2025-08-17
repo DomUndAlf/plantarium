@@ -1,8 +1,8 @@
 import { Input } from "@headlessui/react";
-import { IStructure } from "../../interfaces/interfaces";
+import { IBed, IStructure } from "../../interfaces/interfaces";
 
 type Props = {
-  struct: IStructure;
+  struct: IStructure | IBed;
   setStruct: (value: IStructure) => void;
   type: string;
 };
@@ -13,6 +13,7 @@ function PathTeraceHut({ struct, setStruct }: Props) {
         setStruct({
             ...struct,
             [e.target.name]: e.target.value,
+            type: ""
         });
     };
 
