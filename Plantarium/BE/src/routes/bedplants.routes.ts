@@ -37,7 +37,7 @@ bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
     const bedId = Number(req.params.bedId);
 
-    const { plant_id, quantity, planting_date, plantData } = req.body;
+    const { quantity, planting_date, plantData } = req.body;
 
     const bed = await prisma.beds.findFirst({
       where: { id: bedId, user_id: decoded.id },
@@ -49,9 +49,7 @@ bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
         quantity,
         planting_date: new Date(planting_date),
         beds: { connect: { id: bedId } },
-        ...(plant_id
-          ? { plants: { connect: { id: plant_id } } }
-          : { plants: { create: plantData } }),
+        plants: { create: plantData },
       },
       include: { plants: true },
     });

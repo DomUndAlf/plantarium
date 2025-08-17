@@ -32,7 +32,6 @@ individualPlantsRouter.post("/me/garden/individual-plants", async (req, res) => 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
 
     const {
-      plant_id,
       x_position,
       y_position,
       planting_date,
@@ -45,10 +44,8 @@ individualPlantsRouter.post("/me/garden/individual-plants", async (req, res) => 
         y_position,
         planting_date: new Date(planting_date),
         users: { connect: { id: decoded.id } },
-        ...(plant_id
-        ? { plants: { connect: { id: plant_id } } }
-        : { plants: { create: plantData } }),
-    },
+        plants: { create: plantData },
+      },
       include: { plants: true },
     });
 
