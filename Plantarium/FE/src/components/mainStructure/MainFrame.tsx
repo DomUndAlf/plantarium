@@ -28,6 +28,7 @@ function MainFrame() {
     const [pendingStructure, setPendingStructure] = useState<IStructure | null>(null);
     const [isPlacing, setIsPlacing] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+   // const [bedPlants, setBedPlants] = useState([]);
 
 
     //mehr use effect und mehr context provider für single plants und bedplants
@@ -91,7 +92,6 @@ function MainFrame() {
 
     if (loading) return <p className="text-white p-4">Lade...</p>;
     if (!user) return <CreateGarden />;
-
 
 
     return (

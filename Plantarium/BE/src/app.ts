@@ -19,6 +19,8 @@ app.use(passport.initialize());
 app.use('/users', userRouter);
 app.use('/', surfaceRouter);
 app.use('/', bedRouter);
+app.use('/me/garden/beds', bedRouter);
+app.use('/me/garden/individual-plants', require('./routes/plants.router').default);
 
 export default app;
 
