@@ -187,7 +187,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                     <Text
                                         x={b.x_position + 5}
                                         y={b.y_position + 5}
-                                        text={`Beet: ${b.width / 100}m × ${b.height / 100}m`}
+                                        text={`Beet ${b.id}:\n${b.bed_plant}`}
                                         fontFamily="Calibri"
                                         fontSize={15}
                                         fill="white"

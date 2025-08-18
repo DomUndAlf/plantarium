@@ -19,10 +19,13 @@ function BedDetails() {
         <h2 className="pl-8" > beds</h2>
             {beds.map((bed) => (
                 <div key={bed.id} className="flex items-center flex-col rounded-xl  bg-white/80">
+                    <h2 className="font-semibold text-black pt-5"> bed {bed.id}</h2>
                     <div className="w-90 p-5 pb-1 text-black">
-                        <p className="font-semibold">Höhe: <span className="font-light"> {bed.height / 100}m </span> </p>
-                        <p className="font-semibold">Breite: <span className="font-light"> {bed.width / 100}m </span></p>
-                        <p className="font-semibold">Position: <span className="font-light"> {bed.x_position / 100}m, {bed.y_position / 100}m</span></p>
+                        <p className="font-semibold">height: <span className="font-light"> {bed.height / 100}m </span> </p>
+                        <p className="font-semibold">width: <span className="font-light"> {bed.width / 100}m </span></p>
+                        <p className="font-semibold">position: <span className="font-light"> {bed.x_position / 100}m, {bed.y_position / 100}m</span></p>
+                        <p className="font-semibold">plant: <span className="font-light"> empty </span> </p>
+                        <p className="font-semibold">bed ID: <span className="font-light"> {bed.id} </span> </p>
                     </div>
                     <div className="flex items-center justify-center w-full p-4">
                     <Button onClick={() => dialog.setActiveDialog("bed")} className="p-2 m-2 pl-3 w-35 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">

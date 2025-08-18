@@ -22,18 +22,25 @@ export interface IBed {
     height: number;
     x_position: number;
     y_position:number;
-    watered: boolean;
-    bed_plan: IBedPlant[];
+    bed_plant: IBedPlant;
 }
 
 export interface IBedPlant {
     id: number;
     name: string;
-    edible: boolean;
+    y_position: number;
+    x_position: number;
     watering_interval?: number;
-    bloom_start_month?: number;
-    bloom_end_month?: number;
-    harvest_start_month?: number;
-    harvest_end_month?: number;
+    watered: boolean;
+    date_of_planting: Date;
+}
+
+export interface IPlant {
+    id: number;
+    name: string;
+    y_position: number;
+    x_position: number;
+    date_of_planting: Date;
+    watering_interval?: number;
     watered: boolean;
 }

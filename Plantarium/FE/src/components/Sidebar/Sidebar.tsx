@@ -8,6 +8,7 @@ import GardenDetails from "./GardenDetails";
 import StructureDetails from "./StructureDetails";
 import BedDetails from "./BedDetails";
 import PlantDetails from "./PlantDetails";
+import BedPlantDetails from "./BedPlantDetails";
 
 type Props = {
     isOpen: boolean;
@@ -55,10 +56,12 @@ function Sidebar({ isOpen, onClose }: Props) {
                     </>
 
                     <ListItemButton onClick={() => handleClick("plants")}>
-                        <ListItem>singular plants</ListItem>
+                        <ListItem>plants</ListItem>
                         {openPlants ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
-                    <> {openPlants && <PlantDetails />} </>
+                    <> {openPlants && <PlantDetails />}
+                    {openPlants && <BedPlantDetails />}
+                     </>
                     
                 </List>
             </div>
