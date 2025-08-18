@@ -28,9 +28,9 @@ function BedDetails() {
                         <p className="font-semibold">bed ID: <span className="font-light"> {bed.id} </span> </p>
                     </div>
                     <div className="flex items-center justify-center w-full p-4">
-                    <Button onClick={() => dialog.setActiveDialog("bed")} className="p-2 m-2 pl-3 w-35 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                    <Button onClick={() => dialog.setActiveDialog("bed")} className="p-2 m-2 pl-3 w-35 rounded-xl bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                         delete bed </Button>
-                    <Button onClick={() => dialog.setActiveDialog("bed")} className="m-2 p-2 pl-3 w-35 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                    <Button onClick={() => dialog.setActiveDialog("bed")} className="m-2 p-2 pl-3 w-35 rounded-xl bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                         delete plants </Button>
                         </div>
                 </div>

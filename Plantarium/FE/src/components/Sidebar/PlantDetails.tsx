@@ -16,10 +16,10 @@ function PlantDetails() {
         <p className="font-semibold">needs watering:</p>
         <p className="font-semibold">planted on:</p>
         <p className="font-semibold">location in garden: </p>
-        <Button className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+        <Button className="m-3 p-2 pl-3 pr-3 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
           delete  </Button>
       </div>
-      <Button onClick={() => dialog.setActiveDialog("plant")} className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+      <Button onClick={() => dialog.setActiveDialog("plant-single")} className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
         add new singular plant </Button>
     </div>
   </>

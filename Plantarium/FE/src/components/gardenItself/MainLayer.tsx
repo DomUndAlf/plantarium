@@ -3,6 +3,7 @@ import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
 import { UserContext, StructContext, BedsContext } from "../mainStructure/MainFrame";
 import { IBed, IStructure } from "../../interfaces/interfaces";
+import { DialogContext } from "../dialogues/Dialogcontext";
 
 type Props = {
     isPlacing: boolean;
@@ -19,6 +20,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(null);
     const [hoveredBedIndex, setHoveredBedIndex] = useState<number | null>(null);
 
+    const dialog = useContext(DialogContext);
 
     const [grassImg] = useImage("../../public/assets/grass.jpg");
     const [bedImg] = useImage("../../public/assets/soil.jpg");
@@ -182,6 +184,8 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                     height={b.height}
                                     fillPatternImage={bedImg}
                                     fillPatternScale={{ x: 0.4, y: 0.4 }}
+                                    onClick={() => {dialog.setActiveDialog("plant-bed");}
+                                    }
                                 />
                                 {hoveredBedIndex === i &&
                                     <Text
@@ -196,7 +200,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                             </Group>
                         ))}
 
-{/* das hier das grüne hovervierecke:  */}
+                        {/* das hier das grüne hovervierecke:  */}
 
                         {isPlacing && pendingStruct && (
                             <Rect

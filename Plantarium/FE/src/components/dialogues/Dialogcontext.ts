@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-export type DialogType = null | "garden" | "structure" | "bed" | "plant" | "bedplant";
+export type DialogType = null | "garden" | "structure" | "bed" | "plant-single" | "plant-bed"| "bedplant";
 
 export const DialogContext = createContext<{
   activeDialog: DialogType;

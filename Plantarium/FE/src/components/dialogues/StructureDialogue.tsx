@@ -22,7 +22,7 @@ function StructureDialogue({ isOpen, onClose, setPendingStruct, setIsPlacing }: 
         type: selectedType,
         x_position: 0,
         y_position: 0,
-        watered: false
+
     });
 
 const handleSubmit = (e: React.FormEvent) => {
@@ -66,7 +66,11 @@ const handleSubmit = (e: React.FormEvent) => {
                         </div>
                     </Field>
 
-                    {selectedType === "bed" && <BedDialogue structBed={structBed} setStructBed={setStructBed} type="bed" />}
+                    {selectedType === "bed" &&
+                    <>
+                     <BedDialogue structBed={structBed} setStructBed={setStructBed} type="bed" />
+                     </>
+                     }
                     {selectedType === "path" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="path" />}
                     {selectedType === "terrace" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="terrace" />}
                     {selectedType === "building" && <PathTeraceHut struct={structBed} setStruct={setStructBed} type="building" />}

@@ -1,6 +1,6 @@
 import { Switch } from "@headlessui/react";
 import { useState } from "react";
-import BedplantDialogue from "./Bedplantdialogue";
+import PlantDialogue from "./Plantdia/Plantdialogue";
 import { IBed, IStructure } from "../../interfaces/interfaces";
 import PathTeraceHut from "./PathTeraceHut";
 
@@ -26,7 +26,7 @@ function BedDialogue({ structBed, setStructBed }: Props) {
                 </span>
             </div>
 
-            {enabled && <BedplantDialogue  />}
+            {enabled && <PlantDialogue plantType={"bed"}  />}
         </>
     )
 }
