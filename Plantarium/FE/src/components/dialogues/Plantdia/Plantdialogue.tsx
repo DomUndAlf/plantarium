@@ -28,15 +28,16 @@ function PlantDialogue({ plantType, onChange }: PlantDialogueProps) {
         <>
             <div>
                 <p className="mt-3 font-semibold "> Name: </p>
-                <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" placeholder="plant name"></Input>
+                <Input required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="mt-2 w-full font-light p-2 border-1 rounded-xl border-darkMint/20" placeholder="plant name"></Input>
                 <p className="mt-3 font-semibold"> Date of planting: </p>
                 <Input
                     type="date"
                     value={formData.planting_date}
                     onChange={(e) => setFormData({ ...formData, planting_date: e.target.value })}
+                    required
                 />
                 <div>
-                    <p className="mt-3 font-semibold"> watering needs: </p>
+                    <p className="mt-3 font-semibold"> watering needs: </p>gg
                     <WaterDropOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 1 })} className="hover:bg-mint " />
                     <OpacityOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 2 })} className="hover:bg-mint" />
                     <WaterDropIcon onClick={() => setFormData({ ...formData, watering_interval: 3 })} className="hover:bg-mint" />

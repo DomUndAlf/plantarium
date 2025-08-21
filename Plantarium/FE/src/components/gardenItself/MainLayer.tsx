@@ -187,6 +187,11 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                     fillPatternImage={bedImg}
                                     fillPatternScale={{ x: 0.4, y: 0.4 }}
                                     onClick={() => {
+                                        if (b.bed_plants && b.bed_plants.length > 0) {
+
+                                            alert("In diesem Beet ist schon eine Pflanze. Du kannst hier nichts Neues setzen.");
+                                            return;
+                                        }
                                         dialog.setActiveDialog("plant-bed");
                                         setActiveBedId(b.id);
                                     }}

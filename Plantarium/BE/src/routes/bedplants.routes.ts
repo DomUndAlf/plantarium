@@ -67,11 +67,18 @@ bedPlantsRouter.post("/:bedId/plants", async (req, res) => {
     });
     if (!bed) return res.status(404).json({ error: "Beet nicht gefunden" });
 
+    const existingPlant = await prisma.bed_plants.findFirst({
+      where: { bed_id: bedId },
+    });
+    if (existingPlant) {
+      return res.status(400).json({ error: "In diesem Beet ist schon eine Pflanze vorhanden" });
+    }
+
     const newEntry = await prisma.bed_plants.create({
       data: {
         planting_date: new Date(planting_date),
         beds: { connect: { id: bedId } },
-        plants: { create: { ...plantData, growth_type: plantData.growth_type, watered: false } },
+        plants: { create: { ...plantData, growth_type: "bed", watered: false } },
       },
       include: { plants: true },
     });

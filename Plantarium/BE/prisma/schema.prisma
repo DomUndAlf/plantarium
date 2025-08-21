@@ -15,6 +15,7 @@ model bed_plants {
   plants        plants   @relation(fields: [plant_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "bed_plants_ibfk_2")
 
   @@id([bed_id, plant_id])
+  @@unique([bed_id], map: "unique_bed_has_only_one_plant")
   @@index([plant_id], map: "plant_id")
 }
 
