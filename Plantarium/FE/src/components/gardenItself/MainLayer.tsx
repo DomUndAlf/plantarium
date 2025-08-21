@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import useImage from "use-image";
-import { UserContext, StructContext, BedsContext } from "../mainStructure/MainFrame";
+import { UserContext, StructContext, BedsContext, BedPlantContext, SinglePlantContext } from "../mainStructure/MainFrame";
 import { IBed, IStructure } from "../../interfaces/interfaces";
 import { DialogContext } from "../dialogues/Dialogcontext";
 
@@ -14,12 +14,13 @@ type Props = {
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
-    const { beds, setBeds } = useContext(BedsContext) || { beds: [], setBeds: () => { } };
-
+    const { beds, setBeds, setActiveBedId } = useContext(BedsContext)!;
     const stageRef = useRef<any>(null);
     const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(null);
     const [hoveredBedIndex, setHoveredBedIndex] = useState<number | null>(null);
 
+    const bedplants = useContext(BedPlantContext)?.bedPlants || [];
+    const singularPlants = useContext(SinglePlantContext)?.singularPlants || [];
     const dialog = useContext(DialogContext);
 
     const [grassImg] = useImage("../../public/assets/grass.jpg");
@@ -173,7 +174,8 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                             );
                         })}
                         {beds.map((b, i) => (
-                            <Group key={`bed-fragment-${i}`}
+                            <Group
+                                key={`bed-fragment-${i}`}
                                 onMouseEnter={() => setHoveredBedIndex(i)}
                                 onMouseLeave={() => setHoveredBedIndex(null)}
                             >
@@ -184,21 +186,27 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                     height={b.height}
                                     fillPatternImage={bedImg}
                                     fillPatternScale={{ x: 0.4, y: 0.4 }}
-                                    onClick={() => {dialog.setActiveDialog("plant-bed");}
-                                    }
+                                    onClick={() => {
+                                        dialog.setActiveDialog("plant-bed");
+                                        setActiveBedId(b.id);
+                                    }}
                                 />
-                                {hoveredBedIndex === i &&
+                                {hoveredBedIndex === i && (
                                     <Text
                                         x={b.x_position + 5}
                                         y={b.y_position + 5}
-                                        text={`Beet ${b.id}:\n${b.bed_plant}`}
+                                        text={`Beet ${b.id}:\n${b.bed_plants?.[0]?.plants?.name ?? "empty bed"
+                                            }`}
                                         fontFamily="Calibri"
                                         fontSize={15}
                                         fill="white"
                                     />
-                                }
+                                )}
                             </Group>
                         ))}
+
+
+
 
                         {/* das hier das grüne hovervierecke:  */}
 

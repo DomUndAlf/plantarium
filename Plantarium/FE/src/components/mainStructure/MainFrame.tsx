@@ -5,33 +5,69 @@ import { createContext, useEffect, useState } from "react";
 import { IBed, IGarden, IStructure } from "../../interfaces/interfaces";
 import CreateGarden from "../CreateGarden";
 import Dialoge from "../dialogues/Dialoge";
-import { DialogContext } from "../dialogues/Dialogcontext";
+import { DialogContext, DialogType } from "../dialogues/Dialogcontext";
 
 export const UserContext = createContext<IGarden | null>(null);
+
 export const StructContext = createContext<{
-  structures: IStructure[];
-  setStructures: React.Dispatch<React.SetStateAction<IStructure[]>>;
+    structures: IStructure[];
+    setStructures: React.Dispatch<React.SetStateAction<IStructure[]>>;
 } | null>(null);
+
 export const BedsContext = createContext<{
-  beds: IBed[];
-  setBeds: React.Dispatch<React.SetStateAction<IBed[]>>;
+    beds: IBed[];
+    setBeds: React.Dispatch<React.SetStateAction<IBed[]>>;
+    activeBedId: number | null;
+    setActiveBedId: (id: number | null) => void;
+} | null>(null);
+
+export const BedPlantContext = createContext<{
+    bedPlants: any[];
+    setBedPlants: React.Dispatch<React.SetStateAction<any[]>>;
+} | null>(null);
+
+export const SinglePlantContext = createContext<{
+    singularPlants: any[];
+    setSingularPlants: React.Dispatch<React.SetStateAction<any[]>>;
 } | null>(null);
 
 function MainFrame() {
     const [user, setUser] = useState<IGarden | null>(null);
- const [structures, setStructures] = useState<IStructure[]>([]);
-  const [beds, setBeds] = useState<IBed[]>([]);
+    const [structures, setStructures] = useState<IStructure[]>([]);
+    const [beds, setBeds] = useState<IBed[]>([]);
+    const [bedPlants, setBedPlants] = useState<any[]>([]);
+    const [singularPlants, setSingularPlants] = useState<any[]>([]);
 
 
     const [loading, setLoading] = useState(true);
-    const [activeDialog, setActiveDialog] = useState<null | "garden" | "structure" | "bed" | "plant" | "bedplant">(null);
+    const [activeDialog, setActiveDialog] = useState<DialogType | null>(null);
     const [pendingStructure, setPendingStructure] = useState<IStructure | null>(null);
     const [isPlacing, setIsPlacing] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-   // const [bedPlants, setBedPlants] = useState([]);
+    const [activeBedId, setActiveBedId] = useState<number | null>(null);
 
+useEffect(() => {
+  const fetchAllBedPlants = async () => {
+    const res = await fetch("http://localhost:3001/me/garden/beds/plants", { credentials: "include" });
+    if (res.ok) {
+      const data = await res.json();
+      setBeds(data);
+    }
+  };
 
-    //mehr use effect und mehr context provider für single plants und bedplants
+  fetchAllBedPlants();
+}, []);
+    useEffect(() => {
+        const fetchSinglePlants = async () => {
+            const res = await fetch("http://localhost:3001/me/garden/individual-plants", { credentials: "include" });
+            if (res.ok) {
+                const data = await res.json();
+                setSingularPlants(data);
+            }
+        };
+        fetchSinglePlants();
+    }, []);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -96,25 +132,30 @@ function MainFrame() {
 
     return (
         <UserContext.Provider value={user}>
-            <StructContext.Provider value={{structures, setStructures}}>
-                <BedsContext.Provider value={{ beds, setBeds }}>
+            <StructContext.Provider value={{ structures, setStructures }}>
+                <BedsContext.Provider value={{ beds, setBeds, activeBedId, setActiveBedId }}>
                     <DialogContext.Provider value={{ setActiveDialog, activeDialog }}>
-                        <div className="flex flex-col min-h-screen">
-                            <Header isSidebarOpen={isSidebarOpen}
-                                setIsSidebarOpen={setIsSidebarOpen} />
-                            <MainLayer isPlacing={isPlacing}
-                                pendingStruct={pendingStructure}
-                                setIsPlacing={setIsPlacing} />
-                            <Footer />
-                            {activeDialog && (
-                                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                                    <Dialoge activeDialog={activeDialog} onClose={() => setActiveDialog(null)}
-                                        setPendingStruct={setPendingStructure}
+                        <BedPlantContext.Provider value={{ bedPlants, setBedPlants }}>
+                            <SinglePlantContext.Provider value={{ singularPlants, setSingularPlants }}>
+                                <div className="flex flex-col min-h-screen">
+                                    <Header isSidebarOpen={isSidebarOpen}
+                                        setIsSidebarOpen={setIsSidebarOpen} />
+                                    <MainLayer isPlacing={isPlacing}
+                                        pendingStruct={pendingStructure}
                                         setIsPlacing={setIsPlacing}
-                                    />
+                                         />
+                                    <Footer />
+                                    {activeDialog && (
+                                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                                            <Dialoge activeDialog={activeDialog} onClose={() => setActiveDialog(null)}
+                                                setPendingStruct={setPendingStructure}
+                                                setIsPlacing={setIsPlacing}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                        </div>
+                            </SinglePlantContext.Provider>
+                        </BedPlantContext.Provider>
                     </DialogContext.Provider>
                 </BedsContext.Provider>
             </StructContext.Provider>

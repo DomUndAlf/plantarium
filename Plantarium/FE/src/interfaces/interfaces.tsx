@@ -17,6 +17,7 @@ export interface IStructure {
 }
 
 export interface IBed {
+    [x: string]: any;
     id: number
     width: number;
     height: number;

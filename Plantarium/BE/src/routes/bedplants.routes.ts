@@ -4,7 +4,7 @@ import { prisma } from "../prismaClient";
 
 const bedPlantsRouter = Router();
 
-bedPlantsRouter.get("/me/garden/beds/:bedId/plants", async (req, res) => {
+bedPlantsRouter.get("/:bedId/plants", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -29,7 +29,30 @@ bedPlantsRouter.get("/me/garden/beds/:bedId/plants", async (req, res) => {
   }
 });
 
-bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
+bedPlantsRouter.get("/plants", async (req, res) => {
+  const token = req.cookies?.jwt;
+  if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+
+    const bedsWithPlants = await prisma.beds.findMany({
+      where: { user_id: decoded.id },
+      include: {
+        bed_plants: {
+          include: { plants: true },
+        },
+      },
+    });
+
+    res.json(bedsWithPlants);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Fehler beim Laden aller Beetpflanzen" });
+  }
+});
+
+bedPlantsRouter.post("/:bedId/plants", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -37,7 +60,7 @@ bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
     const bedId = Number(req.params.bedId);
 
-    const { quantity, planting_date, plantData } = req.body;
+    const { planting_date, plantData } = req.body;
 
     const bed = await prisma.beds.findFirst({
       where: { id: bedId, user_id: decoded.id },
@@ -46,10 +69,9 @@ bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
 
     const newEntry = await prisma.bed_plants.create({
       data: {
-        quantity,
         planting_date: new Date(planting_date),
         beds: { connect: { id: bedId } },
-        plants: { create: plantData },
+        plants: { create: { ...plantData, growth_type: plantData.growth_type, watered: false } },
       },
       include: { plants: true },
     });
@@ -61,7 +83,7 @@ bedPlantsRouter.post("/me/garden/beds/:bedId/plants", async (req, res) => {
   }
 });
 
-bedPlantsRouter.put("/me/garden/beds/:bedId/plants/:plantId", async (req, res) => {
+bedPlantsRouter.put("/:bedId/plants/:plantId", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -70,7 +92,7 @@ bedPlantsRouter.put("/me/garden/beds/:bedId/plants/:plantId", async (req, res) =
     const bedId = Number(req.params.bedId);
     const plantId = Number(req.params.plantId);
 
-    const { quantity, planting_date } = req.body;
+    const { planting_date } = req.body;
 
     const bed = await prisma.beds.findFirst({
       where: { id: bedId, user_id: decoded.id },
@@ -80,7 +102,6 @@ bedPlantsRouter.put("/me/garden/beds/:bedId/plants/:plantId", async (req, res) =
     const updated = await prisma.bed_plants.update({
       where: { bed_id_plant_id: { bed_id: bedId, plant_id: plantId } },
       data: {
-        ...(quantity !== undefined && { quantity }),
         ...(planting_date && { planting_date: new Date(planting_date) }),
       },
       include: { plants: true },
@@ -93,7 +114,7 @@ bedPlantsRouter.put("/me/garden/beds/:bedId/plants/:plantId", async (req, res) =
   }
 });
 
-bedPlantsRouter.delete("/me/garden/beds/:bedId/plants/:plantId", async (req, res) => {
+bedPlantsRouter.delete("/:bedId/plants/:plantId", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 

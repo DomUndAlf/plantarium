@@ -4,7 +4,7 @@ import { prisma } from "../prismaClient";
 
 const bedRouter = Router();
 
-bedRouter.post("/me/garden/beds", async (req, res) => {
+bedRouter.post("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -44,7 +44,7 @@ bedRouter.post("/me/garden/beds", async (req, res) => {
 });
 
 
-bedRouter.get("/me/garden/beds", async (req, res) => {
+bedRouter.get("/", async (req, res) => {
   const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
     try {
@@ -52,6 +52,13 @@ bedRouter.get("/me/garden/beds", async (req, res) => {
   
   const beds = await prisma.beds.findMany({
       where: { user_id: decoded.id },
+      include: {
+        bed_plants: {
+          include: {
+            plants: true, 
+          },
+        },
+      },
     });
 
     res.json({ data: beds });
@@ -60,7 +67,7 @@ bedRouter.get("/me/garden/beds", async (req, res) => {
   }
 });
 
-bedRouter.put("/me/garden/beds/:id", async (req, res) => {
+bedRouter.put("/:id", async (req, res) => {
     const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
   try {
@@ -94,7 +101,7 @@ bedRouter.put("/me/garden/beds/:id", async (req, res) => {
   }
 });
 
-bedRouter.delete("/me/garden/beds/:id", async (req, res) => {
+bedRouter.delete("/:id", async (req, res) => {
     const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
          try {

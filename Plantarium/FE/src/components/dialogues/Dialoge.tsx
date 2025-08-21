@@ -20,12 +20,10 @@ function Dialoge({ activeDialog, onClose, setIsPlacing, setPendingStruct }: Prop
             return (
                 <WrapperDialogue isOpen={true} onClose={onClose} plantType="single" />
             );
-
         case "plant-bed":
             return (
                 <WrapperDialogue isOpen={true} onClose={onClose} plantType="bed" />
             );
-
         case "structure":
             return <StructureDialogue isOpen={true} onClose={onClose} setPendingStruct={setPendingStruct} setIsPlacing={setIsPlacing} />;
 

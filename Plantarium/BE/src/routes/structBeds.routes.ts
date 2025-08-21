@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const surfaceRouter = Router();
 
-surfaceRouter.post("/me/garden/surfaces", async (req, res) => {
+surfaceRouter.post("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -47,7 +47,7 @@ surfaceRouter.post("/me/garden/surfaces", async (req, res) => {
 });
 
 
-surfaceRouter.get("/me/garden/surfaces", async (req, res) => {
+surfaceRouter.get("/", async (req, res) => {
   const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
     try {
@@ -63,7 +63,7 @@ surfaceRouter.get("/me/garden/surfaces", async (req, res) => {
   }
 });
 
-surfaceRouter.put("/me/garden/surfaces/:id", async (req, res) => {
+surfaceRouter.put("/:id", async (req, res) => {
     const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
   try {
@@ -99,7 +99,7 @@ surfaceRouter.put("/me/garden/surfaces/:id", async (req, res) => {
   }
 });
 
-surfaceRouter.delete("/me/garden/surfaces/:id", async (req, res) => {
+surfaceRouter.delete("/:id", async (req, res) => {
     const token = req.cookies?.jwt;
      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
          try {

@@ -1,10 +1,11 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { prisma } from "../prismaClient";
+import { plants_growth_type } from "@prisma/client";
 
 const individualPlantsRouter = Router();
 
-individualPlantsRouter.get("/me/garden/individual-plants", async (req, res) => {
+individualPlantsRouter.get("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -24,7 +25,7 @@ individualPlantsRouter.get("/me/garden/individual-plants", async (req, res) => {
 });
 
 
-individualPlantsRouter.post("/me/garden/individual-plants", async (req, res) => {
+individualPlantsRouter.post("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -44,7 +45,7 @@ individualPlantsRouter.post("/me/garden/individual-plants", async (req, res) => 
         y_position,
         planting_date: new Date(planting_date),
         users: { connect: { id: decoded.id } },
-        plants: { create: plantData },
+        plants: { create: { ...plantData, plants_growth_type: plants_growth_type, watered: false } },
       },
       include: { plants: true },
     });
@@ -57,7 +58,7 @@ individualPlantsRouter.post("/me/garden/individual-plants", async (req, res) => 
 });
 
 
-individualPlantsRouter.put("/me/garden/individual-plants/:plantId", async (req, res) => {
+individualPlantsRouter.put("/:plantId", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
@@ -86,7 +87,7 @@ individualPlantsRouter.put("/me/garden/individual-plants/:plantId", async (req, 
   }
 });
 
-individualPlantsRouter.delete("/me/garden/individual-plants/:plantId", async (req, res) => {
+individualPlantsRouter.delete("/:plantId", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
