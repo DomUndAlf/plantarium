@@ -39,7 +39,6 @@ function StructureDetails() {
         )
     }
 
-
     return (
         <>
            <h2 className="pl-8">surfaces</h2>
@@ -57,7 +56,7 @@ function StructureDetails() {
             ))}
             <div className="flex items-center flex-col">
                 <Button onClick={() => dialog.setActiveDialog("structure")} className="m-3 mt-2 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                    add new structure </Button>
+                    add new structure or bed </Button>
             </div>
         </>
     );

@@ -9,20 +9,20 @@ type Props = {
     activeDialog: DialogType;
     onClose: () => void;
     setPendingStruct: (s: IStructure) => void;
+    setPendingPlant: (p: any) => void;
     setIsPlacing: (v: boolean) => void;
 
 };
 
-function Dialoge({ activeDialog, onClose, setIsPlacing, setPendingStruct }: Props) {
-
+function Dialoge({ activeDialog, onClose, setIsPlacing, setPendingStruct, setPendingPlant }: Props) {
     switch (activeDialog) {
         case "plant-single":
             return (
-                <WrapperDialogue isOpen={true} onClose={onClose} plantType="single" />
+                <WrapperDialogue isOpen={true} onClose={onClose} plantType="single" setPendingPlant={setPendingPlant} setIsPlacing={setIsPlacing} />
             );
         case "plant-bed":
             return (
-                <WrapperDialogue isOpen={true} onClose={onClose} plantType="bed" />
+                <WrapperDialogue isOpen={true} onClose={onClose} plantType="bed" setPendingPlant={setPendingPlant} setIsPlacing={setIsPlacing} />
             );
         case "structure":
             return <StructureDialogue isOpen={true} onClose={onClose} setPendingStruct={setPendingStruct} setIsPlacing={setIsPlacing} />;

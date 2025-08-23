@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from "react";
-import { Stage, Layer, Rect, Text, Group } from "react-konva";
+import { Stage, Layer, Rect, Text, Group, Circle } from "react-konva";
 import useImage from "use-image";
-import { UserContext, StructContext, BedsContext, BedPlantContext, SinglePlantContext } from "../mainStructure/MainFrame";
+import { UserContext, StructContext, BedsContext, SinglePlantContext } from "../mainStructure/MainFrame";
 import { IBed, IStructure } from "../../interfaces/interfaces";
 import { DialogContext } from "../dialogues/Dialogcontext";
 
@@ -9,9 +9,11 @@ type Props = {
     isPlacing: boolean;
     pendingStruct: IStructure | null;
     setIsPlacing: (v: boolean) => void;
+    pendingPlant: any | null;
+    setPendingPlant: (p: any | null) => void;
 };
 
-function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
+function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant }: Props) {
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
     const { beds, setBeds, setActiveBedId } = useContext(BedsContext)!;
@@ -19,8 +21,12 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
     const [dragPos, setDragPos] = useState<{ x: number; y: number } | null>(null);
     const [hoveredBedIndex, setHoveredBedIndex] = useState<number | null>(null);
 
-    const bedplants = useContext(BedPlantContext)?.bedPlants || [];
-    const singularPlants = useContext(SinglePlantContext)?.singularPlants || [];
+    const plantCtx = useContext(SinglePlantContext);
+    if (!plantCtx) {
+        return <p className="text-white">Lade Pflanzen...</p>;
+    }
+    const { singularPlants, setSingularPlants } = plantCtx;
+
     const dialog = useContext(DialogContext);
 
     const [grassImg] = useImage("../../public/assets/grass.jpg");
@@ -227,6 +233,69 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing }: Props) {
                                 onDragEnd={handleDragEnd}
                             />
                         )}
+                    </Layer>
+                    <Layer>
+                        {/* vorhandene Pflanzen rendern */}
+                        {singularPlants.map((p: { x_position: number | undefined; y_position: number | undefined; }, i: any) => (
+                            <Circle
+                                key={`plant-${i}`}
+                                x={p.x_position}
+                                y={p.y_position}
+                                radius={15} // kannst du dynamisch machen
+                                fill="green"
+                                shadowBlur={5}
+                            />
+                        ))}
+
+                        {/* Vorschau beim Platzieren einer neuen Pflanze */}
+                        {isPlacing && pendingPlant && (
+                            <Circle
+                                x={dragPos?.x || 50}
+                                y={dragPos?.y || 50}
+                                radius={15}
+                                fill="rgba(0, 200, 0, 0.3)"
+                                draggable
+                                onDragMove={(e) => {
+                                    const pos = e.target.position();
+                                    const snapped = snapTo(pos, 30, 30); // Durchmesser = 30 für Circle
+                                    e.target.position(snapped);
+                                    setDragPos(snapped);
+                                }}
+                                onDragEnd={async (e) => {
+                                    const pos = e.target.position();
+                                    console.log("DEBUG SEND:", {
+                                        x_position: pos.x,
+                                        y_position: pos.y,
+                                        planting_date: pendingPlant.planting_date,
+                                        plantData: pendingPlant.plantData,
+                                    });
+                                    const res = await fetch("http://localhost:3001/me/garden/individual-plants", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        credentials: "include",
+                                        body: JSON.stringify({
+                                            x_position: pos.x,
+                                            y_position: pos.y,
+                                            planting_date: pendingPlant.planting_date,
+                                            plantData: {
+                                                name: pendingPlant.plantData.name,
+                                                watering_interval: Number(pendingPlant.plantData.watering_interval),
+                                            },
+                                        }),
+                                    });
+
+
+                                    if (res.ok) {
+                                        const data = await res.json();
+                                        setSingularPlants((prev) => [...prev, data]);
+                                        setIsPlacing(false);
+                                        setDragPos(null);
+                                        setPendingPlant(null); // zurücksetzen
+                                    }
+                                }}
+                            />
+                        )}
+
                     </Layer>
                 </Stage>
             </div>

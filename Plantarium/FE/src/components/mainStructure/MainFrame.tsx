@@ -27,6 +27,7 @@ export const BedPlantContext = createContext<{
 } | null>(null);
 
 export const SinglePlantContext = createContext<{
+    [x: string]: any;
     singularPlants: any[];
     setSingularPlants: React.Dispatch<React.SetStateAction<any[]>>;
 } | null>(null);
@@ -42,6 +43,7 @@ function MainFrame() {
     const [loading, setLoading] = useState(true);
     const [activeDialog, setActiveDialog] = useState<DialogType | null>(null);
     const [pendingStructure, setPendingStructure] = useState<IStructure | null>(null);
+    const [pendingPlant, setPendingPlant] = useState<any | null>(null);
     const [isPlacing, setIsPlacing] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeBedId, setActiveBedId] = useState<number | null>(null);
@@ -141,15 +143,18 @@ useEffect(() => {
                                     <Header isSidebarOpen={isSidebarOpen}
                                         setIsSidebarOpen={setIsSidebarOpen} />
                                     <MainLayer isPlacing={isPlacing}
-                                        pendingStruct={pendingStructure}
-                                        setIsPlacing={setIsPlacing}
-                                         />
+                                    pendingStruct={pendingStructure}
+                                    setIsPlacing={setIsPlacing}
+                                    pendingPlant={pendingPlant} setPendingPlant={function (p: any): void {
+                                        throw new Error("Function not implemented.");
+                                    } }                                         />
                                     <Footer />
                                     {activeDialog && (
                                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
                                             <Dialoge activeDialog={activeDialog} onClose={() => setActiveDialog(null)}
                                                 setPendingStruct={setPendingStructure}
                                                 setIsPlacing={setIsPlacing}
+                                                  setPendingPlant={setPendingPlant} 
                                             />
                                         </div>
                                     )}
