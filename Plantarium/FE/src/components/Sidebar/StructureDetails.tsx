@@ -50,7 +50,7 @@ function StructureDetails() {
                         <p className="font-normal">width: <span className="font-light"> {i.width / 100}m </span> </p>
                         <p className="font-normal">positioned at: <span className="font-light">width {i.x_position / 100}m, height {i.y_position / 100}m</span></p>
                     </div>
-                    <Button onClick={() => dialog.setActiveDialog("structure")} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl bg-darkMint/90 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                    <Button onClick={() => dialog.setActiveDialog("structure")} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl bg-mint/90 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                         delete </Button>
                 </div>
             ))}
