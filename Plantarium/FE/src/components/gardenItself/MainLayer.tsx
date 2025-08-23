@@ -235,8 +235,10 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         )}
                     </Layer>
                     <Layer>
-                        {/* vorhandene Pflanzen rendern */}
-                        {singularPlants.map((p: { x_position: number | undefined; y_position: number | undefined; }, i: any) => (
+                        {singularPlants.map((p: {
+                            [x: string]: any; x_position: number | undefined; y_position: number | undefined; 
+}, i: any) => (
+                            <Group>
                             <Circle
                                 key={`plant-${i}`}
                                 x={p.x_position}
@@ -245,9 +247,17 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                 fill="green"
                                 shadowBlur={5}
                             />
+                            <Text
+                                x={(p.x_position ?? 0) - 5}
+                                y={(p.y_position ?? 0) - 5}
+                                text={p.plants.id}
+                                fontFamily="Calibri"
+                                fontSize={12}
+                                fill="white"
+                            />
+                            </Group>
                         ))}
 
-                        {/* Vorschau beim Platzieren einer neuen Pflanze */}
                         {isPlacing && pendingPlant && (
                             <Circle
                                 x={dragPos?.x || 50}

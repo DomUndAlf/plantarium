@@ -37,22 +37,29 @@ function PlantDialogue({ plantType, onChange }: PlantDialogueProps) {
                     required
                 />
                 <div>
-                    <p className="mt-3 font-semibold"> watering needs: </p>gg
-                    <WaterDropOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 1 })} className="hover:bg-mint " />
-                    <OpacityOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 2 })} className="hover:bg-mint" />
-                    <WaterDropIcon onClick={() => setFormData({ ...formData, watering_interval: 3 })} className="hover:bg-mint" />
+                    <p className="mt-3 font-semibold"> watering needs: </p>
+                    <WaterDropOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 1 })} className={`cursor-pointer ${formData.watering_interval === 1 ? "text-mint" : "text-darkMint"
+                        }`} />
+                    <OpacityOutlinedIcon onClick={() => setFormData({ ...formData, watering_interval: 2 })} className={`cursor-pointer ${formData.watering_interval === 2 ? "text-mint" : "text-darkMint"
+                        }`} />
+                    <WaterDropIcon onClick={() => setFormData({ ...formData, watering_interval: 3 })} className={`cursor-pointer ${formData.watering_interval === 3 ? "text-mint" : "text-darkMint"
+                        }`} />
                 </div>
+                <div >
                 <p className="mt-3 font-semibold"> Is this plant edible? </p>
                 <Checkbox
                     checked={formData.edible}
                     onChange={() => setFormData({ ...formData, edible: !formData.edible })}
                     className="group block size-4 rounded border bg-white data-checked:bg-mint"
                 >
+                    
                     {/* Checkmark icon */}
                     <svg className="stroke-white opacity-0 group-data-checked:opacity-100" viewBox="0 0 14 14" fill="none">
                         <path d="M3 8L6 11L11 3.5" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </Checkbox>
+
+                </div>
 
                 {plantType === "bed" && (
                     <>
@@ -62,7 +69,7 @@ function PlantDialogue({ plantType, onChange }: PlantDialogueProps) {
 
                 {plantType === "single" && (
                     <>
-                        <p className="mt-3 font-semibold"> place plant freely: </p>
+                        <p className="mt-3 font-normal"> place plant freely </p>
                     </>
                 )}
             </div>
