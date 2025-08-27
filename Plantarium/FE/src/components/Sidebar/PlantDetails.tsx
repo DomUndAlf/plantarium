@@ -1,7 +1,7 @@
 import { Button } from "@headlessui/react";
 import { useContext } from "react";
 import { DialogContext } from "../dialogues/Dialogcontext";
-import { SinglePlantContext } from "../mainStructure/MainFrame";
+import { SinglePlantContext } from "../../contexts";
 
 
 

@@ -1,36 +1,12 @@
 import Header from "./Header";
 import Footer from "./Footer";
 import MainLayer from "../gardenItself/MainLayer";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IBed, IGarden, IStructure } from "../../interfaces/interfaces";
 import CreateGarden from "../CreateGarden";
 import Dialoge from "../dialogues/Dialoge";
 import { DialogContext, DialogType } from "../dialogues/Dialogcontext";
-
-export const UserContext = createContext<IGarden | null>(null);
-
-export const StructContext = createContext<{
-    structures: IStructure[];
-    setStructures: React.Dispatch<React.SetStateAction<IStructure[]>>;
-} | null>(null);
-
-export const BedsContext = createContext<{
-    beds: IBed[];
-    setBeds: React.Dispatch<React.SetStateAction<IBed[]>>;
-    activeBedId: number | null;
-    setActiveBedId: (id: number | null) => void;
-} | null>(null);
-
-export const BedPlantContext = createContext<{
-    bedPlants: any[];
-    setBedPlants: React.Dispatch<React.SetStateAction<any[]>>;
-} | null>(null);
-
-export const SinglePlantContext = createContext<{
-    [x: string]: any;
-    singularPlants: any[];
-    setSingularPlants: React.Dispatch<React.SetStateAction<any[]>>;
-} | null>(null);
+import { BedsContext, BedPlantContext, SinglePlantContext, StructContext, UserContext } from "../../contexts";
 
 function MainFrame() {
     const [user, setUser] = useState<IGarden | null>(null);
@@ -38,7 +14,6 @@ function MainFrame() {
     const [beds, setBeds] = useState<IBed[]>([]);
     const [bedPlants, setBedPlants] = useState<any[]>([]);
     const [singularPlants, setSingularPlants] = useState<any[]>([]);
-
 
     const [loading, setLoading] = useState(true);
     const [activeDialog, setActiveDialog] = useState<DialogType | null>(null);
@@ -129,7 +104,14 @@ useEffect(() => {
     }, [activeDialog]);
 
     if (loading) return <p className="text-white p-4">Lade...</p>;
-    if (!user) return <CreateGarden />;
+
+if (!user?.location) {
+  return (
+    <CreateGarden
+      onGardenCreated={(newGarden: IGarden) => setUser(newGarden)}
+    />
+  );
+}
 
 
     return (
@@ -147,7 +129,7 @@ useEffect(() => {
                                     setIsPlacing={setIsPlacing}
                                     pendingPlant={pendingPlant} setPendingPlant={function (p: any): void {
                                         throw new Error("Function not implemented.");
-                                    } }                                         />
+                                    } }                                         /> 
                                     <Footer />
                                     {activeDialog && (
                                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -167,5 +149,6 @@ useEffect(() => {
         </UserContext.Provider>
     )
 }
+
 
 export default MainFrame;

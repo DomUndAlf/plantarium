@@ -1,5 +1,5 @@
 import { Button } from "@headlessui/react";
-import { BedsContext } from "../mainStructure/MainFrame";
+import { BedsContext } from "../../contexts";
 import { useContext } from "react";
 import { IBed } from "../../interfaces/interfaces";
 

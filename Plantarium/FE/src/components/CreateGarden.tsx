@@ -2,7 +2,12 @@ import { Fieldset, Legend, Field, Input, Button, Label } from "@headlessui/react
 import { useState } from "react";
 import { IGarden } from "../interfaces/interfaces";
 
-function CreateGarden(){
+type Props = {
+  onGardenCreated: (garden: IGarden) => void;
+};
+
+
+function CreateGarden({ onGardenCreated }: Props){
     const [garden, setGarden] = useState<IGarden>({
         id: 0,
         name: "",
@@ -14,12 +19,12 @@ function CreateGarden(){
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGarden({
       ...garden,
-      [e.target.name]: e.target.value, //
+      [e.target.name]: e.target.value,
     });
   };
 
  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); //verhindert neuladen
+    e.preventDefault(); 
 
   if (
     !garden.name.trim() ||
@@ -50,6 +55,7 @@ function CreateGarden(){
       alert(data.error || "Fehler beim Speichern");
     } else {
       alert("Garten gespeichert!");
+       onGardenCreated(data.data);
     }
   };
 

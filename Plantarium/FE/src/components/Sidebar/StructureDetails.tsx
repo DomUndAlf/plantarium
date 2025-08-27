@@ -1,8 +1,7 @@
 import { Button } from "@headlessui/react";
 import { useContext } from "react";
 import { DialogContext } from "../dialogues/Dialogcontext";
-import { StructContext } from "../mainStructure/MainFrame";
-
+import { StructContext } from "../../contexts";
 import type { IStructure } from "../../interfaces/interfaces";
 
 import CabinIcon from '@mui/icons-material/Cabin';

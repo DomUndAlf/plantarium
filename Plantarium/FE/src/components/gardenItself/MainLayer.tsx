@@ -110,8 +110,8 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         type: isBed ? undefined : pendingStruct.type,
                         x_position: pos.x,
                         y_position: pos.y,
-                        width: pendingStruct.width * 200,
-                        height: pendingStruct.height * 200,
+                        width: pendingStruct.width * 100,
+                        height: pendingStruct.height * 100,
                     }),
                 }
             );
@@ -236,25 +236,25 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                     </Layer>
                     <Layer>
                         {singularPlants.map((p: {
-                            [x: string]: any; x_position: number | undefined; y_position: number | undefined; 
-}, i: any) => (
+                            [x: string]: any; x_position: number | undefined; y_position: number | undefined;
+                        }, i: any) => (
                             <Group>
-                            <Circle
-                                key={`plant-${i}`}
-                                x={p.x_position}
-                                y={p.y_position}
-                                radius={15} // kannst du dynamisch machen
-                                fill="green"
-                                shadowBlur={5}
-                            />
-                            <Text
-                                x={(p.x_position ?? 0) - 5}
-                                y={(p.y_position ?? 0) - 5}
-                                text={p.plants.id}
-                                fontFamily="Calibri"
-                                fontSize={12}
-                                fill="white"
-                            />
+                                <Circle
+                                    key={`plant-${i}`}
+                                    x={p.x_position}
+                                    y={p.y_position}
+                                    radius={15} // kannst du dynamisch machen
+                                    fill="green"
+                                    shadowBlur={5}
+                                />
+                                <Text
+                                    x={(p.x_position ?? 0) - 5}
+                                    y={(p.y_position ?? 0) - 5}
+                                    text={p.plants.id}
+                                    fontFamily="Calibri"
+                                    fontSize={12}
+                                    fill="white"
+                                />
                             </Group>
                         ))}
 
