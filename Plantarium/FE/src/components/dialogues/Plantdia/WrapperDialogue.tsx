@@ -1,7 +1,8 @@
 import { Dialog, DialogPanel, DialogTitle, Button } from "@headlessui/react";
 import PlantDialogue from "./Plantdialogue";
 import { useContext, useState } from "react";
-import { BedsContext } from "../../mainStructure/MainFrame";
+import { BedsContext } from "../../../contexts";
+
 
 type WrapperDialogueProps = {
   isOpen: boolean;

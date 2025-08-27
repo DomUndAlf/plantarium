@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IBed } from "../../interfaces/interfaces";
-import { BedsContext } from "../mainStructure/MainFrame";
+import { BedsContext } from "../../contexts";
 import { Button } from "@headlessui/react";
 import { DialogContext } from "../dialogues/Dialogcontext";
 

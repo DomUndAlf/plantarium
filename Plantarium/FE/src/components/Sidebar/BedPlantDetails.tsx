@@ -9,7 +9,9 @@ function PlantDetails() {
 
   return (
     <>
-      <h2 className="pl-8">Bed plants</h2>
+      {beds.length !== 0 &&
+        <h2 className="pl-8">Bed plants</h2>
+      }
       {beds.map((i) => {
         const bp = i.bed_plants[0];
         if (!bp) return null;
@@ -27,7 +29,7 @@ function PlantDetails() {
                   delete
                 </Button>
               </div>
-              
+
             </div>
           </div>
         );

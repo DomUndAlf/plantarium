@@ -32,9 +32,10 @@ function StructureDetails() {
     if (!structures || structures.length === 0) {
         { console.log("nix anzuzeigen"); }
         return (
-
+        <div className="flex items-center flex-col">
             <Button onClick={() => dialog.setActiveDialog("structure")} className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                 add new structure </Button>
+        </div>
         )
     }
 

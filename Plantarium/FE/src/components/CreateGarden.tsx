@@ -14,8 +14,7 @@ function CreateGarden({ onGardenCreated }: Props){
         location: "",
         height: "",
         width: ""});
-
-//Aktualisiert den Zustand (garden) bei jeder Änderung in einem Eingabefeld        
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGarden({
       ...garden,
@@ -36,7 +35,7 @@ function CreateGarden({ onGardenCreated }: Props){
     return;
   }
 
-    const res = await fetch("http://localhost:3001/users/me/garden", { //PUT request an diese route
+    const res = await fetch("http://localhost:3001/users/me/garden", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +60,7 @@ function CreateGarden({ onGardenCreated }: Props){
 
     return(
     <> 
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center min-h-screen">
         <form onSubmit={handleSubmit}>
         <Fieldset className="space-y-7 pt-10 pb-15 shadow-lg/20 bg-mint text-white p-5 rounded-xl w-[40vw]">
             <Legend className="text-2xl mx-auto w-1/2 font-semibold">Create your Garden</Legend>

@@ -1,7 +1,7 @@
 import { useState, useContext, useRef } from "react";
 import { Stage, Layer, Rect, Text, Group, Circle } from "react-konva";
 import useImage from "use-image";
-import { UserContext, StructContext, BedsContext, SinglePlantContext } from "../mainStructure/MainFrame";
+import { UserContext, StructContext, BedsContext, SinglePlantContext } from "../../contexts";
 import { IBed, IStructure } from "../../interfaces/interfaces";
 import { DialogContext } from "../dialogues/Dialogcontext";
 

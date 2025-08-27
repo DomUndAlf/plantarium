@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../mainStructure/MainFrame";
+import { UserContext } from "../../contexts";
 import { Button, Input } from "@headlessui/react";
 import { IGarden } from "../../interfaces/interfaces";
 
