@@ -14,7 +14,6 @@ app.use(cookieParser());
 
 app.get("/health", (_req, res) => res.json({ ok: true, service: "api" }));
 
-// exakt deine Pfade
 app.use("/me/garden/surfaces", surfaceRouter);
 app.use("/me/garden/individual-plants", individualPlantsRouter);
 app.use("/me/garden/beds", bedPlantsRouter);
