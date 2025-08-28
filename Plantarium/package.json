@@ -8,8 +8,9 @@
     "start": "npm-run-all --parallel start-front start-back",
 
     "dev:frontend": "cd FE && npm run dev",
-    "dev:backend": "cd BE && npm run dev:local",
-    "dev:all": "npm-run-all --parallel dev:frontend dev:backend",
+    "dev:auth": "cd aServices/auth && npm run dev",
+    "dev:api": "cd aServices/api && npm run dev",
+    "dev:all": "npm-run-all --parallel dev:frontend dev:auth dev:api",
 
     "build:frontend": "cd FE && npm run build",
     "build:backend": "cd BE && npm run build",

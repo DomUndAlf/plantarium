@@ -1,4 +1,3 @@
-version: '3.9'
 
 services:
   frontend:
@@ -7,17 +6,26 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
-  backend:
-    build: BE
+      - auth
+      - api
+  auth:
+    build: ./aServices/auth
+    container_name: auth
     env_file:
-    - ./BE/.env
-    container_name: backend
+      - ./aServices/auth/.env
     ports:
-      - "3001:3001"
-      - "127.0.10.1:8081:3001"
-      - "127.0.10.1:8082:5555" 
-      - "5555:5555"
+      - "3001:3000"        # Auth-Service extern auf :3001
+    depends_on:
+      - mysql
+
+  api:
+    build: ./aServices/api
+    container_name: api
+    env_file:
+      - ./aServices/api/.env
+    ports:
+      - "3002:3000"        # API-Service extern auf :3002
+      - "5555:5555"        # Prisma Studio (optional)
     depends_on:
       - mysql
   mysql:

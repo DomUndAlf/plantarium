@@ -25,7 +25,7 @@ function MainFrame() {
 
 useEffect(() => {
   const fetchAllBedPlants = async () => {
-    const res = await fetch("http://localhost:3001/me/garden/beds/plants", { credentials: "include" });
+    const res = await fetch("http://localhost:3002/me/garden/beds/plants", { credentials: "include" });
     if (res.ok) {
       const data = await res.json();
       setBeds(data);
@@ -36,7 +36,7 @@ useEffect(() => {
 }, []);
     useEffect(() => {
         const fetchSinglePlants = async () => {
-            const res = await fetch("http://localhost:3001/me/garden/individual-plants", { credentials: "include" });
+            const res = await fetch("http://localhost:3002/me/garden/individual-plants", { credentials: "include" });
             if (res.ok) {
                 const data = await res.json();
                 setSingularPlants(data);
@@ -50,8 +50,8 @@ useEffect(() => {
         const fetchData = async () => {
             try {
                 const [surfacesRes, bedsRes] = await Promise.all([
-                    fetch("http://localhost:3001/me/garden/surfaces", { credentials: "include" }),
-                    fetch("http://localhost:3001/me/garden/beds", { credentials: "include" }),
+                    fetch("http://localhost:3002/me/garden/surfaces", { credentials: "include" }),
+                    fetch("http://localhost:3002/me/garden/beds", { credentials: "include" }),
                 ]);
 
                 if (surfacesRes.ok) {
@@ -127,7 +127,7 @@ if (!user?.location) {
                                     <MainLayer isPlacing={isPlacing}
                                     pendingStruct={pendingStructure}
                                     setIsPlacing={setIsPlacing}
-                                    pendingPlant={pendingPlant} setPendingPlant={function (p: any): void {
+                                    pendingPlant={pendingPlant} setPendingPlant={function (): void {
                                         throw new Error("Function not implemented.");
                                     } }                                         /> 
                                     <Footer />

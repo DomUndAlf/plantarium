@@ -14,7 +14,7 @@ function Del({ isOpen, onClose, toDelete }: Props) {
     e.preventDefault();
     if (!toDelete) return;
 
-    await fetch(`http://localhost:3001/me/garden/surfaces/${toDelete.id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/me/garden/surfaces/${toDelete.id}`, {
       method: "DELETE",
       credentials: "include",
     });

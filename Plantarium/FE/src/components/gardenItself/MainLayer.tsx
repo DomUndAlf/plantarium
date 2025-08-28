@@ -101,7 +101,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
         try {
             const res = await fetch(
-                `http://localhost:3001/me/garden/${isBed ? "beds" : "surfaces"}`,
+                `http://localhost:3002/me/garden/${isBed ? "beds" : "surfaces"}`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -279,7 +279,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                         planting_date: pendingPlant.planting_date,
                                         plantData: pendingPlant.plantData,
                                     });
-                                    const res = await fetch("http://localhost:3001/me/garden/individual-plants", {
+                                    const res = await fetch("http://localhost:3002/me/garden/individual-plants", {
                                         method: "POST",
                                         headers: { "Content-Type": "application/json" },
                                         credentials: "include",

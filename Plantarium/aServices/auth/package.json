@@ -3,17 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "dev:local": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "prisma generate",
-    "pull": "docker-compose exec backend npx prisma db pull",
-    "generate": "docker-compose exec backend npx prisma generate",
-    "studio": "npx prisma studio",
-    "studioDocker": "docker-compose exec backend npx prisma studio"
-  },
+"scripts": {
+  "dev": "ts-node-dev --respawn src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "prisma:generate": "prisma generate"
+}
+,
   "author": "Dominique Fischer",
   "license": "ISC",
   "devDependencies": {
