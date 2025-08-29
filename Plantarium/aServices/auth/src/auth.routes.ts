@@ -4,19 +4,17 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// Einstieg: /auth/google
-router.get('/google', (_req, _res, next) => {
-  console.log('🚀 [GET] /auth/google aufgerufen');
+router.get('/gitlab', (_req, _res, next) => {
+  console.log('🚀 [GET] /auth/gitlab aufgerufen');
   next();
-}, passport.authenticate('google', { scope: ['email', 'profile'] }));
+}, passport.authenticate('gitlab', { scope: ['read_user'] }));
 
-// Callback: /auth/google/callback
-router.get('/google/callback', (_req, _res, next) => {
-  console.log('🔁 [GET] /auth/google/callback erreicht');
+router.get('/gitlab/callback', (_req, _res, next) => {
+  console.log('🔁 [GET] /auth/gitlab/callback erreicht');
   next();
-}, passport.authenticate('google', { session: false, failureRedirect: '/' }),
+}, passport.authenticate('gitlab', { session: false, failureRedirect: '/' }),
 (req, res) => {
-  console.log('✅ Google-Login erfolgreich, erstelle JWT');
+  console.log('✅ GitLab-Login erfolgreich, erstelle JWT');
 
   const user = req.user as any;
 
@@ -30,7 +28,7 @@ router.get('/google/callback', (_req, _res, next) => {
 
    res.cookie("jwt", token, {
       httpOnly: true,
-      secure: false, // lokal lieber false, sonst wird's nicht gesetzt!
+      secure: false, // lokal lieber false, sonst wird's nicht gesetzt! bei deployment auf true
       //sameSite: 'Lax', FÜR HTTPS
       maxAge: 3600000
     });

@@ -8,7 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const passport_1 = __importDefault(require("passport"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const user_routes_1 = __importDefault(require("./user.routes"));
-require("./auth/passport");
+require("./passport");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ origin: "http://localhost:3000", credentials: true }));
 app.use(express_1.default.json());

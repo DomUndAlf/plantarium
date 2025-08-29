@@ -2,7 +2,7 @@ import { Button } from "@headlessui/react";
 
 export default function Welcome() {
   const handleLogin = () => {
-    window.location.href = 'http://localhost:3001/auth/google'; //DEPL: tatsächliche BE Adresse
+    window.location.href = 'http://localhost:3001/auth/gitlab'; //DEPL: tatsächliche BE Adresse
   };
 
   return (
@@ -13,7 +13,7 @@ export default function Welcome() {
         className="bg-mint font-medium rounded-xl w-40 mt-7 p-2 text-white"
         onClick={handleLogin}
       >
-        Login mit Google
+        Login mit Gitlab
       </Button>
     </div>
   );
