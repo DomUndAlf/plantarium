@@ -16,7 +16,7 @@ app.get("/health", (_req, res) => res.json({ ok: true, service: "api" }));
 
 app.use("/me/garden/surfaces", surfaceRouter);
 app.use("/me/garden/individual-plants", individualPlantsRouter);
-app.use("/me/garden/beds", bedPlantsRouter);
+app.use("/me/garden/bed-plants", bedPlantsRouter);
 app.use("/me/garden/beds", bedRouter);
 
 export default app;
