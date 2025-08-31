@@ -2,7 +2,6 @@ import { Button } from "@headlessui/react";
 import { useContext } from "react";
 import { DialogContext } from "../dialogues/Dialogcontext";
 import { SinglePlantContext } from "../../contexts";
-import handleDelete from "../util/ondelete";
 
 function PlantDetails() {
   const { singularPlants, setSingularPlants } = useContext(SinglePlantContext) as {
@@ -11,6 +10,31 @@ function PlantDetails() {
   };
 
   const dialog = useContext(DialogContext);
+
+  async function deletePlant(plantId: number) {
+    const confirmed = confirm("Are you sure you want to delete this plant?");
+    if (!confirmed) return;
+
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/individual-plants/${plantId}`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    });
+
+    setSingularPlants((prev) => {
+      const plant = prev.find((p) => p.plant_id === plantId);
+      if (!plant) return prev;
+
+      return prev.filter((p) => p.plant_id !== plantId);
+    });
+
+    if (!res.ok) throw new Error("Fehler beim Löschen der Pflanze");
+    return res.json();
+  }
+
+
   return (
     <>
       {singularPlants.length !== 0 &&
@@ -25,7 +49,7 @@ function PlantDetails() {
             <p className="font-normal">planted on: {new Date(i.planting_date).toLocaleDateString()}</p>
             <p className="font-normal">location in garden: {i.x_position / 100}m, {i.y_position / 100}m</p>
             <div className="flex justify-center">
-              <Button onClick={() => handleDelete(`me/garden/individual-plants/${i.plant_id}`, setSingularPlants, i.plant_id)} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+              <Button onClick={() => deletePlant(i.plant_id)} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                 delete  </Button>
             </div>
 
