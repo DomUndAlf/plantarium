@@ -6,13 +6,13 @@ import { IBed, IGarden, IStructure } from "../../interfaces/interfaces";
 import CreateGarden from "../CreateGarden";
 import Dialoge from "../dialogues/Dialoge";
 import { DialogContext, DialogType } from "../dialogues/Dialogcontext";
-import { BedsContext, BedPlantContext, SinglePlantContext, StructContext, UserContext } from "../../contexts";
+import { BedsContext, SinglePlantContext, StructContext, UserContext } from "../../contexts";
 
 function MainFrame() {
     const [user, setUser] = useState<IGarden | null>(null);
     const [structures, setStructures] = useState<IStructure[]>([]);
     const [beds, setBeds] = useState<IBed[]>([]);
-    const [bedPlants, setBedPlants] = useState<any[]>([]);
+    const [, setBedPlants] = useState<any[]>([]);
     const [singularPlants, setSingularPlants] = useState<any[]>([]);
 
     const [loading, setLoading] = useState(true);
@@ -24,15 +24,7 @@ function MainFrame() {
     const [activeBedId, setActiveBedId] = useState<number | null>(null);
 
 useEffect(() => {
-  const fetchAllBedPlants = async () => {
-    const res = await fetch("http://localhost:3002/me/garden/beds/plants", { credentials: "include" });
-    if (res.ok) {
-      const data = await res.json();
-      setBeds(data);
-    }
-  };
 
-  fetchAllBedPlants();
 }, []);
     useEffect(() => {
         const fetchSinglePlants = async () => {
@@ -61,6 +53,7 @@ useEffect(() => {
                 if (bedsRes.ok) {
                     const data = await bedsRes.json();
                     setBeds(data.data);
+                    setBedPlants(data.data.flatMap((bed: IBed) => bed.plants));
                 }
             } catch (err) {
                 console.error("Fehler beim Laden der Garten-Daten", err);
@@ -119,7 +112,6 @@ if (!user?.location) {
             <StructContext.Provider value={{ structures, setStructures }}>
                 <BedsContext.Provider value={{ beds, setBeds, activeBedId, setActiveBedId }}>
                     <DialogContext.Provider value={{ setActiveDialog, activeDialog }}>
-                        <BedPlantContext.Provider value={{ bedPlants, setBedPlants }}>
                             <SinglePlantContext.Provider value={{ singularPlants, setSingularPlants }}>
                                 <div className="flex flex-col min-h-screen">
                                     <Header isSidebarOpen={isSidebarOpen}
@@ -142,7 +134,6 @@ if (!user?.location) {
                                     )}
                                 </div>
                             </SinglePlantContext.Provider>
-                        </BedPlantContext.Provider>
                     </DialogContext.Provider>
                 </BedsContext.Provider>
             </StructContext.Provider>

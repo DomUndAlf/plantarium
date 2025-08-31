@@ -15,11 +15,6 @@ export const BedsContext = createContext<{
     setActiveBedId: (id: number | null) => void;
 } | null>(null);
 
-export const BedPlantContext = createContext<{
-    bedPlants: any[];
-    setBedPlants: React.Dispatch<React.SetStateAction<any[]>>;
-} | null>(null);
-
 export const SinglePlantContext = createContext<
     {
         [x: string]: any;

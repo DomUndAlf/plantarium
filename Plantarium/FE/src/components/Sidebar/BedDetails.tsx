@@ -2,21 +2,36 @@ import { useContext } from "react";
 import { IBed } from "../../interfaces/interfaces";
 import { BedsContext } from "../../contexts";
 import { Button } from "@headlessui/react";
-import { DialogContext } from "../dialogues/Dialogcontext";
 
 function BedDetails() {
-    const dialog = useContext(DialogContext);
-    const { beds } = useContext(BedsContext) as { beds: IBed[]; setBeds: (updater: IBed[] | ((prev: IBed[]) => IBed[])) => void; };
+    const { beds, setBeds } = useContext(BedsContext) as { beds: IBed[]; setBeds: (updater: IBed[] | ((prev: IBed[]) => IBed[])) => void; };
 
     if (!beds || beds.length === 0) {
         { console.log("nix anzuzeigen"); }
         return null;
     }
 
+    async function deleteBed(bedId: number) {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/beds/${bedId}`, {
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "DELETE",
+        });
+
+        const confirmed = confirm("Are you sure you want to delete this bed?");
+        if (!confirmed) return;
+
+        setBeds((prevBeds) => prevBeds.filter((bed) => bed.id !== bedId));
+        if (!res.ok) throw new Error("Error deleting bed");
+        return res.json();
+    }
+
     return (
 
         <>
-        <h2 className="pl-8" > beds</h2>
+            <h2 className="pl-8" > beds</h2>
             {beds.map((bed) => (
                 <div key={bed.id} className="flex flex-col pl-2 rounded-xl  bg-white/80">
                     <h2 className="font-semibold text-black pl-5 pt-5"> bed {bed.id}</h2>
@@ -28,11 +43,9 @@ function BedDetails() {
                         <p className="font-normal">bed ID:  {bed.id} </p>
                     </div>
                     <div className="flex items-center justify-center w-full p-4">
-                    <Button onClick={() => dialog.setActiveDialog("bed")} className="p-2 m-2 pl-3 w-35 rounded-xl bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                        delete bed </Button>
-                    <Button onClick={() => dialog.setActiveDialog("bed")} className="m-2 p-2 pl-3 w-35 rounded-xl bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                        delete plants </Button>
-                        </div>
+                        <Button onClick={() => deleteBed(bed.id)} className="p-2 m-2 pl-3 w-35 rounded-xl bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                            delete bed </Button>
+                    </div>
                 </div>
             ))}
         </>

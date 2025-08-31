@@ -3,7 +3,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import surfaceRouter from "./routes/structBeds.routes";
 import bedRouter from "./routes/bed.routes";
-import bedPlantsRouter from "./routes/bedplants.routes";
 import individualPlantsRouter from "./routes/plants.router";
 
 const app = express();
@@ -16,7 +15,6 @@ app.get("/health", (_req, res) => res.json({ ok: true, service: "api" }));
 
 app.use("/me/garden/surfaces", surfaceRouter);
 app.use("/me/garden/individual-plants", individualPlantsRouter);
-app.use("/me/garden/bed-plants", bedPlantsRouter);
 app.use("/me/garden/beds", bedRouter);
 
 export default app;

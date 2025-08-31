@@ -5,7 +5,6 @@ import { plants_growth_type } from "@prisma/client";
 
 const individualPlantsRouter = Router();
 
-// 🟢 Alle individuellen Pflanzen holen
 individualPlantsRouter.get("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
@@ -25,7 +24,6 @@ individualPlantsRouter.get("/", async (req, res) => {
   }
 });
 
-// 🟢 Neue individuelle Pflanze anlegen
 individualPlantsRouter.post("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
@@ -41,7 +39,6 @@ individualPlantsRouter.post("/", async (req, res) => {
         .json({ error: "Name und Wasserbedarf sind erforderlich" });
     }
 
-    // 1️⃣ prüfen, ob Sorte schon existiert
     let plant = await prisma.plants.findFirst({
       where: {
         name: plantData.name,
@@ -50,7 +47,6 @@ individualPlantsRouter.post("/", async (req, res) => {
       },
     });
 
-    // 2️⃣ wenn nicht -> neue Sorte anlegen
     if (!plant) {
       plant = await prisma.plants.create({
         data: {
@@ -62,7 +58,6 @@ individualPlantsRouter.post("/", async (req, res) => {
       });
     }
 
-    // 3️⃣ individuellen Pflanzeneintrag anlegen
     const newIndividual = await prisma.individual_plants.create({
       data: {
         user_id: decoded.id,
@@ -82,7 +77,6 @@ individualPlantsRouter.post("/", async (req, res) => {
   }
 });
 
-// 🟢 Pflanze updaten
 individualPlantsRouter.put("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
@@ -126,7 +120,6 @@ individualPlantsRouter.put("/", async (req, res) => {
   }
 });
 
-// 🟢 Pflanze löschen
 individualPlantsRouter.delete("/", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });

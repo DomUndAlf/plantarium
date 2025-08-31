@@ -7,7 +7,7 @@ async function handleDelete(
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`http://localhost:3001/${endpoint}`, {
+    const res = await fetch(`http://localhost:3002/${endpoint}`, {
       method: "DELETE",
       credentials: "include",
     });

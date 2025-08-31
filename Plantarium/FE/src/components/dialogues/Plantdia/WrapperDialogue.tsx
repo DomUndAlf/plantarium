@@ -48,7 +48,7 @@ function WrapperDialogue({
     if (plantType === "bed" && activeBedId !== null) {
       try {
         const res = await fetch(
-          `/me/garden/beds/${activeBedId}/plants`,
+          `${import.meta.env.VITE_API_URL}/me/garden/beds/${activeBedId}/plants`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
