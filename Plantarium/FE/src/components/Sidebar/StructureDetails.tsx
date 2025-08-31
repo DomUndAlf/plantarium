@@ -21,10 +21,9 @@ function getIcon(type: string) {
     }
 }
 
-
 function StructureDetails() {
     const dialog = useContext(DialogContext);
-    const { structures } = useContext(StructContext) as {
+    const { structures, setStructures } = useContext(StructContext) as {
         structures: IStructure[];
         setStructures: (updater: IStructure[] | ((prev: IStructure[]) => IStructure[])) => void;
     };
@@ -32,16 +31,35 @@ function StructureDetails() {
     if (!structures || structures.length === 0) {
         { console.log("nix anzuzeigen"); }
         return (
-        <div className="flex items-center flex-col">
-            <Button onClick={() => dialog.setActiveDialog("structure")} className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
-                add new structure </Button>
-        </div>
+            <div className="flex items-center flex-col">
+                <Button onClick={() => dialog.setActiveDialog("structure")} className="m-3 p-2 pl-3 pr-3 rounded-xl bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                    add new structure </Button>
+            </div>
         )
     }
 
+    async function deleteStructure(surfaceId: number) {
+        const confirmed = confirm("Are you sure you want to delete this structure?");
+        if (!confirmed) return;
+
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/surfaces/${surfaceId}`, {
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "DELETE",
+        });
+
+        setStructures((prev) => prev.filter((s) => s.id !== surfaceId));
+
+        if (!res.ok) throw new Error("Fehler beim Löschen des Beets");
+        return res.json();
+    }
+
+
     return (
         <>
-           <h2 className="pl-8">surfaces</h2>
+            <h2 className="pl-8">surfaces</h2>
             {structures.map((i) => (
                 <div className="flex items-center flex-col  rounded-xl  bg-white/80 ">
                     <div className="w-90 p-5 pb-1 text-black">
@@ -50,7 +68,7 @@ function StructureDetails() {
                         <p className="font-normal">width: <span className="font-light"> {i.width / 100}m </span> </p>
                         <p className="font-normal">positioned at: <span className="font-light">width {i.x_position / 100}m, height {i.y_position / 100}m</span></p>
                     </div>
-                    <Button onClick={() => dialog.setActiveDialog("structure")} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl bg-mint/90 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                    <Button onClick={() => deleteStructure(i.id)} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl bg-mint/90 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                         delete </Button>
                 </div>
             ))}
