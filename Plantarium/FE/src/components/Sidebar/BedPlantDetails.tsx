@@ -5,7 +5,31 @@ import { IBed } from "../../interfaces/interfaces";
 
 function PlantDetails() {
 
-  const { beds } = useContext(BedsContext) as { beds: IBed[]; setBeds: (updater: IBed[] | ((prev: IBed[]) => IBed[])) => void; };
+  const { beds, setBeds } = useContext(BedsContext) as { beds: IBed[]; setBeds: (updater: IBed[] | ((prev: IBed[]) => IBed[])) => void; };
+
+  async function deletePlantInBed(bedId: number, plantId: number) {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/beds/${bedId}/plants/${plantId}`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    });
+
+    const confirmed = confirm("Are you sure you want to delete this plant?");
+    if (!confirmed) return;
+
+    setBeds((prev) => {
+      const bed = prev.find((b) => b.id === bedId);
+      if (!bed) return prev;
+
+      bed.bed_plants = bed.bed_plants.filter((p: { id: number; }) => p.id !== plantId);
+      return [...prev];
+    });
+
+    if (!res.ok) throw new Error("Fehler beim Löschen der Pflanze");
+    return res.json();
+  }
 
   return (
     <>
@@ -25,7 +49,7 @@ function PlantDetails() {
               <p className="font-normal">edible: {bp.plants?.edible ? "yes" : "no"}</p>
               <p className="font-normal">location in garden: Bed {i.id}</p>
               <div className="flex justify-center">
-                <Button className="m-3 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+                <Button onClick={() => deletePlantInBed(i.id, bp.id)} className="m-3 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                   delete
                 </Button>
               </div>
