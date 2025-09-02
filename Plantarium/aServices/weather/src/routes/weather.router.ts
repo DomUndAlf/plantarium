@@ -8,8 +8,14 @@ const prisma = new PrismaClient();
 const weatherRouter = Router();
 
 weatherRouter.get("/me/garden/weather", async (req, res) => {
-  const token = req.cookies?.jwt;
-  if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+  console.log("Authorization Header:", req.headers["authorization"]);
+
+  
+  const authHeader = req.headers["authorization"];
+if (!authHeader) return res.status(401).json({ error: "Nicht eingeloggt" });
+
+const token = authHeader.split(" ")[1];
+if (!token) return res.status(401).json({ error: "Token fehlt" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
@@ -32,23 +38,27 @@ weatherRouter.get("/me/garden/weather", async (req, res) => {
       params: {
         latitude,
         longitude,
-        hourly: "precipitation_sum",
-        past_days: 30, 
+        daily: "precipitation_sum",
+        past_days: 60, 
+         forecast_days: 1,  
         timezone: "Europe/Berlin"
       },
     });
 
     const data = response.data;
     const dates: string[] = data.daily?.time ?? [];
-    const precipitation = data.hourly?.precipitation ?? [];
+   const precipitation: number[] = data.daily?.precipitation_sum ?? [];
 
-    let lastRainDay: { date: string; precipitation: number } | null = null;
-    for (let i = dates.length - 1; i >= 0; i--) {
-      if (precipitation[i] > 0) {
-        lastRainDay = { date: dates[i], precipitation: precipitation[i] };
-        break;
-      }
-    }
+let lastRainDay: { date: string; precipitation: number } | null = null;
+for (let i = dates.length - 1; i >= 0; i--) {
+  if (precipitation[i] > 0.01) {
+    lastRainDay = { date: dates[i], precipitation: precipitation[i] };
+    break;
+  }
+}
+
+    console.log("Dates:", dates);
+console.log("Precipitation:", precipitation);
 
     res.json({
       location: { latitude, longitude },

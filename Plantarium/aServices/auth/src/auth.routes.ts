@@ -33,7 +33,8 @@ router.get('/gitlab/callback', (_req, _res, next) => {
       maxAge: 3600000
     });
 
-    res.redirect("http://localhost:3000/dashboard"); //DEPL 
+       res.redirect(`http://localhost:3000/dashboard?token=${token}`);
+       console.log("Redirecting to dashboard with token:", token);
   });
 
 export default router;

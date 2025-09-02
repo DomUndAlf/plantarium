@@ -23,6 +23,51 @@ function MainFrame() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeBedId, setActiveBedId] = useState<number | null>(null);
 
+    useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+
+  if (token) {
+    console.log("Token aus URL gefunden:", token);
+    localStorage.setItem("token", token);
+ console.log("Token jetzt im localStorage:", localStorage.getItem("token"));
+    // Query-Param aus der URL entfernen (optional)
+    window.history.replaceState({}, document.title, "/dashboard");
+  }
+}, []);
+
+useEffect(() => {
+  const fetchWeather = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("Kein Token gefunden → nicht eingeloggt");
+        return;
+      }
+
+      const res = await fetch("http://localhost:3003/me/garden/weather", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Wetterdaten:", data);
+        // optional: state setzen, falls du die Daten im UI brauchst
+        // setWeather(data);
+      } else {
+        console.warn("Wetter konnte nicht geladen werden", await res.json());
+      }
+    } catch (err) {
+      console.error("Fehler beim Laden des Wetters", err);
+    }
+  };
+
+  fetchWeather();
+}, []);
+
+
 useEffect(() => {
 
 }, []);

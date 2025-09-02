@@ -13,6 +13,17 @@ type Props = {
     setPendingPlant: (p: any | null) => void;
 };
 
+const token = localStorage.getItem("token");
+console.log("Using Token:", token);
+
+const res = await fetch("http://localhost:3003/me/garden/weather", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+const data = await res.json();
+console.log(data);
+
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant }: Props) {
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
@@ -34,6 +45,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
     const [terImg] = useImage("../../public/assets/terace.jpg");
     const [roofImg] = useImage("../../public/assets/roof.jpg");
     const [pathImg] = useImage("../../public/assets/path.jpg");
+
+
+
 
     if (!user) return <p className="text-white p-4">Lade Nutzerdaten...</p>;
 
