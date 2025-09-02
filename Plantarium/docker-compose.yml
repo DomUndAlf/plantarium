@@ -8,6 +8,7 @@ services:
     depends_on:
       - auth
       - api
+      - weather
   auth:
     build: ./aServices/auth
     container_name: auth
@@ -25,6 +26,17 @@ services:
       - ./aServices/api/.env
     ports:
       - "3002:3000"        # API-Service extern auf :3002
+      - "5556:5555"        # Prisma Studio (optional)
+    depends_on:
+      - mysql
+
+  weather:
+    build: ./aServices/weather
+    container_name: weather
+    env_file:
+      - ./aServices/weather/.env
+    ports:
+      - "3003:3000"        # Weather-Service extern auf :3003
       - "5555:5555"        # Prisma Studio (optional)
     depends_on:
       - mysql
