@@ -77,86 +77,32 @@ individualPlantsRouter.post("/", async (req, res) => {
   }
 });
 
-individualPlantsRouter.put("/", async (req, res) => {
+
+individualPlantsRouter.delete("/:plant_id/:x_position/:y_position", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    const { plant_id, x_position, y_position } = req.params;
 
-    const { plant_id, x_position, y_position, planting_date, watered } = req.body;
-
-    if (
-      plant_id === undefined ||
-      x_position === undefined ||
-      y_position === undefined
-    ) {
-      return res
-        .status(400)
-        .json({ error: "plant_id, x_position und y_position sind erforderlich" });
-    }
-
-    const updated = await prisma.individual_plants.updateMany({
+    const deleted = await prisma.individual_plants.delete({
       where: {
-        user_id: decoded.id,
-        plant_id: Number(plant_id),
-        x_position: Number(x_position),
-        y_position: Number(y_position),
-      },
-      data: {
-        ...(planting_date && { planting_date: new Date(planting_date) }),
-        ...(watered !== undefined && { watered }),
+        user_id_plant_id_x_position_y_position: {
+          user_id: decoded.id,
+          plant_id: Number(plant_id),
+          x_position: Number(x_position),
+          y_position: Number(y_position),
+        },
       },
     });
 
-    if (updated.count === 0) {
-      return res.status(404).json({ error: "Pflanze nicht gefunden" });
-    }
-
-    res.json({ success: true });
+    res.json(deleted);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Fehler beim Aktualisieren der Einzelpflanze" });
+    res.status(404).json({ error: "Pflanze nicht gefunden" });
   }
 });
 
-individualPlantsRouter.delete("/", async (req, res) => {
-  const token = req.cookies?.jwt;
-  if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
-
-    const { plant_id, x_position, y_position } = req.body;
-
-    if (
-      plant_id === undefined ||
-      x_position === undefined ||
-      y_position === undefined
-    ) {
-      return res
-        .status(400)
-        .json({ error: "plant_id, x_position und y_position sind erforderlich" });
-    }
-
-    const deleted = await prisma.individual_plants.deleteMany({
-      where: {
-        user_id: decoded.id,
-        plant_id: Number(plant_id),
-        x_position: Number(x_position),
-        y_position: Number(y_position),
-      },
-    });
-
-    if (deleted.count === 0) {
-      return res.status(404).json({ error: "Pflanze nicht gefunden" });
-    }
-
-    res.json({ success: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Fehler beim Löschen der Einzelpflanze" });
-  }
-});
 
 export default individualPlantsRouter;

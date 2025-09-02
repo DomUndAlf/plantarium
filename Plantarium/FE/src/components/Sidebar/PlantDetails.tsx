@@ -11,29 +11,29 @@ function PlantDetails() {
 
   const dialog = useContext(DialogContext);
 
-  async function deletePlant(plantId: number) {
-    const confirmed = confirm("Are you sure you want to delete this plant?");
-    if (!confirmed) return;
+async function deletePlant(plant: { plant_id: number; x_position: number; y_position: number }) {
+  const confirmed = confirm("Are you sure you want to delete this plant?");
+  if (!confirmed) return;
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/individual-plants/${plantId}`, {
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const res = await fetch(
+    `${import.meta.env.VITE_API_URL}/me/garden/individual-plants/${plant.plant_id}/${plant.x_position}/${plant.y_position}`,
+    {
       method: "DELETE",
-    });
+      credentials: "include",
+    }
+  );
 
-    setSingularPlants((prev) => {
-      const plant = prev.find((p) => p.plant_id === plantId);
-      if (!plant) return prev;
-
-      return prev.filter((p) => p.plant_id !== plantId);
-    });
-
-    if (!res.ok) throw new Error("Fehler beim Löschen der Pflanze");
-    return res.json();
+  if (!res.ok) {
+    const err = await res.json();
+    alert(err.error || "Fehler beim Löschen");
+    return;
   }
-
+   setSingularPlants(prev => prev.filter(p =>
+     !(p.plant_id === plant.plant_id &&
+       p.x_position === plant.x_position &&
+       p.y_position === plant.y_position)
+   ));
+}
 
   return (
     <>
@@ -49,7 +49,7 @@ function PlantDetails() {
             <p className="font-normal">planted on: {new Date(i.planting_date).toLocaleDateString()}</p>
             <p className="font-normal">location in garden: {i.x_position / 100}m, {i.y_position / 100}m</p>
             <div className="flex justify-center">
-              <Button onClick={() => deletePlant(i.plant_id)} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
+              <Button onClick={() => deletePlant(i)} className="m-4 p-2 pl-3 pr-3 w-30 rounded-xl text-white bg-mint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150">
                 delete  </Button>
             </div>
 
