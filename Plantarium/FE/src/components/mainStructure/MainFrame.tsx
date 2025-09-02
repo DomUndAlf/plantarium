@@ -9,6 +9,7 @@ import { DialogContext, DialogType } from "../dialogues/Dialogcontext";
 import { BedsContext, SinglePlantContext, StructContext, UserContext } from "../../contexts";
 
 function MainFrame() {
+    
     const [user, setUser] = useState<IGarden | null>(null);
     const [structures, setStructures] = useState<IStructure[]>([]);
     const [beds, setBeds] = useState<IBed[]>([]);
@@ -22,55 +23,55 @@ function MainFrame() {
     const [isPlacing, setIsPlacing] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeBedId, setActiveBedId] = useState<number | null>(null);
+    const [weather, setWeather] = useState<any | null>(null);
 
     useEffect(() => {
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get("token");
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
 
-  if (token) {
-    console.log("Token aus URL gefunden:", token);
-    localStorage.setItem("token", token);
- console.log("Token jetzt im localStorage:", localStorage.getItem("token"));
-    // Query-Param aus der URL entfernen (optional)
-    window.history.replaceState({}, document.title, "/dashboard");
-  }
-}, []);
+        if (token) {
+            console.log("Token aus URL gefunden:", token);
+            localStorage.setItem("token", token);
+            console.log("Token jetzt im localStorage:", localStorage.getItem("token"));
+            window.history.replaceState({}, document.title, "/dashboard");
+        }
+    }, []);
 
-useEffect(() => {
-  const fetchWeather = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.warn("Kein Token gefunden → nicht eingeloggt");
-        return;
-      }
+    useEffect(() => {
+        const fetchWeather = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    console.warn("Kein Token gefunden → nicht eingeloggt");
+                    return;
+                }
 
-      const res = await fetch("http://localhost:3003/me/garden/weather", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+                const res = await fetch("http://localhost:3003/me/garden/weather", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
-      if (res.ok) {
-        const data = await res.json();
-        console.log("Wetterdaten:", data);
-        // optional: state setzen, falls du die Daten im UI brauchst
-        // setWeather(data);
-      } else {
-        console.warn("Wetter konnte nicht geladen werden", await res.json());
-      }
-    } catch (err) {
-      console.error("Fehler beim Laden des Wetters", err);
-    }
-  };
+                if (res.ok) {
+                    const data = await res.json();
+                    console.log("Wetterdaten:", data);
+                    setWeather(data);
+                    console.log("Wetter im State gesetzt:", data);
+                } else {
+                    console.warn("Wetter konnte nicht geladen werden", await res.json());
+                }
+            } catch (err) {
+                console.error("Fehler beim Laden des Wetters", err);
+            }
+        };
 
-  fetchWeather();
-}, []);
+        fetchWeather();
+    }, []);
 
 
-useEffect(() => {
+    useEffect(() => {
 
-}, []);
+    }, []);
     useEffect(() => {
         const fetchSinglePlants = async () => {
             const res = await fetch("http://localhost:3002/me/garden/individual-plants", { credentials: "include" });
@@ -143,13 +144,13 @@ useEffect(() => {
 
     if (loading) return <p className="text-white p-4">Lade...</p>;
 
-if (!user?.location) {
-  return (
-    <CreateGarden
-      onGardenCreated={(newGarden: IGarden) => setUser(newGarden)}
-    />
-  );
-}
+    if (!user?.location) {
+        return (
+            <CreateGarden
+                onGardenCreated={(newGarden: IGarden) => setUser(newGarden)}
+            />
+        );
+    }
 
 
     return (
@@ -157,28 +158,28 @@ if (!user?.location) {
             <StructContext.Provider value={{ structures, setStructures }}>
                 <BedsContext.Provider value={{ beds, setBeds, activeBedId, setActiveBedId }}>
                     <DialogContext.Provider value={{ setActiveDialog, activeDialog }}>
-                            <SinglePlantContext.Provider value={{ singularPlants, setSingularPlants }}>
-                                <div className="flex flex-col min-h-screen">
-                                    <Header isSidebarOpen={isSidebarOpen}
-                                        setIsSidebarOpen={setIsSidebarOpen} />
-                                    <MainLayer isPlacing={isPlacing}
+                        <SinglePlantContext.Provider value={{ singularPlants, setSingularPlants }}>
+                            <div className="flex flex-col min-h-screen">
+                                <Header isSidebarOpen={isSidebarOpen}
+                                    setIsSidebarOpen={setIsSidebarOpen} />
+                                <MainLayer isPlacing={isPlacing}
                                     pendingStruct={pendingStructure}
-                                    setIsPlacing={setIsPlacing}
+                                    setIsPlacing={setIsPlacing} weather={weather}
                                     pendingPlant={pendingPlant} setPendingPlant={function (): void {
                                         throw new Error("Function not implemented.");
-                                    } }                                         /> 
-                                    <Footer />
-                                    {activeDialog && (
-                                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                                            <Dialoge activeDialog={activeDialog} onClose={() => setActiveDialog(null)}
-                                                setPendingStruct={setPendingStructure}
-                                                setIsPlacing={setIsPlacing}
-                                                  setPendingPlant={setPendingPlant} 
-                                            />
-                                        </div>
-                                    )}
-                                </div>
-                            </SinglePlantContext.Provider>
+                                    }} />
+                                <Footer />
+                                {activeDialog && (
+                                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                                        <Dialoge activeDialog={activeDialog} onClose={() => setActiveDialog(null)}
+                                            setPendingStruct={setPendingStructure}
+                                            setIsPlacing={setIsPlacing}
+                                            setPendingPlant={setPendingPlant}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        </SinglePlantContext.Provider>
                     </DialogContext.Provider>
                 </BedsContext.Provider>
             </StructContext.Provider>

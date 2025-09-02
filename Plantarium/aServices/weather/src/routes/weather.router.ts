@@ -49,6 +49,8 @@ if (!token) return res.status(401).json({ error: "Token fehlt" });
     const dates: string[] = data.daily?.time ?? [];
    const precipitation: number[] = data.daily?.precipitation_sum ?? [];
 
+    const today = new Date().toISOString().split("T")[0];
+
 let lastRainDay: { date: string; precipitation: number } | null = null;
 for (let i = dates.length - 1; i >= 0; i--) {
   if (precipitation[i] > 0.01) {
@@ -57,12 +59,21 @@ for (let i = dates.length - 1; i >= 0; i--) {
   }
 }
 
+    let last5DaysSum = 0;
+    const todayIndex = dates.findIndex((d) => d === today);
+    if (todayIndex !== -1) {
+      const start = Math.max(0, todayIndex - 4);
+      const recent5 = precipitation.slice(start, todayIndex + 1);
+      last5DaysSum = recent5.reduce((a, b) => a + b, 0);
+    }
+
     console.log("Dates:", dates);
 console.log("Precipitation:", precipitation);
 
     res.json({
       location: { latitude, longitude },
-      lastRainDay
+      lastRainDay,
+        last5DaysSum
     });
   } catch (err) {
     console.error(err);

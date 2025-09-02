@@ -11,6 +11,7 @@ type Props = {
     setIsPlacing: (v: boolean) => void;
     pendingPlant: any | null;
     setPendingPlant: (p: any | null) => void;
+    weather: any | null;
 };
 
 const token = localStorage.getItem("token");
@@ -24,7 +25,8 @@ const res = await fetch("http://localhost:3003/me/garden/weather", {
 const data = await res.json();
 console.log(data);
 
-function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant }: Props) {
+function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant, weather }: Props) {
+      console.log("Weather in MainLayer:", weather);
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
     const { beds, setBeds, setActiveBedId } = useContext(BedsContext)!;
@@ -154,6 +156,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
     return (
         <main className="flex-grow pt-[60px] w-full overflow-auto">
+
+            <p> the last time it rained in your garden was: {weather?.lastRainDay?.date ?? "—"} </p>
+            <p> it rained {weather?.last5DaysSum ?? "—"} mm</p>
             <div className="w-full flex justify-center mt-5">
                 <Stage
                     width={gardenWidth}
