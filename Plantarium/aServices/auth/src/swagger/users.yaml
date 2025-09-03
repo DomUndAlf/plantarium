@@ -1,0 +1,41 @@
+paths:
+  /users/me:
+    get:
+      summary: Hole Daten des eingeloggten Nutzers
+      tags: [Users]
+      responses:
+        "200":
+          description: Nutzer gefunden
+        "401":
+          description: Nicht eingeloggt oder ungültiges Token
+        "404":
+          description: Nutzer nicht gefunden
+
+  /users/me/garden:
+    put:
+      summary: Aktualisiere Gartendaten
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                location:
+                  type: string
+                height:
+                  type: number
+                width:
+                  type: number
+      responses:
+        "200":
+          description: Garten erfolgreich aktualisiert
+        "400":
+          description: Ungültiges Eingabeformat
+        "401":
+          description: Nicht eingeloggt oder ungültiges Token
+        "404":
+          description: Nutzer nicht gefunden

@@ -1,0 +1,28 @@
+tags:
+  - name: Auth
+    description: Login über GitLab
+
+paths:
+  /auth/gitlab:
+    get:
+      summary: "Login mit GitLab starten"
+      description: |
+        Startet den OAuth2-Login-Prozess bei GitLab.
+        Leitet den Benutzer zu GitLab weiter.
+      tags: [Auth]
+      responses:
+        "302":
+          description: Redirect zu GitLab OAuth2
+
+  /auth/gitlab/callback:
+    get:
+      summary: "GitLab OAuth Callback"
+      description: |
+        Callback, den GitLab nach erfolgreichem Login aufruft.  
+        Erstellt ein JWT, setzt es als HttpOnly-Cookie `jwt` und leitet den Benutzer weiter auf das Dashboard.
+      tags: [Auth]
+      responses:
+        "302":
+          description: Redirect zum Frontend mit JWT-Token als Query-Parameter
+        "401":
+          description: Fehler bei der Authentifizierung

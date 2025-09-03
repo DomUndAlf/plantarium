@@ -9,6 +9,7 @@ router.get('/gitlab', (_req, _res, next) => {
   next();
 }, passport.authenticate('gitlab', { scope: ['read_user'] }));
 
+
 router.get('/gitlab/callback', (_req, _res, next) => {
   console.log('🔁 [GET] /auth/gitlab/callback erreicht');
   next();

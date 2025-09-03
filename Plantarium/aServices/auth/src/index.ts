@@ -2,7 +2,7 @@ import app from "./app";
 import passport from "passport";
 import dotenv from "dotenv";
 import path from "path";
-import authRoutes from "./auth.routes";
+import authRoutes from "./routes/auth.routes";
 import "./passport";               
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
