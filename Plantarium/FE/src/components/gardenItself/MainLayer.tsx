@@ -42,11 +42,11 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
     const dialog = useContext(DialogContext);
 
-    const [grassImg] = useImage("../../public/assets/grass.jpg");
-    const [bedImg] = useImage("../../public/assets/soil.jpg");
-    const [terImg] = useImage("../../public/assets/terace.jpg");
-    const [roofImg] = useImage("../../public/assets/roof.jpg");
-    const [pathImg] = useImage("../../public/assets/path.jpg");
+    const [grassImg] = useImage("../../assets/grass.jpg");
+    const [bedImg] = useImage("../../assets/soil.jpg");
+    const [terImg] = useImage("../../assets/terace.jpg");
+    const [roofImg] = useImage("../../assets/roof.jpg");
+    const [pathImg] = useImage("../../assets/path.jpg");
 
 
 
@@ -298,7 +298,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                         planting_date: pendingPlant.planting_date,
                                         plantData: pendingPlant.plantData,
                                     });
-                                    const res = await fetch("http://localhost:3002/me/garden/individual-plants", {
+                                    const res = await fetch("http://localhost:3004/me/garden/individual-plants", {
                                         method: "POST",
                                         headers: { "Content-Type": "application/json" },
                                         credentials: "include",

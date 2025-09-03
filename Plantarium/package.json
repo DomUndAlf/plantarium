@@ -9,9 +9,11 @@
 
     "dev:frontend": "cd FE && npm run dev",
     "dev:auth": "cd aServices/auth && npm run dev",
-    "dev:api": "cd aServices/api && npm run dev",
+    "dev:plants": "cd aServices/plants && npm run dev",
+    "dev:beds": "cd aServices/beds && npm run dev",
+    "dev:struct": "cd aServices/struct && npm run dev",
     "dev:weather": "cd aServices/weather && npm run dev",
-    "dev:all": "npm-run-all --parallel dev:frontend dev:auth dev:api dev:weather ",
+    "dev:all": "npm-run-all --parallel dev:frontend dev:auth dev:plants dev:beds dev:struct dev:weather ",
 
     "build:frontend": "cd FE && npm run build",
     "build:backend": "cd BE && npm run build",

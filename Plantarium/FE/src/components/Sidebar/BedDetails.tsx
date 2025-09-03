@@ -12,7 +12,7 @@ function BedDetails() {
     }
 
     async function deleteBed(bedId: number) {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/beds/${bedId}`, {
+        const res = await fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds/${bedId}`, {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",

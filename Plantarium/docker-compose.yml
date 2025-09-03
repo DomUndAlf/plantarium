@@ -7,7 +7,9 @@ services:
       - "3000:3000"
     depends_on:
       - auth
-      - api
+      - beds
+      - plants
+      - struct
       - weather
   auth:
     build: ./aServices/auth
@@ -19,14 +21,36 @@ services:
     depends_on:
       - mysql
 
-  api:
-    build: ./aServices/api
-    container_name: api
+  beds:
+    build: ./aServices/beds
+    container_name: beds
     env_file:
-      - ./aServices/api/.env
+      - ./aServices/beds/.env
     ports:
       - "3002:3000"        # API-Service extern auf :3002
       - "5556:5555"        # Prisma Studio (optional)
+    depends_on:
+      - mysql
+
+  plants:
+    build: ./aServices/plants
+    container_name: plants
+    env_file:
+      - ./aServices/plants/.env
+    ports:
+      - "3004:3000"        # API-Service extern auf :3002
+      - "5557:5555"        # Prisma Studio (optional)
+    depends_on:
+      - mysql
+
+  struct:
+    build: ./aServices/struct
+    container_name: struct
+    env_file:
+      - ./aServices/struct/.env
+    ports:
+      - "3005:3000"        # API-Service extern auf :3002
+      - "5558:5555"        # Prisma Studio (optional)
     depends_on:
       - mysql
 

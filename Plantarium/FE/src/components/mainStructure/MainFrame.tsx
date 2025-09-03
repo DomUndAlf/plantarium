@@ -74,7 +74,7 @@ function MainFrame() {
     }, []);
     useEffect(() => {
         const fetchSinglePlants = async () => {
-            const res = await fetch("http://localhost:3002/me/garden/individual-plants", { credentials: "include" });
+            const res = await fetch("http://localhost:3004/me/garden/individual-plants", { credentials: "include" });
             if (res.ok) {
                 const data = await res.json();
                 setSingularPlants(data);
@@ -88,7 +88,7 @@ function MainFrame() {
         const fetchData = async () => {
             try {
                 const [surfacesRes, bedsRes] = await Promise.all([
-                    fetch("http://localhost:3002/me/garden/surfaces", { credentials: "include" }),
+                    fetch("http://localhost:3005/me/garden/surfaces", { credentials: "include" }),
                     fetch("http://localhost:3002/me/garden/beds", { credentials: "include" }),
                 ]);
 

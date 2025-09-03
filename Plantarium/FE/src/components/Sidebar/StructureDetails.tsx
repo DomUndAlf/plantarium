@@ -42,7 +42,7 @@ function StructureDetails() {
         const confirmed = confirm("Are you sure you want to delete this structure?");
         if (!confirmed) return;
 
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/surfaces/${surfaceId}`, {
+        const res = await fetch(`${import.meta.env.VITE_STRUCT_URL}/me/garden/surfaces/${surfaceId}`, {
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",

@@ -8,7 +8,7 @@ function PlantDetails() {
   const { beds, setBeds } = useContext(BedsContext) as { beds: IBed[]; setBeds: (updater: IBed[] | ((prev: IBed[]) => IBed[])) => void; };
 
   async function deletePlantInBed(bedId: number, plantId: number) {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/me/garden/beds/${bedId}/plants/${plantId}`, {
+    const res = await fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds/${bedId}/plants/${plantId}`, {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",

@@ -16,7 +16,7 @@ async function deletePlant(plant: { plant_id: number; x_position: number; y_posi
   if (!confirmed) return;
 
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/me/garden/individual-plants/${plant.plant_id}/${plant.x_position}/${plant.y_position}`,
+    `${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants/${plant.plant_id}/${plant.x_position}/${plant.y_position}`,
     {
       method: "DELETE",
       credentials: "include",
