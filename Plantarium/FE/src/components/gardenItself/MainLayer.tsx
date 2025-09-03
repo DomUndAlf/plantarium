@@ -18,15 +18,15 @@ const token = localStorage.getItem("token");
 console.log("Using Token:", token);
 
 const res = await fetch(`${import.meta.env.VITE_WEATHER_URL}/me/garden/weather`, {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
 });
 const data = await res.json();
 console.log(data);
 
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant, weather }: Props) {
-      console.log("Weather in MainLayer:", weather);
+    console.log("Weather in MainLayer:", weather);
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
     const { beds, setBeds, setActiveBedId } = useContext(BedsContext)!;
@@ -115,9 +115,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
         const pos = e.target.position();
         const isBed = pendingStruct.type === "bed";
 
+        const baseUrl = isBed
+            ? import.meta.env.VITE_BEDS_URL
+            : import.meta.env.VITE_STRUCT_URL;
+
         try {
             const res = await fetch(
-                `${import.meta.env.VITE_BEDS_URL}/me/garden/${isBed ? "beds" : "surfaces"}`,
+                `${baseUrl}/me/garden/${isBed ? "beds" : "surfaces"}`,
+                
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -130,8 +135,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         height: pendingStruct.height * 100,
                     }),
                 }
+                
             );
-
+            console.log("baseUrl", baseUrl);
             if (res.ok) {
                 const data = await res.json();
                 const newStruct = {
