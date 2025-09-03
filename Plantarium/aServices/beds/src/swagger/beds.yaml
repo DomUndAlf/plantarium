@@ -1,0 +1,217 @@
+tags:
+  - name: Beds
+    description: Verwaltung der Beete und Beetpflanzen
+
+paths:
+  /me/garden/beds:
+    post:
+      summary: "Beet anlegen"
+      tags: [Beds]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - x_position
+                - y_position
+                - width
+                - height
+              properties:
+                x_position:
+                  type: number
+                  example: 10
+                y_position:
+                  type: number
+                  example: 20
+                width:
+                  type: number
+                  example: 200
+                height:
+                  type: number
+                  example: 150
+      responses:
+        "201":
+          description: Neues Beet erfolgreich angelegt
+        "400":
+          description: Ungültige Eingabedaten
+        "401":
+          description: Nicht eingeloggt
+    get:
+      summary: "Alle Beete des Nutzers laden"
+      tags: [Beds]
+      responses:
+        "200":
+          description: Liste der Beete
+        "401":
+          description: Nicht eingeloggt
+
+  /me/garden/beds/{id}:
+    put:
+      summary: "Beet aktualisieren"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID des Beets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x_position:
+                  type: number
+                y_position:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+      responses:
+        "200":
+          description: Beet aktualisiert
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet nicht gefunden
+    delete:
+      summary: "Beet löschen"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID des Beets
+      responses:
+        "200":
+          description: Beet gelöscht
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet nicht gefunden
+
+  /me/garden/beds/{bedId}/plants:
+    get:
+      summary: "Alle Pflanzen in einem Beet laden"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: bedId
+          required: true
+          schema:
+            type: integer
+          description: ID des Beets
+      responses:
+        "200":
+          description: Liste der Beetpflanzen
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet nicht gefunden
+    post:
+      summary: "Pflanze in Beet anlegen"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: bedId
+          required: true
+          schema:
+            type: integer
+          description: ID des Beets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - planting_date
+                - plantData
+              properties:
+                planting_date:
+                  type: string
+                  format: date-time
+                  example: "2025-09-03T00:00:00.000Z"
+                plantData:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Tomate
+                    edible:
+                      type: boolean
+                      example: true
+                    watering_interval:
+                      type: number
+                      example: 3
+      responses:
+        "200":
+          description: Pflanze erfolgreich angelegt
+        "400":
+          description: In diesem Beet ist schon eine Pflanze vorhanden
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet nicht gefunden
+
+  /me/garden/beds/{bedId}/plants/{plantId}:
+    put:
+      summary: "Beetpflanze aktualisieren"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: bedId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: plantId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                planting_date:
+                  type: string
+                  format: date-time
+      responses:
+        "200":
+          description: Beetpflanze aktualisiert
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet oder Pflanze nicht gefunden
+    delete:
+      summary: "Beetpflanze löschen"
+      tags: [Beds]
+      parameters:
+        - in: path
+          name: bedId
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: plantId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Beetpflanze gelöscht
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Beet oder Pflanze nicht gefunden
