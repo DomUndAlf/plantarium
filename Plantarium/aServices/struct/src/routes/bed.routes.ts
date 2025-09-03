@@ -225,7 +225,10 @@ bedRouter.delete("/:bedId/plants/:plantId", async (req, res) => {
     if (!bed) return res.status(404).json({ error: "Beet nicht gefunden" });
 
     const deleted = await prisma.bed_plants.delete({
-      where: { bed_id_plant_id: { bed_id: bedId, plant_id: plantId } }, // oder id: plantId, falls dein Schema eigenes PK hat
+      where: { 
+        bed_id_plant_id: { 
+          bed_id: bedId, 
+          plant_id: plantId } },
       include: { plants: true },
     });
 
