@@ -35,7 +35,7 @@ function CreateGarden({ onGardenCreated }: Props){
     return;
   }
 
-    const res = await fetch("http://localhost:3001/users/me/garden", {
+    const res = await fetch(`${import.meta.env.VITE_AUTH_URL}/users/me/garden`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

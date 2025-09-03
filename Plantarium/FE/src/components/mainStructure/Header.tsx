@@ -12,7 +12,7 @@ function Header({ isSidebarOpen, setIsSidebarOpen }: Props) {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await fetch("http://localhost:3001/users/me", {
+            const res = await fetch(`${import.meta.env.VITE_AUTH_URL}/users/me`, {
                 credentials: "include",
             });
 

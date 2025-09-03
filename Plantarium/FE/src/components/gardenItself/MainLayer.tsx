@@ -17,7 +17,7 @@ type Props = {
 const token = localStorage.getItem("token");
 console.log("Using Token:", token);
 
-const res = await fetch("http://localhost:3003/me/garden/weather", {
+const res = await fetch(`${import.meta.env.VITE_WEATHER_URL}/me/garden/weather`, {
   headers: {
     Authorization: `Bearer ${token}`,
   },
@@ -117,7 +117,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
         try {
             const res = await fetch(
-                `http://localhost:3002/me/garden/${isBed ? "beds" : "surfaces"}`,
+                `${import.meta.env.VITE_BEDS_URL}/me/garden/${isBed ? "beds" : "surfaces"}`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -298,7 +298,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                         planting_date: pendingPlant.planting_date,
                                         plantData: pendingPlant.plantData,
                                     });
-                                    const res = await fetch("http://localhost:3004/me/garden/individual-plants", {
+                                    const res = await fetch(`${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants`, {
                                         method: "POST",
                                         headers: { "Content-Type": "application/json" },
                                         credentials: "include",

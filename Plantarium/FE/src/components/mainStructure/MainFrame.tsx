@@ -7,7 +7,6 @@ import CreateGarden from "../CreateGarden";
 import Dialoge from "../dialogues/Dialoge";
 import { DialogContext, DialogType } from "../dialogues/Dialogcontext";
 import { BedsContext, SinglePlantContext, StructContext, UserContext } from "../../contexts";
-
 function MainFrame() {
     
     const [user, setUser] = useState<IGarden | null>(null);
@@ -46,7 +45,7 @@ function MainFrame() {
                     return;
                 }
 
-                const res = await fetch("http://localhost:3003/me/garden/weather", {
+                const res = await fetch(`${import.meta.env.VITE_WEATHER_URL}/me/garden/weather`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -74,7 +73,7 @@ function MainFrame() {
     }, []);
     useEffect(() => {
         const fetchSinglePlants = async () => {
-            const res = await fetch("http://localhost:3004/me/garden/individual-plants", { credentials: "include" });
+            const res = await fetch(`${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants`, { credentials: "include" });
             if (res.ok) {
                 const data = await res.json();
                 setSingularPlants(data);
@@ -88,8 +87,8 @@ function MainFrame() {
         const fetchData = async () => {
             try {
                 const [surfacesRes, bedsRes] = await Promise.all([
-                    fetch("http://localhost:3005/me/garden/surfaces", { credentials: "include" }),
-                    fetch("http://localhost:3002/me/garden/beds", { credentials: "include" }),
+                    fetch(`${import.meta.env.VITE_STRUCT_URL}/me/garden/surfaces`, { credentials: "include" }),
+                    fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds`, { credentials: "include" }),
                 ]);
 
                 if (surfacesRes.ok) {
@@ -114,7 +113,7 @@ function MainFrame() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await fetch("http://localhost:3001/users/me", {
+                const res = await fetch(`${import.meta.env.VITE_AUTH_URL}/users/me`, {
                     credentials: "include",
                 });
 
