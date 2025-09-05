@@ -40,6 +40,12 @@ export function setupSwagger(app: Express) {
       title: "Plantarium API",
       version: "1.0.0",
     },
+     servers: [
+      {
+        url: process.env.VITE_BEDS_URL,
+        description: "Beds Service lokal",
+      },
+    ],
     paths: {
       ...bedsDoc.paths,
     },

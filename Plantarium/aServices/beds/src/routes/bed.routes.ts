@@ -161,7 +161,10 @@ bedRouter.post("/:bedId/plants", async (req, res) => {
         .status(400)
         .json({ error: "In diesem Beet ist schon eine Pflanze vorhanden" });
     }
-
+    console.log({
+  ...plantData,
+  last_watered: new Date("2000-01-01T00:00:00.000Z"),
+});
     const newEntry = await prisma.bed_plants.create({
       data: {
         planting_date: new Date(planting_date),
