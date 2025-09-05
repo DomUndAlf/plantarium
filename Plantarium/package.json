@@ -6,7 +6,6 @@
     "start-front": "cd FE && npm run dev",
     "start-back": "cd BE && npm run dev:local",
     "start": "npm-run-all --parallel start-front start-back",
-
     "dev:frontend": "cd FE && npm run dev",
     "dev:auth": "cd aServices/auth && npm run dev",
     "dev:plants": "cd aServices/plants && npm run dev",
@@ -14,16 +13,17 @@
     "dev:struct": "cd aServices/struct && npm run dev",
     "dev:weather": "cd aServices/weather && npm run dev",
     "dev:all": "npm-run-all --parallel dev:frontend dev:auth dev:plants dev:beds dev:struct dev:weather ",
-
     "build:frontend": "cd FE && npm run build",
     "build:backend": "cd BE && npm run build",
     "build:all": "npm-run-all build:frontend build:backend",
-
     "format:frontend": "cd FE && npx prettier --write .",
     "format:backend": "cd BE && npx prettier --write .",
     "format:all": "npm run format:frontend && npm run format:backend"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.15.0"
   }
 }

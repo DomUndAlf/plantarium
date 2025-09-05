@@ -1,10 +1,10 @@
 import passport from 'passport';
 // @ts-ignore
 import { Strategy as GitLabStrategy } from 'passport-gitlab2';
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../shared/prismaClient";
+import dotenv from 'dotenv';
 
-const prisma = new PrismaClient();
-
+dotenv.config()
 interface GitLabProfileEmail {
   value: string;
   verified?: boolean;

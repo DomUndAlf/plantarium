@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../prismaClient";
-import { plants_growth_type } from "@prisma/client";
+import prisma from "../../../../shared/prismaClient";
+import { plants_growth_type } from "../../../../shared/prisma/types";
 
 const individualPlantsRouter = Router();
 
@@ -53,7 +53,7 @@ individualPlantsRouter.post("/", async (req, res) => {
           name: plantData.name,
           watering_interval: Number(plantData.watering_interval),
           growth_type: plants_growth_type.single,
-          watered: false,
+          last_watered: new Date("2000-01-01T00:00:00.000Z"),
         },
       });
     }
@@ -65,7 +65,8 @@ individualPlantsRouter.post("/", async (req, res) => {
         x_position: Number(x_position),
         y_position: Number(y_position),
         planting_date: new Date(planting_date),
-        watered: false,
+        last_watered: new Date("2000-01-01T00:00:00.000Z"),
+
       },
       include: { plants: true },
     });

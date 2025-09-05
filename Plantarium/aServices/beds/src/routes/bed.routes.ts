@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { prisma } from "../prismaClient";
+import prisma from "../../../../shared/prismaClient";
 
 const bedRouter = Router();
 
@@ -170,7 +170,7 @@ bedRouter.post("/:bedId/plants", async (req, res) => {
         planting_date: new Date(planting_date),
         beds: { connect: { id: bedId } },
         plants: {
-          create: { ...plantData, growth_type: "bed", watered: false },
+          create: { ...plantData, growth_type: "bed", last_watered: new Date("2000-01-01T00:00:00.000Z") },
         },
       },
       include: { plants: true },

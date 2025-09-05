@@ -1,9 +1,7 @@
 import axios from "axios";
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../../../shared/prismaClient";
 
 const weatherRouter = Router();
 
