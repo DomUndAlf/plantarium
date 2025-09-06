@@ -44,13 +44,11 @@ function MainFrame() {
                     console.warn("Kein Token gefunden → nicht eingeloggt");
                     return;
                 }
-
                 const res = await fetch(`${import.meta.env.VITE_WEATHER_URL}/me/garden/weather`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
                 if (res.ok) {
                     const data = await res.json();
                     console.log("Wetterdaten:", data);
@@ -150,7 +148,6 @@ function MainFrame() {
             />
         );
     }
-
 
     return (
         <UserContext.Provider value={user}>

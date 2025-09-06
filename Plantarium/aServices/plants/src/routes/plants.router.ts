@@ -119,7 +119,6 @@ individualPlantsRouter.put("/:id", async (req, res) => {
   }
 });
 
-
 individualPlantsRouter.delete("/:plant_id/:x_position/:y_position", async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });

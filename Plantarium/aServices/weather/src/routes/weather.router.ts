@@ -8,8 +8,7 @@ const weatherRouter = Router();
 weatherRouter.get("/me/garden/weather", async (req, res) => {
   console.log("Authorization Header:", req.headers["authorization"]);
 
-  
-  const authHeader = req.headers["authorization"];
+const authHeader = req.headers["authorization"];
 if (!authHeader) return res.status(401).json({ error: "Nicht eingeloggt" });
 
 const token = authHeader.split(" ")[1];

@@ -14,17 +14,6 @@ type Props = {
     weather: any | null;
 };
 
-const token = localStorage.getItem("token");
-console.log("Using Token:", token);
-
-const res = await fetch(`${import.meta.env.VITE_WEATHER_URL}/me/garden/weather`, {
-    headers: {
-        Authorization: `Bearer ${token}`,
-    },
-});
-const data = await res.json();
-console.log(data);
-
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant, weather }: Props) {
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
@@ -57,11 +46,11 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
     const [needsWatering, setNeedsWatering] = useState<boolean>(false);
 
     const enoughWater = (entity: IBedPlant | IPlant) => {
-        const last5DaysSum = weather.last5DaysSum;
-         const interval = (entity as any).plants?.watering_interval;
+        const last5DaysSum = weather?.last5DaysSum ?? 0;
+        const interval = (entity as any)?.plants?.watering_interval;
         console.log(interval, last5DaysSum);
         if (interval === 1 && last5DaysSum > 7) return true;
-        if (interval === 2 && last5DaysSum > 12)return true;
+        if (interval === 2 && last5DaysSum > 12) return true;
         if (interval === 3 && last5DaysSum > 16) return true;
         else return false;
     };
@@ -159,7 +148,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
         try {
             const res = await fetch(
                 `${baseUrl}/me/garden/${isBed ? "beds" : "surfaces"}`,
-
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -172,7 +160,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         height: pendingStruct.height * 100,
                     }),
                 }
-
             );
             console.log("baseUrl", baseUrl);
             if (res.ok) {
@@ -182,13 +169,11 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                     width: pendingStruct.width * 100,
                     height: pendingStruct.height * 100,
                 };
-
                 if (isBed) {
                     setBeds((prev: IBed[]) => [...prev, newStruct]);
                 } else {
                     setStructures((prev: IStructure[]) => [...prev, newStruct]);
                 }
-
                 setIsPlacing(false);
                 setDragPos(null);
             }
@@ -235,13 +220,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                     y={s.y_position}
                                     width={s.width}
                                     height={s.height}
+                                    shadowBlur={s.type === "building" ? 20 : s.type === "terrace" ? 5 : 0}
                                     fillPatternImage={fill}
                                     fillPatternRepeat="repeat"
                                     fillPatternScale={{ x: 0.15, y: 0.15 }}
                                 />
                             );
                         })}
-                        {beds.map((b, i) => (
+                        {beds.map((b: any, i:number) => (
                             <Group
                                 key={`bed-fragment-${i}`}
                                 onMouseEnter={() => setHoveredBedIndex(i)}
@@ -254,6 +240,8 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                     height={b.height}
                                     fillPatternImage={bedImg}
                                     fillPatternScale={{ x: 0.4, y: 0.4 }}
+                                    stroke={"green"}
+                                    strokeWidth={0.5}
                                     onClick={() => {
                                         if (b.bed_plants && b.bed_plants.length > 0) {
 
@@ -264,11 +252,20 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                         setActiveBedId(b.id);
                                     }}
                                 />
+                                {b.bed_plants?.[0] && !enoughWater(b.bed_plants?.[0]) &&
+                                <Rect
+                                    x={b.x_position}
+                                    y={b.y_position}
+                                    width={b.width}
+                                    height={b.height}
+                                    fill={"brown"}
+                                    opacity={0.4}
+                                /> }
                                 {hoveredBedIndex === i && (
                                     <Text
                                         x={b.x_position + 5}
                                         y={b.y_position + 5}
-                                        text={`Beet ${b.id}:\n${b.bed_plants?.[0]?.plants?.name ?? "empty bed"
+                                        text={`Beet ${b.id}:\n${b.bed_plants?.[0]?.plants?.name ?? "click to plant"
                                             }`}
                                         fontFamily="Calibri"
                                         fontSize={15}
@@ -277,10 +274,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                 )}
                             </Group>
                         ))}
-
-
-
-
                         {/* das hier das grüne hovervierecke:  */}
 
                         {isPlacing && pendingStruct && (
@@ -327,7 +320,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                 draggable
                                 onDragMove={(e) => {
                                     const pos = e.target.position();
-                                    const snapped = snapTo(pos, 30, 30); // Durchmesser = 30 für Circle
+                                    const snapped = snapTo(pos, 30, 30);
                                     e.target.position(snapped);
                                     setDragPos(snapped);
                                 }}
@@ -353,21 +346,16 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                             },
                                         }),
                                     });
-
-
                                     if (res.ok) {
                                         const data = await res.json();
                                         setSingularPlants((prev) => [...prev, data]);
                                         setIsPlacing(false);
                                         setDragPos(null);
-                                        setPendingPlant(null); // zurücksetzen
-
+                                        setPendingPlant(null);
                                     }
                                 }}
-                                
                             />
                         )}
-
                     </Layer>
                 </Stage>
             </div>
