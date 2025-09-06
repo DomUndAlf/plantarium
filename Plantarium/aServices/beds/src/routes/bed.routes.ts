@@ -192,7 +192,6 @@ bedRouter.put("/:bedId/plants/:plantId", async (req, res) => {
     const bedId = Number(req.params.bedId);
     const plantId = Number(req.params.plantId);
     const { planting_date } = req.body;
-
     const bed = await prisma.beds.findFirst({
       where: { id: bedId, user_id: decoded.id },
     });

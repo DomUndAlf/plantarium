@@ -31,9 +31,9 @@ export interface IBedPlant {
     name: string;
     y_position: number;
     x_position: number;
-    watering_interval?: number;
-    watered: boolean;
     date_of_planting: Date;
+    last_watered: Date;
+    watering_interval: number;
 }
 
 export interface IPlant {
@@ -42,6 +42,6 @@ export interface IPlant {
     y_position: number;
     x_position: number;
     date_of_planting: Date;
-    watering_interval?: number;
-    watered: boolean;
+    last_watered: Date;
+    watering_interval: number;
 }

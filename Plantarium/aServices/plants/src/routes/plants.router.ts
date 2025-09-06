@@ -78,6 +78,47 @@ individualPlantsRouter.post("/", async (req, res) => {
   }
 });
 
+individualPlantsRouter.put("/:id", async (req, res) => {
+  const token = req.cookies?.jwt;
+  if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+    const userId = decoded.id;
+    const plantId = parseInt(req.params.id);
+
+    const { last_watered, x_position, y_position } = req.body;
+
+    const existing = await prisma.individual_plants.findFirst({
+      where: { user_id: userId, plant_id: plantId },
+    });
+    if (!existing) {
+      return res.status(404).json({ error: "Einzelpflanze nicht gefunden oder nicht erlaubt" });
+    }
+
+    const updated = await prisma.individual_plants.update({
+      where:{
+    user_id_plant_id_x_position_y_position: {
+      user_id: userId,
+      plant_id: existing.plant_id,
+      x_position: existing.x_position,
+      y_position: existing.y_position,
+    },
+  },
+      data: {
+        last_watered: last_watered ? new Date(last_watered) : existing.last_watered,
+        x_position: x_position ?? existing.x_position,
+        y_position: y_position ?? existing.y_position,
+      },
+    });
+
+    res.json({ updated });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Fehler beim Aktualisieren der Einzelpflanze" });
+  }
+});
+
 
 individualPlantsRouter.delete("/:plant_id/:x_position/:y_position", async (req, res) => {
   const token = req.cookies?.jwt;

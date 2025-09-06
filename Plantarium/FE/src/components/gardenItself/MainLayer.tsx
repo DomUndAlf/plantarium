@@ -2,7 +2,7 @@ import { useState, useContext, useRef } from "react";
 import { Stage, Layer, Rect, Text, Group, Circle } from "react-konva";
 import useImage from "use-image";
 import { UserContext, StructContext, BedsContext, SinglePlantContext } from "../../contexts";
-import { IBed, IStructure } from "../../interfaces/interfaces";
+import { IBed, IBedPlant, IPlant, IStructure } from "../../interfaces/interfaces";
 import { DialogContext } from "../dialogues/Dialogcontext";
 
 type Props = {
@@ -26,7 +26,6 @@ const data = await res.json();
 console.log(data);
 
 function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPendingPlant, weather }: Props) {
-    console.log("Weather in MainLayer:", weather);
     const user = useContext(UserContext);
     const { structures, setStructures } = useContext(StructContext) || { structures: [], setStructures: () => { } };
     const { beds, setBeds, setActiveBedId } = useContext(BedsContext)!;
@@ -48,15 +47,53 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
     const [roofImg] = useImage("../../assets/roof.jpg");
     const [pathImg] = useImage("../../assets/path.jpg");
 
-
-
-
     if (!user) return <p className="text-white p-4">Lade Nutzerdaten...</p>;
 
     const gardenWidth = Number(user.width) * 100;
     const gardenHeight = Number(user.height) * 100;
 
     const SNAP_THRESHOLD = 15;
+
+    const [needsWatering, setNeedsWatering] = useState<boolean>(false);
+
+    const enoughWater = (entity: IBedPlant | IPlant) => {
+        const last5DaysSum = weather.last5DaysSum;
+         const interval = (entity as any).plants?.watering_interval;
+        console.log(interval, last5DaysSum);
+        if (interval === 1 && last5DaysSum > 7) return true;
+        if (interval === 2 && last5DaysSum > 12)return true;
+        if (interval === 3 && last5DaysSum > 16) return true;
+        else return false;
+    };
+
+    const updateWatered = async (entity: IBedPlant | IPlant, type: "bed" | "plant") => {
+        if (enoughWater(entity)) {
+            setNeedsWatering(true);
+            return;
+        }
+        const today = new Date().toISOString().split("T")[0];
+
+        if (type === "bed") {
+            await fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds/${entity.id}`, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ last_watered: today }),
+            });
+        } else {
+            await fetch(`${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants/${entity.id}`, {
+                method: "PUT",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ last_watered: today }),
+            });
+        }
+    };
+
 
     const snapTo = (pos: { x: number; y: number }, width: number, height: number) => {
         const candidates = [...structures, ...beds];
@@ -122,7 +159,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
         try {
             const res = await fetch(
                 `${baseUrl}/me/garden/${isBed ? "beds" : "surfaces"}`,
-                
+
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -135,7 +172,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         height: pendingStruct.height * 100,
                     }),
                 }
-                
+
             );
             console.log("baseUrl", baseUrl);
             if (res.ok) {
@@ -260,16 +297,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                         )}
                     </Layer>
                     <Layer>
-                        {singularPlants.map((p: {
-                            [x: string]: any; x_position: number | undefined; y_position: number | undefined;
-                        }, i: any) => (
+                        {singularPlants.map((p: any, i: number) => (
                             <Group>
                                 <Circle
                                     key={`plant-${i}`}
                                     x={p.x_position}
                                     y={p.y_position}
-                                    radius={15} // kannst du dynamisch machen
-                                    fill="green"
+                                    radius={15}
+                                    fill={enoughWater(p) ? "green" : "brown"}
                                     shadowBlur={5}
                                 />
                                 <Text
@@ -326,8 +361,10 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                         setIsPlacing(false);
                                         setDragPos(null);
                                         setPendingPlant(null); // zurücksetzen
+
                                     }
                                 }}
+                                
                             />
                         )}
 
