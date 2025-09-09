@@ -191,18 +191,18 @@ bedRouter.put("/:bedId/plants/:plantId", async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
     const bedId = Number(req.params.bedId);
     const plantId = Number(req.params.plantId);
-    const { planting_date } = req.body;
+    const { last_watered } = req.body;
+
     const bed = await prisma.beds.findFirst({
       where: { id: bedId, user_id: decoded.id },
     });
     if (!bed) return res.status(404).json({ error: "Beet nicht gefunden" });
 
-    const updated = await prisma.bed_plants.update({
-      where: { bed_id_plant_id: { bed_id: bedId, plant_id: plantId } }, // ⚠️ nur wenn Composite Key existiert
+    const updated = await prisma.plants.update({
+    where: { id: plantId },
       data: {
-        ...(planting_date && { planting_date: new Date(planting_date) }),
+        ...(last_watered && { last_watered: new Date(last_watered) }),
       },
-      include: { plants: true },
     });
 
     res.json(updated);
@@ -227,7 +227,7 @@ bedRouter.delete("/:bedId/plants/:plantId", async (req, res) => {
     if (!bed) return res.status(404).json({ error: "Beet nicht gefunden" });
 
     const deleted = await prisma.bed_plants.delete({
-      where: { bed_id_plant_id: { bed_id: bedId, plant_id: plantId } }, // oder id: plantId, falls dein Schema eigenes PK hat
+      where: { bed_id_plant_id: { bed_id: bedId, plant_id: plantId } },
       include: { plants: true },
     });
 

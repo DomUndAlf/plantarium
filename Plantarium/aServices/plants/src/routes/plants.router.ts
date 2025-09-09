@@ -106,10 +106,9 @@ individualPlantsRouter.put("/:id", async (req, res) => {
     },
   },
       data: {
-        last_watered: last_watered ? new Date(last_watered) : existing.last_watered,
-        x_position: x_position ?? existing.x_position,
-        y_position: y_position ?? existing.y_position,
+        last_watered: last_watered ? new Date(last_watered) : existing.last_watered
       },
+      include: { plants: true },
     });
 
     res.json({ updated });

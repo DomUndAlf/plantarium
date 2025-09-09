@@ -4,6 +4,7 @@ import useImage from "use-image";
 import { UserContext, StructContext, BedsContext, SinglePlantContext } from "../../contexts";
 import { IBed, IBedPlant, IPlant, IStructure } from "../../interfaces/interfaces";
 import { DialogContext } from "../dialogues/Dialogcontext";
+import { Button } from "@headlessui/react";
 
 type Props = {
     isPlacing: boolean;
@@ -43,19 +44,46 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
     const SNAP_THRESHOLD = 15;
 
-    const [needsWatering, setNeedsWatering] = useState<boolean>(false);
+    const [, setNeedsWatering] = useState<boolean>(false);
 
     const enoughWater = (entity: IBedPlant | IPlant) => {
         const last5DaysSum = weather?.last5DaysSum ?? 0;
         const interval = (entity as any)?.plants?.watering_interval;
-        console.log(interval, last5DaysSum);
+
+        const lastWatered = (entity as any).last_watered || (entity as any).plants?.last_watered;
+        if (lastWatered) {
+            const diffDays =
+                (new Date().getTime() - new Date(lastWatered).getTime()) /
+                (1000 * 60 * 60 * 24);
+
+            if (diffDays <= interval) {
+                return true;
+            }
+        }
+
         if (interval === 1 && last5DaysSum > 7) return true;
         if (interval === 2 && last5DaysSum > 12) return true;
         if (interval === 3 && last5DaysSum > 16) return true;
         else return false;
     };
 
-    const updateWatered = async (entity: IBedPlant | IPlant, type: "bed" | "plant") => {
+    const waterAllPlants = async () => {
+        await Promise.all(
+            beds.flatMap((b) =>
+                (b.bed_plants ?? []).map((bp: IBedPlant) =>
+                    updateWatered(bp, "bed")
+                )
+            )
+        );
+        await Promise.all(
+            singularPlants.map((sp: IPlant) =>
+                updateWatered(sp, "plant")
+            )
+        );
+        setNeedsWatering(false);
+    }
+
+    const updateWatered = async (entity: any, type: "bed" | "plant") => {
         if (enoughWater(entity)) {
             setNeedsWatering(true);
             return;
@@ -63,7 +91,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
         const today = new Date().toISOString().split("T")[0];
 
         if (type === "bed") {
-            await fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds/${entity.id}`, {
+            const bedId = (entity as any).bed_id;
+            const plantId = (entity as any).plants.id;
+            await fetch(`${import.meta.env.VITE_BEDS_URL}/me/garden/beds/${bedId}/plants/${plantId}`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
@@ -71,8 +101,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                 },
                 body: JSON.stringify({ last_watered: today }),
             });
+            setBeds((prev) =>
+                prev.map((p) =>
+                    p.plants.id === plantId ? { ...p, last_watered: today } : p
+                ));
+
         } else {
-            await fetch(`${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants/${entity.id}`, {
+            const plantId = (entity as any).plants.id;
+            await fetch(`${import.meta.env.VITE_PLANTS_URL}/me/garden/individual-plants/${plantId}`, {
                 method: "PUT",
                 credentials: "include",
                 headers: {
@@ -80,6 +116,10 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                 },
                 body: JSON.stringify({ last_watered: today }),
             });
+            setSingularPlants((prev) =>
+                prev.map((p) =>
+                    p.plants.id === plantId ? { ...p, last_watered: today } : p
+                ));
         }
     };
 
@@ -187,6 +227,9 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
 
             <p> the last time it rained in your garden was: {weather?.lastRainDay?.date ?? "—"} </p>
             <p> it rained {weather?.last5DaysSum ?? "—"} mm</p>
+            <Button className="m-3 p-2 pl-8 pr-8 rounded-xl text-white bg-darkMint/80 font-normal hover:bg-darkMint/50 active:scale-97 transition duration-150" onClick={async () => await waterAllPlants()}
+            >water your garden</Button>
+
             <div className="w-full flex justify-center mt-5">
                 <Stage
                     width={gardenWidth}
@@ -227,7 +270,7 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                 />
                             );
                         })}
-                        {beds.map((b: any, i:number) => (
+                        {beds.map((b: any, i: number) => (
                             <Group
                                 key={`bed-fragment-${i}`}
                                 onMouseEnter={() => setHoveredBedIndex(i)}
@@ -253,14 +296,14 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                     }}
                                 />
                                 {b.bed_plants?.[0] && !enoughWater(b.bed_plants?.[0]) &&
-                                <Rect
-                                    x={b.x_position}
-                                    y={b.y_position}
-                                    width={b.width}
-                                    height={b.height}
-                                    fill={"brown"}
-                                    opacity={0.4}
-                                /> }
+                                    <Rect
+                                        x={b.x_position}
+                                        y={b.y_position}
+                                        width={b.width}
+                                        height={b.height}
+                                        fill={"brown"}
+                                        opacity={0.4}
+                                    />}
                                 {hoveredBedIndex === i && (
                                     <Text
                                         x={b.x_position + 5}
