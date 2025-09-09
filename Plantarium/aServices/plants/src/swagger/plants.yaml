@@ -1,0 +1,121 @@
+tags:
+  - name: Individual Plants
+    description: Verwaltung der Einzelpflanzen
+
+paths:
+  /me/garden/individual-plants:
+    get:
+      summary: Alle Einzelpflanzen des eingeloggten Users laden
+      tags: [Individual Plants]
+      responses:
+        "200":
+          description: Liste der Einzelpflanzen
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IndividualPlant"
+        "401":
+          description: Nicht eingeloggt
+    post:
+      summary: Neue Einzelpflanze anlegen
+      tags: [Individual Plants]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x_position:
+                  type: number
+                y_position:
+                  type: number
+                planting_date:
+                  type: string
+                  format: date
+                plantData:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    watering_interval:
+                      type: integer
+              required: [x_position, y_position, planting_date, plantData]
+      responses:
+        "200":
+          description: Einzelpflanze erfolgreich angelegt
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndividualPlant"
+        "400":
+          description: Ungültige Eingabedaten
+        "401":
+          description: Nicht eingeloggt
+
+  /me/garden/individual-plants/{id}:
+    put:
+      summary: Einzelpflanze aktualisieren (z. B. gegossen)
+      tags: [Individual Plants]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: plant_id der Pflanze
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                last_watered:
+                  type: string
+                  format: date
+                x_position:
+                  type: number
+                y_position:
+                  type: number
+      responses:
+        "200":
+          description: Einzelpflanze aktualisiert
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IndividualPlant"
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Einzelpflanze nicht gefunden
+
+  /me/garden/individual-plants/{plant_id}/{x_position}/{y_position}:
+    delete:
+      summary: Einzelpflanze löschen
+      tags: [Individual Plants]
+      parameters:
+        - name: plant_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: x_position
+          in: path
+          required: true
+          schema:
+            type: number
+        - name: y_position
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Einzelpflanze gelöscht
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Pflanze nicht gefunden

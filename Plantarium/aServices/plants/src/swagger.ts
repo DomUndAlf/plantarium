@@ -8,9 +8,9 @@ const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Beds Service API",
+      title: "Plants Service API",
       version: "1.0.0",
-      description: "API für Gartenbeete und die Pflanzen darin",
+      description: "API für einzelne Pflanzen",
     },
     components: {
       securitySchemes: {
@@ -32,7 +32,7 @@ const options: swaggerJsdoc.Options = {
 };
 
 export function setupSwagger(app: Express) {
-  const bedsDoc = YAML.load(path.join(__dirname, "./swagger/beds.yaml"));
+  const plantsDoc = YAML.load(path.join(__dirname, "./swagger/plants.yaml"));
 
   const swaggerDocument = {
     openapi: "3.0.0",
@@ -42,18 +42,18 @@ export function setupSwagger(app: Express) {
     },
      servers: [
       {
-        url: process.env.VITE_BEDS_URL,
-        description: "Beds Service lokal",
+        url: process.env.VITE_PLANTS_URL,
+        description: "Plants Service lokal",
       },
     ],
     paths: {
-      ...bedsDoc.paths,
+      ...plantsDoc.paths,
     },
     components: {
-      ...bedsDoc.components,
+      ...plantsDoc.components,
     },
     tags: [
-      ...(bedsDoc.tags || []),
+      ...(plantsDoc.tags || []),
     ],
   };
 

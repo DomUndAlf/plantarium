@@ -102,9 +102,25 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                 body: JSON.stringify({ last_watered: today }),
             });
             setBeds((prev) =>
-                prev.map((p) =>
-                    p.plants.id === plantId ? { ...p, last_watered: today } : p
-                ));
+                prev.map((b) =>
+                    b.id === bedId
+                        ? {
+                            ...b,
+                            bed_plants: b.bed_plants.map((bp:any) =>
+                                bp.plants.id === plantId
+                                    ? {
+                                        ...bp,
+                                        plants: {
+                                            ...bp.plants,
+                                            last_watered: today,
+                                        },
+                                    }
+                                    : bp
+                            ),
+                        }
+                        : b
+                )
+            );
 
         } else {
             const plantId = (entity as any).plants.id;
@@ -287,7 +303,6 @@ function MainLayer({ isPlacing, pendingStruct, setIsPlacing, pendingPlant, setPe
                                     strokeWidth={0.5}
                                     onClick={() => {
                                         if (b.bed_plants && b.bed_plants.length > 0) {
-
                                             alert("In diesem Beet ist schon eine Pflanze. Du kannst hier nichts Neues setzen.");
                                             return;
                                         }
