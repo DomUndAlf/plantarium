@@ -1,0 +1,89 @@
+tags:
+  - name: Surfaces
+    description: Verwaltung von Flächen (z. B. Wege, Wiesen, Terrassen, Gebäude)
+
+paths:
+  /me/garden/surfaces:
+    get:
+      summary: Alle Flächen des eingeloggten Users laden
+      tags: [Surfaces]
+      responses:
+        "200":
+          description: Liste der Flächen
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+        "401":
+          description: Nicht eingeloggt
+    post:
+      summary: Neue Fläche anlegen
+      tags: [Surfaces]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Art der Fläche (z. B. terrace, path, building, meadow)
+                x_position:
+                  type: number
+                y_position:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+              required: [type, x_position, y_position, width, height]
+            example:
+                type: "terrace"
+                x_position: 100
+                y_position: 200
+                width: 300
+                height: 150
+      responses:
+        "201":
+          description: Fläche erfolgreich angelegt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+        "400":
+          description: Ungültige Eingabedaten
+        "401":
+          description: Nicht eingeloggt
+
+  /me/garden/surfaces/{id}:
+    delete:
+      summary: Fläche löschen
+      tags: [Surfaces]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Fläche erfolgreich gelöscht
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+        "401":
+          description: Nicht eingeloggt
+        "404":
+          description: Fläche nicht gefunden

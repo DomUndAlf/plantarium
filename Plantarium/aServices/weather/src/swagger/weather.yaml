@@ -1,0 +1,49 @@
+tags:
+  - name: Weather
+    description: Liefert Wetterdaten basierend auf der Location des Users (Proxy für Open-Meteo)
+
+paths:
+  /me/garden/weather:
+    get:
+      summary: Wetterdaten für den eingeloggten User abrufen
+      tags: [Weather]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Wetterdaten erfolgreich geladen
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                  lastRainDay:
+                    type: object
+                    nullable: true
+                    properties:
+                      date:
+                        type: string
+                        format: date
+                      precipitation:
+                        type: number
+                  last5DaysSum:
+                    type: number
+              example:
+                location:
+                  latitude: 51.34
+                  longitude: 12.37
+                lastRainDay:
+                  date: "2025-09-04"
+                  precipitation: 12.3
+                last5DaysSum: 28.7
+        "401":
+          description: Nicht eingeloggt
+        "500":
+          description: Fehler beim Abrufen der Wetterdaten

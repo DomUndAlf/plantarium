@@ -63,41 +63,42 @@ surfaceRouter.get("/", async (req, res) => {
   }
 });
 
-surfaceRouter.put("/:id", async (req, res) => {
-    const token = req.cookies?.jwt;
-     if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
-    const userId = decoded.id;
+//put route derzeit unbenutzt, für erweiterung hier belassen
+// surfaceRouter.put("/:id", async (req, res) => {
+//     const token = req.cookies?.jwt;
+//      if (!token) return res.status(401).json({ error: "Nicht eingeloggt" });
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number };
+//     const userId = decoded.id;
 
-    const surfaceId = parseInt(req.params.id);
-    const {
-      type,
-      x_position,
-      y_position,
-      width,
-      height,
-    } = req.body;
+//     const surfaceId = parseInt(req.params.id);
+//     const {
+//       type,
+//       x_position,
+//       y_position,
+//       width,
+//       height,
+//     } = req.body;
 
-    const updated = await prisma.surfaces.update({
-      where: {
-        id: surfaceId,
-        user_id: userId,
-      },
-      data: {
-        type,
-        x_position,
-        y_position,
-        width,
-        height,
-      },
-    });
+//     const updated = await prisma.surfaces.update({
+//       where: {
+//         id: surfaceId,
+//         user_id: userId,
+//       },
+//       data: {
+//         type,
+//         x_position,
+//         y_position,
+//         width,
+//         height,
+//       },
+//     });
 
-    res.json({ updated });
-  } catch (error) {
-    res.status(500).json({ error: "Fehler beim Aktualisieren" });
-  }
-});
+//     res.json({ updated });
+//   } catch (error) {
+//     res.status(500).json({ error: "Fehler beim Aktualisieren" });
+//   }
+// });
 
 surfaceRouter.delete("/:id", async (req, res) => {
     const token = req.cookies?.jwt;

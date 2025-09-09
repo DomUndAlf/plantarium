@@ -5,6 +5,7 @@ import express from "express";
 import weatherRouter from "./routes/weather.router";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { setupSwagger } from "./swagger";
 
 const app = express();
 
@@ -27,4 +28,6 @@ app.listen(PORT, () => {
 app.get("/health", (_req, res) => {
   res.json({ ok: true, service: "weather" });
 });
+
+setupSwagger(app);
 
