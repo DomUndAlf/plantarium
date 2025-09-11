@@ -2,15 +2,15 @@ import express from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.get('/gitlab', (_req, _res, next) => {
+authRouter.get('/gitlab', (_req, _res, next) => {
   console.log('🚀 [GET] /auth/gitlab aufgerufen');
   next();
 }, passport.authenticate('gitlab', { scope: ['read_user'] }));
 
 
-router.get('/gitlab/callback', (_req, _res, next) => {
+authRouter.get('/gitlab/callback', (_req, _res, next) => {
   console.log('🔁 [GET] /auth/gitlab/callback erreicht');
   next();
 }, passport.authenticate('gitlab', { session: false, failureRedirect: '/' }),
@@ -38,4 +38,4 @@ router.get('/gitlab/callback', (_req, _res, next) => {
        console.log("Redirecting to dashboard with token:", token);
   });
 
-export default router;
+export default authRouter;
