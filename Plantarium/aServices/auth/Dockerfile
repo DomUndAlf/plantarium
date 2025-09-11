@@ -11,6 +11,7 @@ RUN npm ci --include=dev
 
 # Restlichen Code kopieren
 COPY . .
+COPY ../../shared ./shared
 
 # Prisma Client generieren + TS build
 RUN npx prisma generate

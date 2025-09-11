@@ -6,6 +6,7 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+COPY ../../shared ./shared
 
 EXPOSE 3000
 
