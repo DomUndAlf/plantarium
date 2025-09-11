@@ -6,7 +6,7 @@
     "rootDir": "../../",        // erweitert den Bereich
     "baseUrl": "../../",
     "paths": {
-      "@shared/*": ["shared/*"] // Alias für shared
+      "@shared/*": ["../shared/*"] // Alias für shared
     },
     "strict": true,
     "esModuleInterop": true,
