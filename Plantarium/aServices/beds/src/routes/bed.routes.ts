@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import prisma from "../../../../shared/prismaClient";
+import prisma from "../../../shared/prismaClient";
 
 const bedRouter = Router();
 

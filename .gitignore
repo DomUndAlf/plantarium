@@ -3,6 +3,7 @@ Plantarium/.env
 Plantarium/aServices/auth/.env
 Plantarium/aServices/plants/.env
 Plantarium/aServices/weather/.env
+Plantarium/aServices/auth/.env
 Plantarium/aServices/auth/node_modules/
 Plantarium/aServices/plants/node_modules/
 Plantarium/aServices/weather/node_modules/  
