@@ -1,7 +1,7 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import prisma from "../../../../shared/prismaClient";
-import { plants_growth_type } from "../../../shared/prisma/types";
+import prisma from "../../../shared/prismaClient";
+import { plants_growth_type } from "../../../../shared/prisma/types";
 
 const individualPlantsRouter = Router();
 
