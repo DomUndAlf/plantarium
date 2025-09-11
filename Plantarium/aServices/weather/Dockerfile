@@ -1,12 +1,13 @@
 FROM node:20-alpine
-
 WORKDIR /app
 
-COPY package*.json ./
+COPY aServices/weather/package*.json ./
 RUN npm install
 
-COPY . .
-COPY ../../shared ../shared
+COPY aServices/weather ./weather
+COPY shared ./shared
+
+WORKDIR /app/weather
 
 RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
