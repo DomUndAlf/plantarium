@@ -11,7 +11,7 @@ COPY shared ./shared
 WORKDIR /app/auth
 
 RUN npx --prefix /app prisma generate --schema=../shared/prisma/schema.prisma
-RUN npm run build
+RUN npm run build && cp -r src/swagger dist/auth/src/swagger 
 
 EXPOSE 3000
-CMD ["node", "auth/dist/index.js"]
+CMD ["node", "dist/auth/src/index.js"]

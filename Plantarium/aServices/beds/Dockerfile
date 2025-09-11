@@ -10,7 +10,7 @@ COPY shared ./shared
 WORKDIR /app/beds
 
 RUN npx prisma generate --schema=../shared/prisma/schema.prisma
-RUN npm run build
+RUN npm run build && cp -r src/swagger dist/beds/src/swagger
 
 EXPOSE 3000
-CMD ["node", "beds/dist/index.js"]
+CMD ["node", "dist/beds/src/index.js"]
