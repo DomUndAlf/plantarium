@@ -1,5 +1,5 @@
 FROM node:20-alpine
-WORKDIR /app/auth
+WORKDIR /app
 
 COPY aServices/auth/package*.json ./
 RUN npm install
@@ -8,7 +8,9 @@ RUN npm install
 COPY aServices/auth ./auth
 COPY shared ./shared
 
-RUN npx prisma generate --schema=../shared/prisma/schema.prisma
+WORKDIR /app/auth
+
+RUN npx --prefix /app prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000
