@@ -2,10 +2,8 @@ FROM node:20-alpine
 
 WORKDIR /app/weather
 
-
 COPY aServices/weather/package*.json ./
 RUN npm install
-
 
 COPY aServices/weather ./
 COPY shared ../shared
