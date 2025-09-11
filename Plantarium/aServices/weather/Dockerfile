@@ -10,7 +10,7 @@ COPY shared ./shared
 WORKDIR /app/weather
 
 RUN npx prisma generate --schema=../shared/prisma/schema.prisma
-RUN npm run build && ls -R /app/weather && ls -R /app
+RUN npm run build && mv /app/dist ./dist && ls -R ./dist
 
 EXPOSE 3000
 CMD ["node", "../dist/index.js"]
