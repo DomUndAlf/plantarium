@@ -13,4 +13,4 @@ RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build && ls -R /app/weather && ls -R /app
 
 EXPOSE 3000
-CMD ["node", "../dist/aServices/weather/src/index.js"]
+CMD ["node", "dist/weather/src/index.js"]
