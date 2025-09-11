@@ -13,4 +13,4 @@ RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000
-CMD ["node", "dist/index.js"]
+CMD ["node", "plants/dist/index.js"]
