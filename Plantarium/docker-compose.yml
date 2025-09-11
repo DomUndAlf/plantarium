@@ -4,7 +4,7 @@ services:
     build: FE
     container_name: frontend
     ports:
-      - "8080:3000"
+      - "127.0.10.14:8080:3000"
     depends_on:
       - gateway
   gateway:
