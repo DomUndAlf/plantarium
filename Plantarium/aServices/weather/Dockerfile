@@ -2,7 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY aServices/weather/package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 COPY aServices/weather ./weather
 COPY shared ./shared

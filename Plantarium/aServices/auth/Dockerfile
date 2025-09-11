@@ -2,7 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY aServices/auth/package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 
 COPY aServices/auth ./auth

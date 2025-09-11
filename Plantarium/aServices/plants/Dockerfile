@@ -2,7 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY aServices/plants/package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 COPY aServices/plants ./plants
 COPY shared ./shared
