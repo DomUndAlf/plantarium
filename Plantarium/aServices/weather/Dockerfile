@@ -10,7 +10,7 @@ COPY shared ./shared
 
 WORKDIR /app/weather
 
-RUN npx prisma generate || echo "no prisma schema"
+RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000
