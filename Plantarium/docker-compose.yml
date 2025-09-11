@@ -21,7 +21,9 @@ services:
       - struct
 
   auth:
-    build: ./aServices/auth
+    build: 
+      context: ./
+      dockerfile: ./aServices/auth/Dockerfile
     container_name: auth
     env_file:
       - ./aServices/auth/.env
@@ -31,7 +33,9 @@ services:
       - mysql
 
   beds:
-    build: ./aServices/beds
+    build: 
+      context: ./ 
+      dockerfile: ./aServices/beds/Dockerfile
     container_name: beds
     env_file:
       - ./aServices/beds/.env
@@ -41,7 +45,9 @@ services:
       - mysql
 
   plants:
-    build: ./aServices/plants
+    build: 
+      context: ./ 
+      dockerfile: ./aServices/plants/Dockerfile
     container_name: plants
     env_file:
       - ./aServices/plants/.env
@@ -51,7 +57,9 @@ services:
       - mysql
 
   struct:
-    build: ./aServices/struct
+    build: 
+      context: ./ 
+      dockerfile: ./aServices/struct/Dockerfile
     container_name: struct
     env_file:
       - ./aServices/struct/.env
@@ -61,7 +69,9 @@ services:
       - mysql
 
   weather:
-    build: ./aServices/weather
+    build: 
+      context: ./ 
+      dockerfile: ./aServices/weather/Dockerfile
     container_name: weather
     env_file:
       - ./aServices/weather/.env

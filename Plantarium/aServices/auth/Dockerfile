@@ -1,24 +1,15 @@
 FROM node:20-alpine
-
-# Arbeitsverzeichnis im Container
 WORKDIR /app
 
-# package.json und package-lock.json kopieren
-COPY package*.json ./
+COPY aServices/auth/package*.json ./
+RUN npm install --only=production
 
-# Dependencies installieren
-RUN npm ci --include=dev
 
-# Restlichen Code kopieren
-COPY . .
-COPY ../../shared ./shared
+COPY aServices/auth ./auth
+COPY shared ./shared
 
-# Prisma Client generieren + TS build
-RUN npx prisma generate
+WORKDIR /app/auth
 RUN npm run build
 
-# Port für den Container öffnen
 EXPOSE 3000
-
-# Startkommando
 CMD ["node", "dist/index.js"]
