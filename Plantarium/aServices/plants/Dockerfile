@@ -8,6 +8,8 @@ COPY aServices/plants ./plants
 COPY shared ./shared
 
 WORKDIR /app/plants
+
+RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000

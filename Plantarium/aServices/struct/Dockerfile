@@ -8,6 +8,8 @@ COPY aServices/struct ./struct
 COPY shared ./shared
 
 WORKDIR /app/struct
+
+RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000

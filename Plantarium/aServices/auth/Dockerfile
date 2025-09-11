@@ -9,6 +9,8 @@ COPY aServices/auth ./auth
 COPY shared ./shared
 
 WORKDIR /app/auth
+
+RUN npx prisma generate --schema=../shared/prisma/schema.prisma
 RUN npm run build
 
 EXPOSE 3000
