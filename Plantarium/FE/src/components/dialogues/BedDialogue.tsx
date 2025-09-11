@@ -10,6 +10,7 @@ type Props = {
 };
 
 function BedDialogue({ structBed, setStructBed }: Props) {
+    // @ts-ignore
     const [enabled, setEnabled] = useState(false);
     return (
         <>
