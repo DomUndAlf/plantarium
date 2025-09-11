@@ -1,15 +1,18 @@
 FROM node:20-alpine
-
-WORKDIR /app/weather
+WORKDIR /app
 
 COPY aServices/weather/package*.json ./
 RUN npm install
 
-COPY aServices/weather ./
+COPY aServices/weather ./weather
 COPY shared ../shared
 
-RUN npx prisma generate --schema=../shared/prisma/schema.prisma
+
+WORKDIR /app/weather
+
+RUN npx --prefix /app/weather prisma generate --schema=../shared/prisma/schema.prisma
+
 RUN npm run build
 
 EXPOSE 3000
-CMD ["node", "dist/index.js"]
+CMD ["node", "weather/dist/index.js"]
