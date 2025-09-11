@@ -7,7 +7,10 @@ RUN npm install
 COPY aServices/weather ./weather
 COPY shared ./shared
 
+
 WORKDIR /app/weather
+
+RUN npx prisma generate || echo "no prisma schema"
 RUN npm run build
 
 EXPOSE 3000
