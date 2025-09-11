@@ -1,7 +1,7 @@
 import passport from 'passport';
 // @ts-ignore
 import { Strategy as GitLabStrategy } from 'passport-gitlab2';
-import prisma from "../../../../shared/prismaClient";
+import prisma from "../../shared/prismaClient";
 import dotenv from 'dotenv';
 
 dotenv.config()
