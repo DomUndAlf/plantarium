@@ -4,20 +4,29 @@ services:
     build: FE
     container_name: frontend
     ports:
-      - "3000:3000"
+      - "127.0.10.14:8080:3000"
+    depends_on:
+      - gateway
+  gateway:
+    image: nginx:alpine
+    container_name: gateway
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "127.0.10.14:8082:80"
     depends_on:
       - auth
       - beds
       - plants
       - struct
-      - weather
+
   auth:
     build: ./aServices/auth
     container_name: auth
     env_file:
       - ./aServices/auth/.env
-    ports:
-      - "3001:3000"        # Auth-Service extern auf :3001
+    expose:
+      - "3000"
     depends_on:
       - mysql
 
@@ -26,9 +35,8 @@ services:
     container_name: beds
     env_file:
       - ./aServices/beds/.env
-    ports:
-      - "3002:3000"        # API-Service extern auf :3002
-      - "5556:5555"        # Prisma Studio (optional)
+    expose:
+      - "3000"
     depends_on:
       - mysql
 
@@ -37,9 +45,8 @@ services:
     container_name: plants
     env_file:
       - ./aServices/plants/.env
-    ports:
-      - "3004:3000"        # API-Service extern auf :3002
-      - "5557:5555"        # Prisma Studio (optional)
+    expose:
+      - "3000"
     depends_on:
       - mysql
 
@@ -48,9 +55,8 @@ services:
     container_name: struct
     env_file:
       - ./aServices/struct/.env
-    ports:
-      - "3005:3000"        # API-Service extern auf :3002
-      - "5558:5555"        # Prisma Studio (optional)
+    expose:
+      - "3000"
     depends_on:
       - mysql
 
@@ -60,8 +66,7 @@ services:
     env_file:
       - ./aServices/weather/.env
     ports:
-      - "3003:3000"        # Weather-Service extern auf :3003
-      - "5555:5555"        # Prisma Studio (optional)
+      - "127.0.10.14:8081:3000"
     depends_on:
       - mysql
   mysql:
