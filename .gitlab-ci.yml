@@ -7,5 +7,5 @@ deploy:
     - docker
   script:
     - docker compose -f Plantarium/docker-compose.yml down
-    - docker compose -f Plantarium/docker-compose.yml --no-cache build
+    - docker compose -f Plantarium/docker-compose.yml build --no-cache
     - docker compose -f Plantarium/docker-compose.yml up -d
