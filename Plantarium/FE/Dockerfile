@@ -5,13 +5,14 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Abhängigkeiten kopieren
-COPY FE/package*.json ./
+COPY package*.json ./
 RUN npm install
 
 # Restliche Projektdateien kopieren
 COPY FE .
 
 # App bauen (für Produktion) – oder auskommentieren, falls du `npm run dev` nutzen willst
+COPY . .
 RUN npm run build
 
 FROM nginx:alpine
