@@ -21,7 +21,7 @@ services:
 
   auth:
     build: 
-      context: ./
+      context: .
       dockerfile: ./aServices/auth/Dockerfile
     container_name: auth
     env_file:
