@@ -8,4 +8,4 @@ deploy:
   script:
     - docker compose -f Plantarium/docker-compose.yml down
     - docker compose -f Plantarium/docker-compose.yml build --no-cache
-    - docker compose -f Plantarium/docker-compose.yml up -d
+    - docker compose -f Plantarium/docker-compose.yml up -d --force-recreate
