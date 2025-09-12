@@ -9,7 +9,7 @@ services:
       - gateway
   gateway:
     build:
-      context: ./Plantarium
+      context: .
       dockerfile: gateway.Dockerfile
     ports:
       - "127.0.10.14:8082:80"
@@ -21,7 +21,7 @@ services:
 
   auth:
     build: 
-      context: .
+      context: ./
       dockerfile: ./aServices/auth/Dockerfile
     container_name: auth
     env_file:
