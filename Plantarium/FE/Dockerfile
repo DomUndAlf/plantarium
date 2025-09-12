@@ -1,26 +1,17 @@
-# Basis-Image
-FROM node:20-alpine
-
-# Arbeitsverzeichnis im Container
+# --- Build Stage ---
+FROM node:20-alpine AS build
 WORKDIR /app
 
-# Abhängigkeiten kopieren
 COPY package*.json ./
 RUN npm install
 
-# Restliche Projektdateien kopieren
-COPY FE .
-
-# App bauen (für Produktion) – oder auskommentieren, falls du `npm run dev` nutzen willst
 COPY . .
 RUN npm run build
 
+# --- Serve Stage ---
 FROM nginx:alpine
-# React-Router: alle Routen auf index.html zurückfallen lassen
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-# Gebaute Dateien ins Nginx-HTML-Verzeichnis kopieren
 COPY --from=build /app/dist /usr/share/nginx/html
-EXPOSE 80
 
-# Dev-Server starten
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
