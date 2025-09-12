@@ -1,6 +1,5 @@
 
 import { Button } from "@headlessui/react";
-import fontLogo from "/assets/font.png";
 
 export default function Welcome() {
   const handleLogin = () => {
