@@ -5,7 +5,7 @@ deploy:
   stage: deploy
   tags:
     - docker
-  script:gi
+  script:
     - docker compose -f Plantarium/docker-compose.yml down
     - docker compose -f Plantarium/docker-compose.yml build
     - docker compose -f Plantarium/docker-compose.yml up -d
