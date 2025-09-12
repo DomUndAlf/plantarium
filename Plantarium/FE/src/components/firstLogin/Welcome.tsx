@@ -2,7 +2,7 @@ import { Button } from "@headlessui/react";
 
 export default function Welcome() {
   const handleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_AUTH_URL}/auth/gitlab`; //DEPL: tatsächliche BE Adresse
+    window.location.href = `${import.meta.env.VITE_AUTH_URL}/gitlab`; //DEPL: tatsächliche BE Adresse
   };
 
   return (
