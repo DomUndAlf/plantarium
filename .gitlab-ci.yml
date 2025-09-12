@@ -5,9 +5,7 @@ deploy:
   stage: deploy
   tags:
     - docker
-  script:
-    - cd Plantarium
-    - ls -l nginx.conf        # Debug
-    - docker-compose down
-    - docker-compose build
-    - docker-compose up -d
+  script:gi
+    - docker compose -f Plantarium/docker-compose.yml down
+    - docker compose -f Plantarium/docker-compose.yml build
+    - docker compose -f Plantarium/docker-compose.yml up -d
