@@ -16,7 +16,7 @@ RUN npm run build
 
 FROM nginx:alpine
 # React-Router: alle Routen auf index.html zurückfallen lassen
-COPY FE/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Gebaute Dateien ins Nginx-HTML-Verzeichnis kopieren
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
