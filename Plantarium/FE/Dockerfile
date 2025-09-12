@@ -5,17 +5,21 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Abhängigkeiten kopieren
-COPY package*.json ./
+COPY FE/package*.json ./
 RUN npm install
 
 # Restliche Projektdateien kopieren
-COPY . .
-
-# Vite-Port (optional)
-ENV PORT=3000
+COPY FE .
 
 # App bauen (für Produktion) – oder auskommentieren, falls du `npm run dev` nutzen willst
 RUN npm run build
 
+FROM nginx:alpine
+# React-Router: alle Routen auf index.html zurückfallen lassen
+COPY FE/nginx.conf /etc/nginx/conf.d/default.conf
+# Gebaute Dateien ins Nginx-HTML-Verzeichnis kopieren
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+
 # Dev-Server starten
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["nginx", "-g", "daemon off;"]
