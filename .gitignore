@@ -1,15 +1,9 @@
 Plantarium/node_modules/
-Plantarium/.env
-Plantarium/aServices/auth/.env
-Plantarium/aServices/plants/.env
-Plantarium/aServices/weather/.env
-Plantarium/aServices/auth/.env
+
 Plantarium/aServices/auth/node_modules/
 Plantarium/aServices/plants/node_modules/
 Plantarium/aServices/weather/node_modules/  
-Plantarium/aServices/struct/.env
 Plantarium/aServices/struct/node_modules/
-Plantarium/aServices/beds/.env
 Plantarium/aServices/beds/node_modules/
 Plantarium/aServices/beds/dist
 Plantarium/aServices/struct/dist
@@ -18,5 +12,4 @@ Plantarium/aServices/beds/dist
 Plantarium/aServices/pants/dist
 Plantarium/FE/dist
 Plantarium/FE/node_modules/
-Plantarium/FE/.env
 Plantarium/shared/node_modules
