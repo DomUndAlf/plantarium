@@ -8,10 +8,9 @@ services:
     depends_on:
       - gateway
   gateway:
-    image: nginx:alpine
-    container_name: gateway
-    volumes:
-      - ${CI_PROJECT_DIR}/Plantarium/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    build:
+      context: ./Plantarium
+      dockerfile: gateway.Dockerfile
     ports:
       - "127.0.10.14:8082:80"
     depends_on:
