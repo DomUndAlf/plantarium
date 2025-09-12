@@ -6,6 +6,6 @@ deploy:
   tags:
     - docker
   script:
-    - docker -f Plantarium/docker-compose.yml compose down
-    - docker -f Plantarium/docker-compose.yml compose build
-    - docker -f Plantarium/docker-compose.yml compose up -d
+    - docker compose -f Plantarium/docker-compose.yml down
+    - docker compose -f Plantarium/docker-compose.yml build
+    - docker compose -f Plantarium/docker-compose.yml up -
