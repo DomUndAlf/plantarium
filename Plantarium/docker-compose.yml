@@ -1,7 +1,8 @@
 
 services:
   frontend:
-    build: FE
+    build: 
+       context: ../FE
     container_name: frontend
     ports:
       - "127.0.10.14:8080:80"
